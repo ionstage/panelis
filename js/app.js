@@ -1,0 +1,169 @@
+(function(global) {
+  'use strict';
+  var m = global.m;
+  var panelis = global.panelis;
+  var app = global.app || {};
+  var stageElement = null;
+
+  app.supportsTouch = 'createTouch' in global.document;
+  app.supportsTransitionEnd = (function() {
+    var div = document.createElement('div');
+    return typeof div.style['transition'] !== 'undefined';
+  }());
+
+  app.globalToLocal = function(gpt) {
+    if (!stageElement)
+      return null;
+    var lpt = stageElement.createSVGPoint();
+    lpt.x = gpt.x;
+    lpt.y = gpt.y;
+    return lpt.matrixTransform(stageElement.getScreenCTM().inverse());
+  };
+
+  app.controller = function() {
+    var tile = new panelis.Tile(8, 8);
+    tile.randomEdge();
+
+    var selectedPanel = m.prop(null);
+
+    this.tileController = {
+      panels: tile.panels
+    };
+
+    var actionTileController = this.actionTileController = new app.ActionTileController({
+      selectedPanel: selectedPanel,
+      tile: tile
+    });
+
+    var scoreAnimationController = this.scoreAnimationController = new app.ScoreAnimationController({
+      scoreColors: [],
+      tile: tile
+    });
+
+    var whiteControlBoardController = this.whiteControlBoardController = new app.ControlBoardController({
+      color: panelis.Panel.COLOR_WHITE,
+      panels: [
+        panelis.Panel.sample(panelis.Panel.COLOR_WHITE),
+        panelis.Panel.sample(panelis.Panel.COLOR_WHITE),
+        panelis.Panel.sample(panelis.Panel.COLOR_WHITE)
+      ],
+      selectedPanel: selectedPanel,
+      onok: function() {
+        var ctrl = this;
+        var position = actionTileController.selectedPosition();
+        if (!position)
+          return;
+
+        var row = position.row;
+        var col = position.col;
+        var panel = selectedPanel();
+        var canJoint = tile.canJoint(row, col, panel);
+        if (!canJoint)
+          return;
+
+        tile.panel(row, col, panel);
+
+        ctrl.active(false);
+        ctrl.panels[ctrl.selectedIndex()] = null;
+        ctrl.selectedIndex(-1);
+        selectedPanel(null);
+        actionTileController.selectedPosition(null);
+        actionTileController.rotationCount(0);
+
+        scoreAnimationController.start(row, col, ctrl.score, function() {
+          nonActiveControlBoardController.supplyPanel();
+
+          var canJointNonActiveBoardPanels = actionTileController.canJointAnyPosition(nonActiveControlBoardController.panels);
+          var canJointActiveBoardPanels = actionTileController.canJointAnyPosition(ctrl.panels);
+          if (!canJointNonActiveBoardPanels && !canJointActiveBoardPanels) {
+            ctrl.active(false);
+            setTimeout(function() {
+              var message = '';
+              var whitePlayerScore = whiteControlBoardController.calcScore();
+              var blackPlayerScore = blackControlBoardController.calcScore();
+              if (whitePlayerScore === blackPlayerScore) {
+                message += 'Draw';
+              } else {
+                var winnerColor = (whitePlayerScore > blackPlayerScore) ? 'white' : 'black';
+                message += 'The ' + winnerColor + ' player wins!';
+              }
+              message += '\n\n[Score]\nwhite: ' + whitePlayerScore + '\nblack: ' + blackPlayerScore;
+              alert(message);
+
+              // reset
+              tile.reset();
+              tile.randomEdge();
+
+              nonActiveControlBoardController.panels = [
+                panelis.Panel.sample(nonActiveControlBoardController.color()),
+                panelis.Panel.sample(nonActiveControlBoardController.color()),
+                panelis.Panel.sample(nonActiveControlBoardController.color())
+              ];
+              nonActiveControlBoardController.score.reset();
+
+              ctrl.panels = [
+                panelis.Panel.sample(ctrl.color()),
+                panelis.Panel.sample(ctrl.color()),
+                null
+              ];
+              ctrl.score.reset();
+
+              nonActiveControlBoardController.active(true);
+              nonActiveControlBoardController = ctrl;
+              m.redraw(true);
+            }, 500);
+          } else if (canJointNonActiveBoardPanels) {
+            nonActiveControlBoardController.active(true);
+            nonActiveControlBoardController = ctrl;
+          } else if (canJointActiveBoardPanels) {
+            ctrl.supplyPanel();
+            ctrl.active(true);
+          }
+
+          m.redraw(true);
+        });
+      },
+      onback: function(selectedPanel) {
+        actionTileController.selectedPosition(null);
+        actionTileController.backRotation(selectedPanel);
+      },
+      score: new app.Score()
+    });
+
+    var blackControlBoardController = this.blackControlBoardController = new app.ControlBoardController({
+      color: panelis.Panel.COLOR_BLACK,
+      panels: [
+        panelis.Panel.sample(panelis.Panel.COLOR_BLACK),
+        panelis.Panel.sample(panelis.Panel.COLOR_BLACK),
+        null
+      ],
+      selectedPanel: selectedPanel,
+      onok: whiteControlBoardController.onok,
+      onback: whiteControlBoardController.onback,
+      score: new app.Score()
+    });
+
+    whiteControlBoardController.active(true);
+    var nonActiveControlBoardController = blackControlBoardController;
+  };
+
+  app.view = function(ctrl) {
+    return m('svg.stage.unselectable', {
+      viewBox: '-360,-360,720,720',
+      config: function(element, isInitialized) {
+        if (isInitialized)
+          return;
+        stageElement = element;
+      }
+    }, [
+      app.tileView(ctrl.tileController),
+      app.controlBoardView(ctrl.whiteControlBoardController),
+      app.controlBoardView(ctrl.blackControlBoardController),
+      app.scoreAnimationView(ctrl.scoreAnimationController),
+      app.actionTileView(ctrl.actionTileController)
+    ]);
+  };
+
+  m.module(document.getElementById('container'), app);
+  global.app = app;
+})(this);

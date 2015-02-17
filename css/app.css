@@ -203,6 +203,13 @@ body {
   stroke-width: 2px;
 }
 
+.action-tile .stop {
+  -webkit-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+
 /* score-animation-view */
 .score-animation .circle {
   -webkit-animation: fadeout 1s;

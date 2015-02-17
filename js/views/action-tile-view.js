@@ -22,7 +22,7 @@
             ctrl.dispatchEvent({
               type: 'rotationend'
             });
-            panelElement.setAttribute('class', '');
+            panelElement.setAttribute('class', 'stop');
           });
         }
       }, [
@@ -49,6 +49,7 @@
             ctrl.dispatchEvent({
               type: 'rotationend'
             });
+            panelElement.setAttribute('class', 'stop');
           }
           return;
         }

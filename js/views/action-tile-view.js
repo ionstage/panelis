@@ -5,31 +5,46 @@
 
   var panelWidth = 72;
 
+  var addClass = function(el, className) {
+    el.setAttribute('class', el.getAttribute('class') + ' ' + className);
+  };
+
+  var replaceClass = function(el, c0, c1) {
+    var className = el.getAttribute('class').replace(c0, c1);
+    el.setAttribute('class',  className);
+  };
+
   app.actionTileView = function(ctrl) {
     var view = [];
 
     var panelElement = null;
 
     if (ctrl.selectedPanel() && ctrl.selectedPosition()) {
+      var x = (ctrl.selectedPosition().col - 4) * panelWidth + panelWidth / 2;
+      var y = (ctrl.selectedPosition().row - 4) * panelWidth + panelWidth / 2;
+      var transform = 'translate(' + x + ' ' + y +  ')';
+
       view.push(m('g', {
+        transform: transform,
         config: function(element, isInitialized) {
           if (isInitialized)
             return;
-          panelElement = element;
+          panelElement = element.childNodes[0];
+          addClass(panelElement, 'stop');
 
           // rotation end
           panelElement.addEventListener('transitionend', function() {
             ctrl.dispatchEvent({
               type: 'rotationend'
             });
-            panelElement.setAttribute('class', 'stop');
+            replaceClass(panelElement, 'rotate', 'stop');
           });
         }
       }, [
         app.panelView({
           panel: ctrl.selectedPanel(),
-          x: (ctrl.selectedPosition().col - 4) * panelWidth + panelWidth / 2, 
-          y: (ctrl.selectedPosition().row - 4) * panelWidth + panelWidth / 2,
+          x: 0,
+          y: 0,
           width: panelWidth
         })
       ]));
@@ -44,12 +59,12 @@
         // rotate
         if (ctrl.selectedPanel() && ctrl.selectedPosition()) {
           if (app.supportsTransitionEnd) {
-            panelElement.setAttribute('class', 'rotate');
+            replaceClass(panelElement, 'stop', 'rotate');
           } else {
             ctrl.dispatchEvent({
               type: 'rotationend'
             });
-            panelElement.setAttribute('class', 'stop');
+            replaceClass(panelElement, 'rotate', 'stop');
           }
           return;
         }

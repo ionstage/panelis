@@ -195,8 +195,6 @@ body {
   -ms-transition: -ms-transform 0.1s linear;
   -o-transition: -o-transform 0.1s linear;
   transition: transform 0.1s linear;
-
-  -moz-transform: rotate(0deg);
 }
 
 .action-tile .rotate .panel > .base {

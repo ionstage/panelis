@@ -4,7 +4,7 @@
   var panelis = global.panelis;
   var app = global.app || {};
 
-  var panelJointBorderView = function(x, y, width, joint) {
+  var panelJointBorderView = function(width, joint) {
     var attr = {
       width: width / 4,
       height: width / 4
@@ -13,20 +13,20 @@
 
     switch (joint) {
     case Panel.JOINT_TOP:
-      attr.x = x - width / 8;
-      attr.y = y - width / 2;
+      attr.x = -(width / 8);
+      attr.y = -(width / 2);
       break;
     case Panel.JOINT_RIGHT:
-      attr.x = x + width / 2 - width / 4;
-      attr.y = y - width / 8;
+      attr.x = width / 2 - width / 4;
+      attr.y = -(width / 8);
       break;
     case Panel.JOINT_BOTTOM:
-      attr.x = x - width / 8;
-      attr.y = y + width / 4;
+      attr.x = -(width / 8);
+      attr.y = width / 4;
       break;
     case Panel.JOINT_LEFT:
-      attr.x = x - width / 2;
-      attr.y = y - width / 8;
+      attr.x = -(width / 2);
+      attr.y = -(width / 8);
       break;
     default:
       break;
@@ -35,32 +35,32 @@
     return m('rect.joint.border', attr);
   };
 
-  var panelJointBackView = function(x, y, width, joint) {
+  var panelJointBackView = function(width, joint) {
     var attr = {};
     var Panel = panelis.Panel;
 
     switch (joint) {
     case Panel.JOINT_TOP:
-      attr.x = x - width / 8 + 1;
-      attr.y = y - width / 2 + 1;
+      attr.x = -(width / 8) + 1;
+      attr.y = -(width / 2) + 1;
       attr.width = width / 4 - 2;
       attr.height = width / 4;
       break;
     case Panel.JOINT_RIGHT:
-      attr.x = x + width / 2 - width / 4 + 1;
-      attr.y = y - width / 8 + 1;
+      attr.x = width / 2 - width / 4 + 1;
+      attr.y = -(width / 8) + 1;
       attr.width = width / 4 - 2;
       attr.height = width / 4 - 2;
       break;
     case Panel.JOINT_BOTTOM:
-      attr.x = x - width / 8 + 1;
-      attr.y = y + width / 4 + 1;
+      attr.x = -(width / 8) + 1;
+      attr.y = width / 4 + 1;
       attr.width = width / 4 - 2;
       attr.height = width / 4 - 2;
       break;
     case Panel.JOINT_LEFT:
-      attr.x = x - width / 2 + 1;
-      attr.y = y - width / 8 + 1;
+      attr.x = -(width / 2) + 1;
+      attr.y = -(width / 8) + 1;
       attr.width = width / 4;
       attr.height = width / 4 - 2;
       break;
@@ -71,32 +71,32 @@
     return m('rect.joint.back', attr);
   };
 
-  var panelJointHandleBorderView = function(x, y, width, joint) {
+  var panelJointHandleBorderView = function(width, joint) {
     var attr = {};
     var Panel = panelis.Panel;
 
     switch (joint) {
     case Panel.JOINT_TOP:
-      attr.x = x - width / 8 + 3;
-      attr.y = y - width / 2;
+      attr.x = -(width / 8) + 3;
+      attr.y = -(width / 2);
       attr.width = width / 4 - 6;
       attr.height = width / 4 + 1;
       break;
     case Panel.JOINT_RIGHT:
-      attr.x = x + width / 2 - width / 4 - 1;
-      attr.y = y - width / 8 + 3;
+      attr.x = width / 2 - width / 4 - 1;
+      attr.y = -(width / 8) + 3;
       attr.width = width / 4 + 1;
       attr.height = width / 4 - 6;
       break;
     case Panel.JOINT_BOTTOM:
-      attr.x = x - width / 8 + 3;
-      attr.y = y + width / 4 - 1;
+      attr.x = -(width / 8) + 3;
+      attr.y = width / 4 - 1;
       attr.width = width / 4 - 6;
       attr.height = width / 4 + 1;
       break;
     case Panel.JOINT_LEFT:
-      attr.x = x - width / 2;
-      attr.y = y - width / 8 + 3;
+      attr.x = -(width / 2);
+      attr.y = -(width / 8) + 3;
       attr.width = width / 4 + 1;
       attr.height = width / 4 - 6;
       break;
@@ -107,32 +107,32 @@
     return m('rect.joint.handle.border', attr);
   }; 
 
-  var panelJointHandleView = function(x, y, width, joint) {
+  var panelJointHandleView = function(width, joint) {
     var attr = {};
     var Panel = panelis.Panel;
 
     switch (joint) {
     case Panel.JOINT_TOP:
-      attr.x = x - width / 8 + 4;
-      attr.y = y - width / 2 - 0.3;
+      attr.x = -(width / 8) + 4;
+      attr.y = -(width / 2) - 0.3;
       attr.width = width / 4 - 8;
       attr.height = width / 4 + 0.3;
       break;
     case Panel.JOINT_RIGHT:
-      attr.x = x + width / 2 - width / 4;
-      attr.y = y - width / 8 + 4;
+      attr.x = width / 2 - width / 4;
+      attr.y = -(width / 8) + 4;
       attr.width = width / 4 + 0.3;
       attr.height = width / 4 - 8;
       break;
     case Panel.JOINT_BOTTOM:
-      attr.x = x - width / 8 + 4;
-      attr.y = y + width / 4;
+      attr.x = -(width / 8) + 4;
+      attr.y = width / 4;
       attr.width = width / 4 - 8;
       attr.height = width / 4 + 0.3;
       break;
     case Panel.JOINT_LEFT:
-      attr.x = x - width / 2 - 0.3;
-      attr.y = y - width / 8 + 4;
+      attr.x = -(width / 2) - 0.3;
+      attr.y = -(width / 8) + 4;
       attr.width = width / 4;
       attr.height = width / 4 - 8;
       break;
@@ -156,14 +156,19 @@
     }
 
     view.push(m('rect.base', {
-      x: x - width / 2 + 0.5,
-      y: y - width / 2 + 0.5,
+      x: -(width / 2) + 0.5,
+      y: -(width / 2) + 0.5,
       width: width - 1,
       height: width - 1
     }));
 
-    if (!panel)
-      return m('g.panel ' + classes.join('.'), view);
+    var transform = 'translate(' + x + ' ' + y +  ')';
+
+    if (!panel) {
+      return m('g.panel ' + classes.join('.'), {
+        transform: transform
+      }, view);
+    }
 
     var color = panel.color();
     if (color === panelis.Panel.COLOR_GRAY)
@@ -183,12 +188,12 @@
         Panel.JOINT_LEFT
       ].forEach(function(joint) {
         if (panel.hasJoint(joint))
-          view.push(panelJointBorderView(x, y, width, joint));
+          view.push(panelJointBorderView(width, joint));
       });
 
       view.push(m('circle.color.back', {
-        cx: x,
-        cy: y,
+        cx: 0,
+        cy: 0,
         r: width / 3.2 + 3
       }));
 
@@ -199,7 +204,7 @@
         Panel.JOINT_LEFT
       ].forEach(function(joint) {
         if (panel.hasJoint(joint))
-          view.push(panelJointBackView(x, y, width, joint));
+          view.push(panelJointBackView(width, joint));
       });
     }
 
@@ -210,20 +215,22 @@
       Panel.JOINT_LEFT
     ].forEach(function(joint) {
       if (panel.hasJoint(joint)) {
-        view.push(panelJointHandleBorderView(x, y, width, joint));
-        view.push(panelJointHandleView(x, y, width, joint));
+        view.push(panelJointHandleBorderView(width, joint));
+        view.push(panelJointHandleView(width, joint));
       }
     });
 
     if (!isEdge) {
       view.push(m('circle.color.circle', {
-        cx: x,
-        cy: y,
+        cx: 0,
+        cy: 0,
         r: width / 3.2
       }));
     }
 
-    return m('g.panel ' + classes.join('.'), view);
+    return m('g.panel ' + classes.join('.'), {
+      transform: transform
+    },view);
   };
 
   app.panelView = function(ctrl) {

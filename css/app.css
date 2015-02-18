@@ -209,7 +209,7 @@ body {
 }
 
 /* score-animation-view */
-.score-animation .circle {
+.score-animation .circle.animation {
   -webkit-animation: fadeout 1s;
   -o-animation: fadeout 1s;
   animation: fadeout 1s;

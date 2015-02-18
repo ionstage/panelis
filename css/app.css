@@ -197,7 +197,7 @@ body {
   transition: transform 0.1s linear;
 }
 
-.action-tile .rotate .panel > .base {
+.action-tile .panel.rotate > .base {
   stroke-width: 2px;
 }
 

@@ -230,7 +230,7 @@
 
     return m('g.panel ' + classes.join('.'), {
       transform: transform
-    },view);
+    }, view);
   };
 
   app.panelView = function(ctrl) {

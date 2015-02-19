@@ -4,12 +4,20 @@
   var panelis = global.panelis;
   var app = global.app || {};
 
+  var Panel = panelis.Panel;
+
+  var panelJointList = [
+    Panel.JOINT_TOP,
+    Panel.JOINT_RIGHT,
+    Panel.JOINT_BOTTOM,
+    Panel.JOINT_LEFT
+  ];
+
   var panelJointBorderView = function(width, joint) {
     var attr = {
       width: width / 4,
       height: width / 4
     };
-    var Panel = panelis.Panel;
 
     switch (joint) {
     case Panel.JOINT_TOP:
@@ -37,7 +45,6 @@
 
   var panelJointBackView = function(width, joint) {
     var attr = {};
-    var Panel = panelis.Panel;
 
     switch (joint) {
     case Panel.JOINT_TOP:
@@ -73,7 +80,6 @@
 
   var panelJointHandleBorderView = function(width, joint) {
     var attr = {};
-    var Panel = panelis.Panel;
 
     switch (joint) {
     case Panel.JOINT_TOP:
@@ -109,7 +115,6 @@
 
   var panelJointHandleView = function(width, joint) {
     var attr = {};
-    var Panel = panelis.Panel;
 
     switch (joint) {
     case Panel.JOINT_TOP:
@@ -147,7 +152,7 @@
     var view = [];
 
     var classes = [];
-    var isEdge = panel && panel.color() === panelis.Panel.COLOR_BROWN;
+    var isEdge = panel && panel.color() === Panel.COLOR_BROWN;
     var isFixed = !panel || panel.isFixed();
     if (isEdge) {
       classes.push('edge');
@@ -171,22 +176,15 @@
     }
 
     var color = panel.color();
-    if (color === panelis.Panel.COLOR_GRAY)
+    if (color === Panel.COLOR_GRAY)
       classes.push('gray');
-    else if (color === panelis.Panel.COLOR_WHITE)
+    else if (color === Panel.COLOR_WHITE)
       classes.push('white');
-    else if (color === panelis.Panel.COLOR_BLACK)
+    else if (color === Panel.COLOR_BLACK)
       classes.push('black');
 
-    var Panel = panelis.Panel;
-
     if (!isFixed && !isEdge) {
-      [
-        Panel.JOINT_TOP,
-        Panel.JOINT_RIGHT,
-        Panel.JOINT_BOTTOM,
-        Panel.JOINT_LEFT
-      ].forEach(function(joint) {
+      panelJointList.forEach(function(joint) {
         if (panel.hasJoint(joint))
           view.push(panelJointBorderView(width, joint));
       });
@@ -197,23 +195,13 @@
         r: width / 3.2 + 3
       }));
 
-      [
-        Panel.JOINT_TOP,
-        Panel.JOINT_RIGHT,
-        Panel.JOINT_BOTTOM,
-        Panel.JOINT_LEFT
-      ].forEach(function(joint) {
+      panelJointList.forEach(function(joint) {
         if (panel.hasJoint(joint))
           view.push(panelJointBackView(width, joint));
       });
     }
 
-    [
-      Panel.JOINT_TOP,
-      Panel.JOINT_RIGHT,
-      Panel.JOINT_BOTTOM,
-      Panel.JOINT_LEFT
-    ].forEach(function(joint) {
+    panelJointList.forEach(function(joint) {
       if (panel.hasJoint(joint)) {
         view.push(panelJointHandleBorderView(width, joint));
         view.push(panelJointHandleView(width, joint));

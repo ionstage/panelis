@@ -3,9 +3,9 @@
   var app = global.app || {};
   var m = global.m || require('mithril');
 
-  var panelWidth = 72;
-
   var scoreAnimationView = function(ctrl) {
+    var panelWidth = ctrl.panelWidth();
+
     var view = [];
     var scoreColors = ctrl.scoreColors || [];
 

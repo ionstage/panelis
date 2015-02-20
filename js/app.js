@@ -28,19 +28,23 @@
     tile.randomEdge();
 
     var selectedPanel = m.prop(null);
+    var panelWidth = 72;
 
     this.tileController = {
-      panels: tile.panels
+      panels: tile.panels,
+      panelWidth: m.prop(panelWidth)
     };
 
     var actionTileController = this.actionTileController = new app.ActionTileController({
       selectedPanel: selectedPanel,
-      tile: tile
+      tile: tile,
+      panelWidth: panelWidth
     });
 
     var scoreAnimationController = this.scoreAnimationController = new app.ScoreAnimationController({
       scoreColors: [],
-      tile: tile
+      tile: tile,
+      panelWidth: panelWidth
     });
 
     var whiteControlBoardController = this.whiteControlBoardController = new app.ControlBoardController({
@@ -130,7 +134,8 @@
         actionTileController.selectedPosition(null);
         actionTileController.backRotation(selectedPanel);
       },
-      score: new app.Score()
+      score: new app.Score(),
+      panelWidth: panelWidth
     });
 
     var blackControlBoardController = this.blackControlBoardController = new app.ControlBoardController({
@@ -143,7 +148,8 @@
       selectedPanel: selectedPanel,
       onok: whiteControlBoardController.onok,
       onback: whiteControlBoardController.onback,
-      score: new app.Score()
+      score: new app.Score(),
+      panelWidth: panelWidth
     });
 
     whiteControlBoardController.active(true);

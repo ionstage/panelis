@@ -37,6 +37,7 @@
   var ScoreAnimationController = function(option) {
     this.scoreColors = option.scoreColors;
     this.tile = option.tile;
+    this.panelWidth = m.prop(option.panelWidth || 72);
   };
 
   ScoreAnimationController.prototype.start = function(row, col, score, callback) {

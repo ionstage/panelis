@@ -3,8 +3,6 @@
   var app = global.app || {};
   var m = global.m || require('mithril');
 
-  var panelWidth = 72;
-
   var addClass = function(el, className) {
     el.setAttribute('class', el.getAttribute('class') + ' ' + className);
   };
@@ -15,6 +13,8 @@
   };
 
   var actionTileView = function(ctrl) {
+    var panelWidth = ctrl.panelWidth();
+
     var view = [];
 
     var panelElement = null;

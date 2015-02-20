@@ -5,9 +5,9 @@
 
   var Panel = app.Panel;
 
-  var panelWidth = 72;
-
   var controlBoardView = function(ctrl) {
+    var panelWidth = ctrl.panelWidth();
+
     var view = [];
 
     var color = ctrl.color();

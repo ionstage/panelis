@@ -16,6 +16,7 @@
     this.onok = option.onok || noop;
     this.onback = option.onback || noop;
     this.score = option.score || new app.Score();
+    this.panelWidth = m.prop(option.panelWidth || 72);
   };
 
   ControlBoardController.prototype.supplyPanel = function() {

@@ -8,6 +8,7 @@
     this.selectedPosition = m.prop(option.selectedPosition || null);
     this.tile = option.tile || null;
     this.rotationCount = m.prop(0);
+    this.panelWidth = m.prop(option.panelWidth || 72);
   };
 
   ActionTileController.prototype.backRotation = function(_panel) {

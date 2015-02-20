@@ -72,7 +72,7 @@ describe 'panelis', ->
     it '::sample', ->
       p0 = Panel.sample(Panel.COLOR_WHITE)
       assert.equal(p0.color(), Panel.COLOR_WHITE)
-      p1 = Panel.sample(Panel.COLOR_BROWN, Tile.EDGE_TOP)
+      p1 = Panel.sample(Panel.COLOR_BROWN, Panel.JOINT_BOTTOM)
       assertHasJoint(p1, false, false, null, false)
 
 

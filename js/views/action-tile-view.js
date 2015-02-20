@@ -1,7 +1,7 @@
 (function(global) {
   'use strict';
-  var m = global.m;
   var app = global.app || {};
+  var m = global.m || require('mithril');
 
   var panelWidth = 72;
 
@@ -14,7 +14,7 @@
     el.setAttribute('class',  className);
   };
 
-  app.actionTileView = function(ctrl) {
+  var actionTileView = function(ctrl) {
     var view = [];
 
     var panelElement = null;
@@ -93,5 +93,6 @@
     return m('g.action-tile', view);
   };
 
+  app.actionTileView = actionTileView;
   global.app = app;
 }(this));

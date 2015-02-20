@@ -1,7 +1,7 @@
 (function(global) {
   'use strict';
-  var m = global.m;
   var app = global.app || {};
+  var m = global.m || require('mithril');
 
   var Panel = app.Panel;
   var Tile = app.Tile;

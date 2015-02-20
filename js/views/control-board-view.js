@@ -1,13 +1,13 @@
 (function(global) {
   'use strict';
-  var m = global.m;
   var app = global.app || {};
+  var m = global.m || require('mithril');
 
   var Panel = app.Panel;
 
   var panelWidth = 72;
 
-  app.controlBoardView = function(ctrl) {
+  var controlBoardView = function(ctrl) {
     var view = [];
 
     var color = ctrl.color();
@@ -178,5 +178,6 @@
     return m('g.control-board', {className: className}, view);
   };
 
+  app.controlBoardView = controlBoardView;
   global.app = app;
 }(this));

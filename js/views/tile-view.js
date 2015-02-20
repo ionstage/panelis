@@ -1,11 +1,11 @@
 (function(global) {
   'use strict';
-  var m = global.m;
   var app = global.app || {};
+  var m = global.m || require('mithril');
 
   var panelWidth = 72;
 
-  app.tileView = function(ctrl) {
+  var tileView = function(ctrl) {
     return [
       m('g.tile', [
         m('rect.base', {
@@ -28,5 +28,6 @@
     ];
   };
 
+  app.tileView = tileView;
   global.app = app;
 }(this));

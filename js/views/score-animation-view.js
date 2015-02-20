@@ -1,11 +1,11 @@
 (function(global) {
   'use strict';
-  var m = global.m;
   var app = global.app || {};
+  var m = global.m || require('mithril');
 
   var panelWidth = 72;
 
-  app.scoreAnimationView = function(ctrl) {
+  var scoreAnimationView = function(ctrl) {
     var view = [];
     var scoreColors = ctrl.scoreColors || [];
 
@@ -22,5 +22,6 @@
     return m('g.score-animation', view);
   };
 
+  app.scoreAnimationView = scoreAnimationView;
   global.app = app;
 }(this));

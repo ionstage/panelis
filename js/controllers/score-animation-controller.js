@@ -1,18 +1,13 @@
 (function(global) {
   'use strict';
-  var m = global.m;
   var app = global.app || {};
+  var m = global.m || require('mithril');
 
   var Panel = app.Panel;
   var Score = app.Score;
 
   var COLOR_BROWN = Panel.COLOR_BROWN;
   var COLOR_GRAY = Panel.COLOR_GRAY;
-
-  var controller = function(option) {
-    this.scoreColors = option.scoreColors;
-    this.tile = option.tile;
-  };
 
   var fixJointedPanel = function(row0, col0, row1, col1, score) {
     var tile = this.tile;
@@ -39,7 +34,12 @@
     }
   };
 
-  controller.prototype.start = function(row, col, score, callback) {
+  var ScoreAnimationController = function(option) {
+    this.scoreColors = option.scoreColors;
+    this.tile = option.tile;
+  };
+
+  ScoreAnimationController.prototype.start = function(row, col, score, callback) {
     var ctrl = this;
     var tile = ctrl.tile;
     var startPanel = tile.panel(row, col);
@@ -136,7 +136,6 @@
     }, tile.canFix(row, col) ? 500 : 0);
   };
 
-  app.ScoreAnimationController = controller;
-
+  app.ScoreAnimationController = ScoreAnimationController;
   global.app = app;
 }(this));

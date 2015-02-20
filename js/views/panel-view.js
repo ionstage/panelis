@@ -1,7 +1,7 @@
 (function(global) {
   'use strict';
-  var m = global.m;
   var app = global.app || {};
+  var m = global.m || require('mithril');
 
   var Panel = app.Panel;
 
@@ -147,7 +147,12 @@
     return m('rect.joint.handle', attr);
   };
 
-  var panelView = function(panel, x, y, width, onclick) {
+  var panelView = function(ctrl) {
+    var panel = ctrl.panel;
+    var x = ctrl.x;
+    var y = ctrl.y;
+    var width = ctrl.width;
+
     var view = [];
 
     var classes = [];
@@ -220,9 +225,6 @@
     }, view);
   };
 
-  app.panelView = function(ctrl) {
-    return panelView(ctrl.panel, ctrl.x, ctrl.y, ctrl.width);
-  };
-
+  app.panelView = panelView;
   global.app = app;
 }(this));

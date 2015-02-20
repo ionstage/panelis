@@ -1,16 +1,16 @@
 (function(global) {
   'use strict';
-  var m = global.m;
   var app = global.app || {};
+  var m = global.m || require('mithril');
 
-  var controller = function(option) {
+  var ActionTileController = function(option) {
     this.selectedPanel = option.selectedPanel || m.prop(null);
     this.selectedPosition = m.prop(option.selectedPosition || null);
     this.tile = option.tile || null;
     this.rotationCount = m.prop(0);
   };
 
-  controller.prototype.backRotation = function(_panel) {
+  ActionTileController.prototype.backRotation = function(_panel) {
     var panel = this.selectedPanel() || _panel;
     if (!panel)
       return;
@@ -21,7 +21,7 @@
     this.rotationCount(0);
   };
 
-  controller.prototype.canJointAnyPosition = function(panels) {
+  ActionTileController.prototype.canJointAnyPosition = function(panels) {
     for (var pi = 0, plen = panels.length; pi < plen; pi++) {
       var panel = panels[pi];
       if (panel && this.tile.canJointAnyPosition(panel))
@@ -30,7 +30,7 @@
     return false;
   };
 
-  controller.prototype.dispatchEvent = function(event) {
+  ActionTileController.prototype.dispatchEvent = function(event) {
     switch (event.type) {
     case 'select':
       if (this.selectedPanel() && !this.selectedPosition()) {
@@ -58,7 +58,6 @@
     }
   };
 
-  app.ActionTileController = controller;
-
+  app.ActionTileController = ActionTileController;
   global.app = app;
 }(this));

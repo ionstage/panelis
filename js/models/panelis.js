@@ -105,26 +105,27 @@
     new Panel(null, true, true, true, true)
   ];
 
-  Panel.sample = function(color, edge) {
-    var panel = new Panel();
-    panel.color(color);
-    var joint = {};
-    if (edge) {
-      joint.top = (edge === Tile.EDGE_BOTTOM) ? trueOrFalse() : false;
-      joint.right = (edge === Tile.EDGE_LEFT) ? trueOrFalse() : false;
-      joint.bottom = (edge === Tile.EDGE_TOP) ? trueOrFalse() : false;
-      joint.left = (edge === Tile.EDGE_RIGHT) ? trueOrFalse() : false;
+  Panel.sample = function(color, joint) {
+    var top, right, bottom, left;
+    if (joint) {
+      top = (joint === Panel.JOINT_TOP) ? trueOrFalse() : false;
+      right = (joint === Panel.JOINT_RIGHT) ? trueOrFalse() : false;
+      bottom = (joint === Panel.JOINT_BOTTOM) ? trueOrFalse() : false;
+      left = (joint === Panel.JOINT_LEFT) ? trueOrFalse() : false;
     } else {
       var basePanel = basePanelList[Math.floor(Math.random() * 5)];
-      joint.top = basePanel.hasJoint(Panel.JOINT_TOP);
-      joint.right = basePanel.hasJoint(Panel.JOINT_RIGHT);
-      joint.bottom = basePanel.hasJoint(Panel.JOINT_BOTTOM);
-      joint.left = basePanel.hasJoint(Panel.JOINT_LEFT);
+      top = basePanel.hasJoint(Panel.JOINT_TOP);
+      right = basePanel.hasJoint(Panel.JOINT_RIGHT);
+      bottom = basePanel.hasJoint(Panel.JOINT_BOTTOM);
+      left = basePanel.hasJoint(Panel.JOINT_LEFT);
     }
-    panel.hasJoint(Panel.JOINT_TOP, joint.top);
-    panel.hasJoint(Panel.JOINT_RIGHT, joint.right);
-    panel.hasJoint(Panel.JOINT_BOTTOM, joint.bottom);
-    panel.hasJoint(Panel.JOINT_LEFT, joint.left);
+
+    var panel = new Panel();
+    panel.color(color);
+    panel.hasJoint(Panel.JOINT_TOP, top);
+    panel.hasJoint(Panel.JOINT_RIGHT, right);
+    panel.hasJoint(Panel.JOINT_BOTTOM, bottom);
+    panel.hasJoint(Panel.JOINT_LEFT, left);
     return panel;
   };
 
@@ -413,26 +414,21 @@
 
     // top edge
     for (var ci = 1; ci < col - 1; ci++) {
-      panels[0][ci] = Panel.sample(Panel.COLOR_BROWN, Tile.EDGE_TOP);
+      panels[0][ci] = Panel.sample(Panel.COLOR_BROWN, Panel.JOINT_BOTTOM);
     }
     // right edge
     for (var ri = 1; ri < row - 1; ri++) {
-      panels[ri][col - 1] = Panel.sample(Panel.COLOR_BROWN, Tile.EDGE_RIGHT);
+      panels[ri][col - 1] = Panel.sample(Panel.COLOR_BROWN, Panel.JOINT_LEFT);
     }
     // bottom edge
     for (var ci = 1; ci < col - 1; ci++) {
-      panels[row - 1][ci] = Panel.sample(Panel.COLOR_BROWN, Tile.EDGE_BOTTOM);
+      panels[row - 1][ci] = Panel.sample(Panel.COLOR_BROWN, Panel.JOINT_TOP);
     }
     // left edge
     for (var ri = 1; ri < row - 1; ri++) {
-      panels[ri][0] = Panel.sample(Panel.COLOR_BROWN, Tile.EDGE_LEFT);
+      panels[ri][0] = Panel.sample(Panel.COLOR_BROWN, Panel.JOINT_RIGHT);
     }
   };
-
-  Tile.EDGE_TOP = 'top';
-  Tile.EDGE_LEFT = 'left';
-  Tile.EDGE_BOTTOM = 'bottom';
-  Tile.EDGE_RIGHT = 'right';
 
   var panelis = {};
   panelis.Panel = Panel;

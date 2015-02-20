@@ -1,10 +1,9 @@
 (function(global) {
   'use strict';
   var m = global.m;
-  var panelis = global.panelis;
   var app = global.app || {};
 
-  var Panel = panelis.Panel;
+  var Panel = app.Panel;
 
   var panelJointList = [
     Panel.JOINT_TOP,

@@ -1,7 +1,6 @@
 (function(global) {
   'use strict';
   var m = global.m;
-  var panelis = global.panelis;
   var app = global.app || {};
 
   var controller = function(option) {

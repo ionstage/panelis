@@ -1,13 +1,14 @@
 (function(global) {
   'use strict';
   var m = global.m;
-  var panelis = global.panelis;
   var app = global.app || {};
+
+  var Panel = app.Panel;
 
   var noop = function() {};
 
   var controller = function(option) {
-    this.color = m.prop(option.color || panelis.Panel.COLOR_WHITE);
+    this.color = m.prop(option.color || Panel.COLOR_WHITE);
     this.active = m.prop(option.active || false);
     this.panels = option.panels || [null, null, null];
     this.selectedIndex = m.prop(-1);
@@ -22,7 +23,7 @@
     for (var pi = 0; pi < 3; pi++) {
       var panel = panels[pi];
       if (!panel)
-        panels[pi] = panelis.Panel.sample(this.color());
+        panels[pi] = Panel.sample(this.color());
     }
   };
 

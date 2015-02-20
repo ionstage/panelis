@@ -1,8 +1,9 @@
 (function(global) {
   'use strict';
   var m = global.m;
-  var panelis = global.panelis;
   var app = global.app || {};
+
+  var Panel = app.Panel;
 
   var panelWidth = 72;
 
@@ -13,11 +14,11 @@
     var className = '';
     var dx = 0;
     var dy = 0;
-    if (color === panelis.Panel.COLOR_WHITE) {
+    if (color === Panel.COLOR_WHITE) {
       dx = -384;
       dy = 0;
       className = 'white';
-    } else if (color === panelis.Panel.COLOR_BLACK) {
+    } else if (color === Panel.COLOR_BLACK) {
       dx = 384;
       dy = 0;
       className = 'black';

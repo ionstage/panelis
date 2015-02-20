@@ -1,12 +1,13 @@
 (function(global) {
   'use strict';
   var m = global.m;
-  var panelis = global.panelis;
   var app = global.app || {};
+
+  var Panel = app.Panel;
   var Score = app.Score;
 
-  var COLOR_BROWN = panelis.Panel.COLOR_BROWN;
-  var COLOR_GRAY = panelis.Panel.COLOR_GRAY;
+  var COLOR_BROWN = Panel.COLOR_BROWN;
+  var COLOR_GRAY = Panel.COLOR_GRAY;
 
   var controller = function(option) {
     this.scoreColors = option.scoreColors;

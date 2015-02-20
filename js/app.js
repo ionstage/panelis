@@ -1,8 +1,11 @@
 (function(global) {
   'use strict';
   var m = global.m;
-  var panelis = global.panelis;
   var app = global.app || {};
+
+  var Panel = app.Panel;
+  var Tile = app.Tile;
+
   var stageElement = null;
 
   app.supportsTouch = 'createTouch' in global.document;
@@ -21,7 +24,7 @@
   };
 
   app.controller = function() {
-    var tile = new panelis.Tile(8, 8);
+    var tile = new Tile(8, 8);
     tile.randomEdge();
 
     var selectedPanel = m.prop(null);
@@ -41,11 +44,11 @@
     });
 
     var whiteControlBoardController = this.whiteControlBoardController = new app.ControlBoardController({
-      color: panelis.Panel.COLOR_WHITE,
+      color: Panel.COLOR_WHITE,
       panels: [
-        panelis.Panel.sample(panelis.Panel.COLOR_WHITE),
-        panelis.Panel.sample(panelis.Panel.COLOR_WHITE),
-        panelis.Panel.sample(panelis.Panel.COLOR_WHITE)
+        Panel.sample(Panel.COLOR_WHITE),
+        Panel.sample(Panel.COLOR_WHITE),
+        Panel.sample(Panel.COLOR_WHITE)
       ],
       selectedPanel: selectedPanel,
       onok: function() {
@@ -95,15 +98,15 @@
               tile.randomEdge();
 
               nonActiveControlBoardController.panels = [
-                panelis.Panel.sample(nonActiveControlBoardController.color()),
-                panelis.Panel.sample(nonActiveControlBoardController.color()),
-                panelis.Panel.sample(nonActiveControlBoardController.color())
+                Panel.sample(nonActiveControlBoardController.color()),
+                Panel.sample(nonActiveControlBoardController.color()),
+                Panel.sample(nonActiveControlBoardController.color())
               ];
               nonActiveControlBoardController.score.reset();
 
               ctrl.panels = [
-                panelis.Panel.sample(ctrl.color()),
-                panelis.Panel.sample(ctrl.color()),
+                Panel.sample(ctrl.color()),
+                Panel.sample(ctrl.color()),
                 null
               ];
               ctrl.score.reset();
@@ -131,10 +134,10 @@
     });
 
     var blackControlBoardController = this.blackControlBoardController = new app.ControlBoardController({
-      color: panelis.Panel.COLOR_BLACK,
+      color: Panel.COLOR_BLACK,
       panels: [
-        panelis.Panel.sample(panelis.Panel.COLOR_BLACK),
-        panelis.Panel.sample(panelis.Panel.COLOR_BLACK),
+        Panel.sample(Panel.COLOR_BLACK),
+        Panel.sample(Panel.COLOR_BLACK),
         null
       ],
       selectedPanel: selectedPanel,

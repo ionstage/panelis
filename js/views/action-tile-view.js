@@ -58,7 +58,7 @@
       startHandler: function(event) {
         // rotate
         if (ctrl.selectedPanel() && ctrl.selectedPosition()) {
-          if (app.supportsTransitionEnd) {
+          if (app.view.supportsTransitionEnd) {
             replaceClass(panelElement, 'stop', 'rotate');
           } else {
             ctrl.dispatchEvent({
@@ -70,7 +70,7 @@
         }
 
         // select
-        var loc = app.globalToLocal({
+        var loc = app.view.globalToLocal({
           x: event.clientX || event.touches[0].clientX,
           y: event.clientY || event.touches[0].clientY
         });
@@ -85,7 +85,7 @@
       config: function(element, isInitialized) {
         if (isInitialized)
           return;
-        var eventName = app.supportsTouch ? 'touchstart' : 'mousedown';
+        var eventName = app.view.supportsTouch ? 'touchstart' : 'mousedown';
         element.addEventListener(eventName, this.attrs.startHandler);
       }
     }));

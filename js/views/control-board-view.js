@@ -105,7 +105,7 @@
           config: function(element, isInitialized) {
             if (isInitialized)
               return;
-            var eventName = app.supportsTouch ? 'touchstart' : 'mousedown';
+            var eventName = app.view.supportsTouch ? 'touchstart' : 'mousedown';
             element.addEventListener(eventName, this.attrs.selectHandler);
           }
         };

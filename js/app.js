@@ -6,23 +6,6 @@
   var Panel = app.Panel;
   var Tile = app.Tile;
 
-  var stageElement = null;
-
-  app.supportsTouch = 'createTouch' in global.document;
-  app.supportsTransitionEnd = (function() {
-    var div = document.createElement('div');
-    return typeof div.style['transition'] !== 'undefined';
-  }());
-
-  app.globalToLocal = function(gpt) {
-    if (!stageElement)
-      return null;
-    var lpt = stageElement.createSVGPoint();
-    lpt.x = gpt.x;
-    lpt.y = gpt.y;
-    return lpt.matrixTransform(stageElement.getScreenCTM().inverse());
-  };
-
   app.controller = function() {
     var tile = new Tile(8, 8);
     tile.randomEdge();
@@ -162,7 +145,7 @@
       config: function(element, isInitialized) {
         if (isInitialized)
           return;
-        stageElement = element;
+        app.view.stageElement = element;
       }
     }, [
       app.tileView(ctrl.tileController),
@@ -171,6 +154,23 @@
       app.scoreAnimationView(ctrl.scoreAnimationController),
       app.actionTileView(ctrl.actionTileController)
     ]);
+  };
+
+  app.view.supportsTouch = 'createTouch' in global.document;
+
+  app.view.supportsTransitionEnd = (function() {
+    var div = document.createElement('div');
+    return typeof div.style['transition'] !== 'undefined';
+  }());
+
+  app.view.globalToLocal = function(gpt) {
+    var stageElement = app.view.stageElement;
+    if (!stageElement)
+      return null;
+    var lpt = stageElement.createSVGPoint();
+    lpt.x = gpt.x;
+    lpt.y = gpt.y;
+    return lpt.matrixTransform(stageElement.getScreenCTM().inverse());
   };
 
   m.module(document.getElementById('container'), app);

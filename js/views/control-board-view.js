@@ -12,39 +12,36 @@
 
     var color = ctrl.color();
     var className = '';
-    var dx = 0;
-    var dy = 0;
+    var transform = '';
     if (color === Panel.COLOR_WHITE) {
-      dx = -384;
-      dy = 0;
       className = 'white';
+      transform = 'translate(-384 0)';
     } else if (color === Panel.COLOR_BLACK) {
-      dx = 384;
-      dy = 0;
       className = 'black';
+      transform = 'translate(384 0)';
     }
 
     var active = ctrl.active();
     if (active) {
       view.push(m('rect.active', {
-        x: -84 + dx,
-        y: -312 + dy,
+        x: -84,
+        y: -312,
         width: 168,
         height: 24
       }));
     }
 
     view.push(m('rect.base', {
-      x: -84 + dx,
-      y: -288 + dy,
+      x: -84,
+      y: -288,
       width: 168,
       height: 576
     }));
 
     view.push(m('g.button', [
       m('rect.base', {
-        x: -60 + dx,
-        y: -264 + dy,
+        x: -60,
+        y: -264,
         width: 120,
         height: 42,
         onclick: function() {
@@ -52,15 +49,15 @@
         }
       }),
       m('text.text.ok', {
-        x: dx,
-        y: -235 + dy
+        x: 0,
+        y: -235
       }, 'O K')
     ]));
 
     view.push(m('g.button', [
       m('rect.base', {
-        x: -60 + dx,
-        y: -198 + dy,
+        x: -60,
+        y: -198,
         width: 120,
         height: 42,
         onclick: function() {
@@ -68,8 +65,8 @@
         }
       }),
       m('text.text.back', {
-        x: dx,
-        y: -171 + dy
+        x: 0,
+        y: -171
       }, 'Back')
     ]));
 
@@ -85,13 +82,13 @@
           [
             app.panelView({
               panel: panel,
-              x: -36 + dx + panelWidth / 2, 
+              x: -36 + panelWidth / 2, 
               y: -120 + 84 * pi + panelWidth / 2,
               width: panelWidth
             })
           ]);
         var hitAreaAttr = {
-          x: -36 + dx, 
+          x: -36, 
           y: -120 + 84 * pi,
           width: panelWidth,
           height: panelWidth,
@@ -118,8 +115,8 @@
 
     view.push(m('g.slot', [
       m('rect.base', {
-        x: -48 + dx,
-        y: -132 + dy,
+        x: -48,
+        y: -132,
         width: 96,
         height: 264
       }),
@@ -130,52 +127,55 @@
     view.push(m('g.score',[
       m('g.red', [
         m('circle.circle', {
-          cx: -36 + dx,
-          cy: 180 + dy,
+          cx: -36,
+          cy: 180,
           r: 12
         }),
         m('text.text', {
-          x: -10 + dx,
-          y: 190 - 3 + dy
+          x: -10,
+          y: 190 - 3
         }, '×'),
         m('text.text', {
-          x: 16 + dx,
-          y: 190 - 3 + dy
+          x: 16,
+          y: 190 - 3
         }, ctrl.score.red())
       ]),
       m('g.yellow', [
         m('circle.circle', {
-          cx: -36 + dx,
-          cy: 214 + dy,
+          cx: -36,
+          cy: 214,
           r: 12
         }),
         m('text.text', {
-          x: -10 + dx,
-          y: 224 - 3 + dy
+          x: -10,
+          y: 224 - 3
         }, '×'),
         m('text.text', {
-          x: 16 + dx,
-          y: 224 - 3 + dy
+          x: 16,
+          y: 224 - 3
         }, ctrl.score.yellow())
       ]),
       m('g.green', [
         m('circle.circle', {
-          cx: -36 + dx,
-          cy: 248 + dy,
+          cx: -36,
+          cy: 248,
           r: 12
         }),
         m('text.text', {
-          x: -10 + dx,
-          y: 258 - 3 + dy
+          x: -10,
+          y: 258 - 3
         }, '×'),
         m('text.text', {
-          x: 16 + dx,
-          y: 258 - 3 + dy
+          x: 16,
+          y: 258 - 3
         }, ctrl.score.green())
       ])
     ]));
 
-    return m('g.control-board', {className: className}, view);
+    return m('g.control-board', {
+      className: className,
+      transform: transform
+    }, view);
   };
 
   app.controlBoardView = controlBoardView;

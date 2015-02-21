@@ -23,7 +23,7 @@ body {
 }
 
 /* tile-view */
-.tile > .base {
+.tile > .back {
   fill: #333;
   stroke: #333;
   stroke-width: 2;
@@ -88,16 +88,16 @@ body {
   stroke-width: 2;
 }
 
-.control-board .base {
+.control-board > .back {
   stroke: #333;
   stroke-width: 2;
 }
 
-.control-board.white > .base {
+.control-board.white > .back {
   fill: white;
 }
 
-.control-board.black > .base {
+.control-board.black > .back {
   fill: #333;
 }
 
@@ -105,11 +105,11 @@ body {
   cursor: pointer;
 }
 
-.control-board .button:active .base {
+.control-board .button:active .rect.back {
   fill: orange;
 }
 
-.control-board .button .base {
+.control-board .button .rect.back {
   fill: white;
   stroke: #333;
   stroke-width: 2;
@@ -130,7 +130,7 @@ body {
   font-size: 24px;
 }
 
-.control-board .slot > .base {
+.control-board .slot > .back {
   fill: khaki;
   stroke: #333;
   stroke-width: 2;
@@ -142,6 +142,11 @@ body {
 
 .control-board .slot .hitarea {
   fill: transparent;
+}
+
+.control-board .slot .panel > .base {
+  stroke: #333;
+  stroke-width: 2;
 }
 
 .control-board .score .circle {

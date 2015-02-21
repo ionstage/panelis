@@ -8,7 +8,7 @@
 
     return [
       m('g.tile', [
-        m('rect.base', {
+        m('rect.back', {
           x: -(panelWidth * 4),
           y: -(panelWidth * 4),
           width: panelWidth * 8,

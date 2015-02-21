@@ -31,7 +31,7 @@
       }));
     }
 
-    view.push(m('rect.base', {
+    view.push(m('rect.back', {
       x: -84,
       y: -288,
       width: 168,
@@ -39,7 +39,7 @@
     }));
 
     view.push(m('g.button', [
-      m('rect.base', {
+      m('rect.rect.back', {
         x: -60,
         y: -264,
         width: 120,
@@ -55,7 +55,7 @@
     ]));
 
     view.push(m('g.button', [
-      m('rect.base', {
+      m('rect.rect.back', {
         x: -60,
         y: -198,
         width: 120,
@@ -114,7 +114,7 @@
     }
 
     view.push(m('g.slot', [
-      m('rect.base', {
+      m('rect.back', {
         x: -48,
         y: -132,
         width: 96,

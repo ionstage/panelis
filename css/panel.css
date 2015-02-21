@@ -1,0 +1,50 @@
+.panel > .base {
+  fill: khaki;
+  stroke: #333;
+  stroke-width: 1;
+}
+
+.panel.edge > .base {
+  fill: saddlebrown;
+}
+
+.panel.unfixed > .base {
+  fill: lightgray;
+}
+
+.panel.fixed > .base {
+  fill: khaki;
+}
+
+.panel .joint.back {
+  fill: khaki;
+}
+
+.panel .joint.handle {
+  fill: white;
+}
+
+.panel .joint.back.border, .panel .joint.handle.border {
+  fill: #333;
+}
+
+.panel .color {
+  stroke: #333;
+  stroke-width: 1;
+}
+
+.panel .color.back {
+  fill: khaki;
+}
+
+.panel.gray .color.circle {
+  fill: lightgray;
+}
+
+.panel.white .color.circle {
+  fill: white;
+}
+
+.panel.black .color.circle {
+  fill: #333;
+}

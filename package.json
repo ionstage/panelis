@@ -3,6 +3,7 @@
   "version": "",
   "scripts": {
     "browser-sync": "browser-sync start --files='index.html, css/*.css, js/*.js' --server",
+    "cleancss": "cat css/*.css | cleancss -o build/app.min.css",
     "test": "mocha --compilers coffee:coffee-script/register",
     "test-browser-sync": "browser-sync start --files='test/test.html, css/*.css, js/*.js, test/*.js' --server --startPath='test/test.html'",
     "test-watch": "mocha -w --compilers coffee:coffee-script/register",
@@ -10,6 +11,7 @@
   },
   "devDependencies": {
     "browser-sync": "*",
+    "clean-css": "*",
     "coffee-script": "*",
     "mocha": "*",
     "uglify-js": "*"

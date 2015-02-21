@@ -1,0 +1,96 @@
+.control-board .active {
+  fill: orange;
+  stroke: #333;
+  stroke-width: 2;
+}
+
+.control-board > .back {
+  stroke: #333;
+  stroke-width: 2;
+}
+
+.control-board.white > .back {
+  fill: white;
+}
+
+.control-board.black > .back {
+  fill: #333;
+}
+
+.control-board .button:hover {
+  cursor: pointer;
+}
+
+.control-board .button:active .rect.back {
+  fill: orange;
+}
+
+.control-board .button .rect.back {
+  fill: white;
+  stroke: #333;
+  stroke-width: 2;
+}
+
+.control-board .button .text {
+  fill: #333;
+  font-family: Courier;
+  pointer-events: none;
+  text-anchor: middle;
+}
+
+.control-board .button .text.ok {
+  font-size: 30px;
+}
+
+.control-board .button .text.back {
+  font-size: 24px;
+}
+
+.control-board .slot > .back {
+  fill: khaki;
+  stroke: #333;
+  stroke-width: 2;
+}
+
+.control-board .slot .selected {
+  display: none;
+}
+
+.control-board .slot .hitarea {
+  fill: transparent;
+}
+
+.control-board .slot .panel > .base {
+  stroke: #333;
+  stroke-width: 2;
+}
+
+.control-board .score .circle {
+  stroke: #333;
+  stroke-width: 2;
+}
+
+.control-board .score .text {
+  font-family: Courier;
+  font-size: 24px;
+}
+
+.control-board.white .score .text {
+  fill: #333;
+}
+
+.control-board.black .score .text {
+  fill: white;
+}
+
+.control-board .score .red .circle {
+  fill: red;
+}
+
+.control-board .score .yellow .circle {
+  fill: yellow;
+}
+
+.control-board .score .green .circle {
+  fill: lime;
+}

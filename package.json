@@ -5,12 +5,14 @@
     "browser-sync": "browser-sync start --files='index.html, css/*.css, js/*.js' --server",
     "test": "mocha --compilers coffee:coffee-script/register",
     "test-browser-sync": "browser-sync start --files='test/test.html, css/*.css, js/*.js, test/*.js' --server --startPath='test/test.html'",
-    "test-watch": "mocha -w --compilers coffee:coffee-script/register"
+    "test-watch": "mocha -w --compilers coffee:coffee-script/register",
+    "uglify": "uglifyjs js/models/panel.js js/models/tile.js js/models/score.js js/views/*.js js/controllers/*.js js/app.js -o build/app.min.js -c -m"
   },
   "devDependencies": {
     "browser-sync": "*",
     "coffee-script": "*",
-    "mocha": "*"
+    "mocha": "*",
+    "uglify-js": "*"
   },
   "dependencies": {
     "mithril": "^0.1.30"

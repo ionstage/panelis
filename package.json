@@ -3,6 +3,7 @@
   "version": "",
   "scripts": {
     "browser-sync": "browser-sync start --files='index.html, css/*.css, js/*.js' --server",
+    "build": "npm run cleancss;npm run uglify",
     "cleancss": "cat css/*.css | cleancss -o build/app.min.css",
     "test": "mocha --compilers coffee:coffee-script/register",
     "test-browser-sync": "browser-sync start --files='test/test.html, css/*.css, js/*.js, test/*.js' --server --startPath='test/test.html'",

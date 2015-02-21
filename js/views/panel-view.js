@@ -12,7 +12,7 @@
     Panel.JOINT_LEFT
   ];
 
-  var panelJointBorderView = function(width, joint) {
+  var panelJointBackBorderView = function(width, joint) {
     var attr = {
       width: width / 4,
       height: width / 4
@@ -39,7 +39,7 @@
       break;
     }
 
-    return m('rect.joint.border', attr);
+    return m('rect.joint.back.border', attr);
   };
 
   var panelJointBackView = function(width, joint) {
@@ -190,7 +190,7 @@
     if (!isFixed && !isEdge) {
       panelJointList.forEach(function(joint) {
         if (panel.hasJoint(joint))
-          view.push(panelJointBorderView(width, joint));
+          view.push(panelJointBackBorderView(width, joint));
       });
 
       view.push(m('circle.color.back', {

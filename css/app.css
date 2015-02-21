@@ -48,15 +48,15 @@ body {
   fill: khaki;
 }
 
-.panel .joint.handle {
-  fill: white;
-}
-
 .panel .joint.back {
   fill: khaki;
 }
 
-.panel .joint.border {
+.panel .joint.handle {
+  fill: white;
+}
+
+.panel .joint.back.border, .panel .joint.handle.border {
   fill: #333;
 }
 

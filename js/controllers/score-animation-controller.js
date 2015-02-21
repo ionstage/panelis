@@ -38,6 +38,8 @@
     this.scoreColors = option.scoreColors;
     this.tile = option.tile;
     this.panelWidth = m.prop(option.panelWidth || 72);
+    this.rowLength = m.prop(option.rowLength || 8);
+    this.colLength = m.prop(option.colLength || 8);
   };
 
   ScoreAnimationController.prototype.start = function(row, col, score, callback) {

@@ -32,9 +32,11 @@
     return result;
   };
 
-  var Tile = function(row, col) {
+  var Tile = function(rowLength, colLength) {
     this.panels = [[]];
-    this.reset(row, col);
+    this.rowLength = m.prop(rowLength || 8);
+    this.colLength = m.prop(colLength || 8);
+    this.reset();
   };
 
   Tile.prototype.panel = function(row, col, panel) {
@@ -276,20 +278,14 @@
     return chainList;
   };
 
-  Tile.prototype.reset = function(row, col) {
+  Tile.prototype.reset = function() {
     var panels = this.panels;
-    var row = row || 0;
-    var col = col || 0;
+    var rowLength = this.rowLength();
+    var colLength = this.colLength();
 
-    if (!row && panels)
-      row = panels.length;
-
-    if (!col && panels[0])
-      col = panels[0].length;
-
-    for (var ri = 0; ri < row; ri++) {
+    for (var ri = 0; ri < rowLength; ri++) {
       panels[ri] = [];
-      for (var ci = 0; ci < col; ci++) {
+      for (var ci = 0; ci < colLength; ci++) {
         panels[ri][ci] = null;
       }
     }
@@ -297,28 +293,28 @@
 
   Tile.prototype.randomEdge = function() {
     var panels = this.panels;
-    var row = panels.length;
-    var col = panels[0].length;
+    var rowLength = this.rowLength();
+    var colLength = this.colLength();
 
     panels[0][0] = new Panel();
-    panels[0][col - 1] = new Panel();
-    panels[row - 1][0] = new Panel();
-    panels[row - 1][col - 1] = new Panel();
+    panels[0][colLength - 1] = new Panel();
+    panels[rowLength - 1][0] = new Panel();
+    panels[rowLength - 1][colLength - 1] = new Panel();
 
     // top edge
-    for (var ci = 1; ci < col - 1; ci++) {
+    for (var ci = 1; ci < colLength - 1; ci++) {
       panels[0][ci] = Panel.sample(Panel.COLOR_BROWN, Panel.JOINT_BOTTOM);
     }
     // right edge
-    for (var ri = 1; ri < row - 1; ri++) {
-      panels[ri][col - 1] = Panel.sample(Panel.COLOR_BROWN, Panel.JOINT_LEFT);
+    for (var ri = 1; ri < rowLength - 1; ri++) {
+      panels[ri][colLength - 1] = Panel.sample(Panel.COLOR_BROWN, Panel.JOINT_LEFT);
     }
     // bottom edge
-    for (var ci = 1; ci < col - 1; ci++) {
-      panels[row - 1][ci] = Panel.sample(Panel.COLOR_BROWN, Panel.JOINT_TOP);
+    for (var ci = 1; ci < colLength - 1; ci++) {
+      panels[rowLength - 1][ci] = Panel.sample(Panel.COLOR_BROWN, Panel.JOINT_TOP);
     }
     // left edge
-    for (var ri = 1; ri < row - 1; ri++) {
+    for (var ri = 1; ri < rowLength - 1; ri++) {
       panels[ri][0] = Panel.sample(Panel.COLOR_BROWN, Panel.JOINT_RIGHT);
     }
   };

@@ -14,14 +14,16 @@
 
   var actionTileView = function(ctrl) {
     var panelWidth = ctrl.panelWidth();
+    var rowLength = ctrl.rowLength();
+    var colLength = ctrl.colLength();
 
     var view = [];
 
     var panelElement = null;
 
     if (ctrl.selectedPanel() && ctrl.selectedPosition()) {
-      var x = (ctrl.selectedPosition().col - 4) * panelWidth + panelWidth / 2;
-      var y = (ctrl.selectedPosition().row - 4) * panelWidth + panelWidth / 2;
+      var x = (ctrl.selectedPosition().col - colLength / 2) * panelWidth + panelWidth / 2;
+      var y = (ctrl.selectedPosition().row - rowLength / 2) * panelWidth + panelWidth / 2;
       var transform = 'translate(' + x + ' ' + y +  ')';
 
       view.push(m('g', {
@@ -51,10 +53,10 @@
     }
 
     view.push(m('rect.hitarea', {
-      x: -(panelWidth * 4),
-      y: -(panelWidth * 4),
-      width: panelWidth * 8,
-      height: panelWidth * 8,
+      x: -(panelWidth * colLength / 2),
+      y: -(panelWidth * rowLength / 2),
+      width: panelWidth * colLength,
+      height: panelWidth * rowLength,
       startHandler: function(event) {
         // rotate
         if (ctrl.selectedPanel() && ctrl.selectedPosition()) {
@@ -74,8 +76,8 @@
           x: event.clientX || event.touches[0].clientX,
           y: event.clientY || event.touches[0].clientY
         });
-        var row = parseInt((loc.y + panelWidth * 4) / panelWidth, 10);
-        var col = parseInt((loc.x + panelWidth * 4) / panelWidth, 10);
+        var row = parseInt((loc.y + panelWidth * rowLength / 2) / panelWidth, 10);
+        var col = parseInt((loc.x + panelWidth * colLength / 2) / panelWidth, 10);
         ctrl.dispatchEvent({
           type: 'select',
           row: row,

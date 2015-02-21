@@ -5,21 +5,23 @@
 
   var tileView = function(ctrl) {
     var panelWidth = ctrl.panelWidth();
+    var rowLength = ctrl.rowLength();
+    var colLength = ctrl.colLength();
 
     return [
       m('g.tile', [
         m('rect.back', {
-          x: -(panelWidth * 4),
-          y: -(panelWidth * 4),
-          width: panelWidth * 8,
-          height: panelWidth * 8
+          x: -(panelWidth * colLength / 2),
+          y: -(panelWidth * rowLength / 2),
+          width: panelWidth * colLength,
+          height: panelWidth * rowLength
         }),
         m('g', ctrl.panels.map(function(cols, ri) {
           return cols.map(function(panel, ci) {
             return app.panelView({
               panel: panel,
-              x: -(panelWidth * 4) + ci * panelWidth + panelWidth / 2, 
-              y: -(panelWidth * 4) + ri * panelWidth + panelWidth / 2,
+              x: -(panelWidth * colLength / 2) + ci * panelWidth + panelWidth / 2, 
+              y: -(panelWidth * rowLength / 2) + ri * panelWidth + panelWidth / 2,
               width: panelWidth
             });
           });

@@ -7,7 +7,9 @@
   var Tile = app.Tile;
 
   app.controller = function() {
-    var tile = new Tile(8, 8);
+    var rowLength = 8;
+    var colLength = 8;
+    var tile = new Tile(rowLength, colLength);
     tile.randomEdge();
 
     var selectedPanel = m.prop(null);
@@ -15,19 +17,25 @@
 
     this.tileController = {
       panels: tile.panels,
-      panelWidth: m.prop(panelWidth)
+      panelWidth: m.prop(panelWidth),
+      rowLength: m.prop(rowLength),
+      colLength: m.prop(colLength)
     };
 
     var actionTileController = this.actionTileController = new app.ActionTileController({
       selectedPanel: selectedPanel,
       tile: tile,
-      panelWidth: panelWidth
+      panelWidth: panelWidth,
+      rowLength: rowLength,
+      colLength: colLength
     });
 
     var scoreAnimationController = this.scoreAnimationController = new app.ScoreAnimationController({
       scoreColors: [],
       tile: tile,
-      panelWidth: panelWidth
+      panelWidth: panelWidth,
+      rowLength: rowLength,
+      colLength: colLength
     });
 
     var whiteControlBoardController = this.whiteControlBoardController = new app.ControlBoardController({

@@ -5,6 +5,8 @@
 
   var scoreAnimationView = function(ctrl) {
     var panelWidth = ctrl.panelWidth();
+    var rowLength = ctrl.rowLength();
+    var colLength = ctrl.colLength();
 
     var view = [];
     var scoreColors = ctrl.scoreColors || [];
@@ -13,8 +15,8 @@
       var scoreColor = scoreColors[ci];
       view.push(m('circle.circle', {
         className: scoreColor.color + (app.view.supportsTransitionEnd ? ' animation' : ''),
-        cx: (scoreColor.col - 4) * panelWidth + panelWidth / 2,
-        cy: (scoreColor.row - 4) * panelWidth + panelWidth / 2,
+        cx: (scoreColor.col - colLength / 2) * panelWidth + panelWidth / 2,
+        cy: (scoreColor.row - rowLength / 2) * panelWidth + panelWidth / 2,
         r: panelWidth / 3.2
       }));
     };

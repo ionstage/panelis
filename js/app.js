@@ -48,18 +48,28 @@
       selectedPanel: selectedPanel,
       onok: function() {
         var ctrl = this;
-        var position = actionTileController.selectedPosition();
-        if (!position)
-          return;
 
-        var row = position.row;
-        var col = position.col;
         var panel = selectedPanel();
-        var canJoint = tile.canJoint(row, col, panel);
-        if (!canJoint)
+
+        if (!panel)
           return;
 
-        tile.panel(row, col, panel);
+        var canJointPanels = actionTileController.canJointAnyPosition(ctrl.panels);
+        var position = actionTileController.selectedPosition();
+
+        if (canJointPanels && !position)
+          return;
+
+        if (canJointPanels && position) {
+          var row = position.row;
+          var col = position.col;
+          var canJoint = tile.canJoint(row, col, panel);
+
+          if (!canJoint)
+            return;
+
+          tile.panel(row, col, panel);
+        }
 
         ctrl.active(false);
         ctrl.panels[ctrl.selectedIndex()] = null;
@@ -68,9 +78,15 @@
         actionTileController.selectedPosition(null);
         actionTileController.rotationCount(0);
 
+        if (!canJointPanels && panel) {
+          nonActiveControlBoardController.supplyPanel();
+          nonActiveControlBoardController.active(true);
+          nonActiveControlBoardController = ctrl;
+          return;
+        }
+
         scoreAnimationController.start(row, col, ctrl.score, function() {
           nonActiveControlBoardController.supplyPanel();
-
           var canJointNonActiveBoardPanels = actionTileController.canJointAnyPosition(nonActiveControlBoardController.panels);
           var canJointActiveBoardPanels = actionTileController.canJointAnyPosition(ctrl.panels);
           if (!canJointNonActiveBoardPanels && !canJointActiveBoardPanels) {
@@ -110,12 +126,9 @@
               nonActiveControlBoardController = ctrl;
               m.redraw(true);
             }, 500);
-          } else if (canJointNonActiveBoardPanels) {
+          } else {
             nonActiveControlBoardController.active(true);
             nonActiveControlBoardController = ctrl;
-          } else if (canJointActiveBoardPanels) {
-            ctrl.supplyPanel();
-            ctrl.active(true);
           }
 
           m.redraw(true);

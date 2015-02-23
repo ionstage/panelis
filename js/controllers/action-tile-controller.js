@@ -7,21 +7,9 @@
     this.selectedPanel = option.selectedPanel || m.prop(null);
     this.selectedPosition = m.prop(option.selectedPosition || null);
     this.tile = option.tile || null;
-    this.rotationCount = m.prop(0);
     this.panelWidth = m.prop(option.panelWidth || 72);
     this.rowLength = m.prop(option.rowLength || 8);
     this.colLength = m.prop(option.colLength || 8);
-  };
-
-  ActionTileController.prototype.backRotation = function(_panel) {
-    var panel = this.selectedPanel() || _panel;
-    if (!panel)
-      return;
-    var count = 4 - this.rotationCount();
-    for (var i = 0; i < count; i++) {
-      panel.rotate();
-    }
-    this.rotationCount(0);
   };
 
   ActionTileController.prototype.canJointAnyPosition = function(panels) {
@@ -45,14 +33,12 @@
           row: row,
           col: col
         });
-        this.rotationCount(0);
         m.redraw(true);
       }
       break;
     case 'rotationend':
       if (this.selectedPanel()) {
         this.selectedPanel().rotate();
-        this.rotationCount((this.rotationCount() + 1) % 4);
         m.redraw(true);
       }
       break;

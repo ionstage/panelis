@@ -76,7 +76,6 @@
         ctrl.selectedIndex(-1);
         selectedPanel(null);
         actionTileController.selectedPosition(null);
-        actionTileController.rotationCount(0);
 
         if (!canJointPanels && panel) {
           nonActiveControlBoardController.supplyPanel();
@@ -136,7 +135,7 @@
       },
       onback: function(selectedPanel) {
         actionTileController.selectedPosition(null);
-        actionTileController.backRotation(selectedPanel);
+        selectedPanel.resetRotation();
       },
       score: new app.Score(),
       panelWidth: panelWidth

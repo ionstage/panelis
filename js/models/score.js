@@ -13,12 +13,6 @@
     this[color](this[color]() + value);
   };
 
-  Score.prototype.sum = function(score) {
-    this.add(Score.COLOR_RED, score.red());
-    this.add(Score.COLOR_YELLOW, score.yellow());
-    this.add(Score.COLOR_GREEN, score.green());
-  };
-
   Score.prototype.reset = function() {
     this.red(0);
     this.yellow(0);

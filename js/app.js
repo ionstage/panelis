@@ -54,7 +54,7 @@
         if (!panel)
           return;
 
-        var canJointPanels = actionTileController.canJointAnyPosition(ctrl.panels);
+        var canJointPanels = tile.canJointAnyPosition(ctrl.panels);
         var position = actionTileController.selectedPosition();
 
         if (canJointPanels && !position)
@@ -86,8 +86,8 @@
 
         scoreAnimationController.start(row, col, ctrl.score, function() {
           nonActiveControlBoardController.supplyPanel();
-          var canJointNonActiveBoardPanels = actionTileController.canJointAnyPosition(nonActiveControlBoardController.panels);
-          var canJointActiveBoardPanels = actionTileController.canJointAnyPosition(ctrl.panels);
+          var canJointNonActiveBoardPanels = tile.canJointAnyPosition(nonActiveControlBoardController.panels);
+          var canJointActiveBoardPanels = tile.canJointAnyPosition(ctrl.panels);
           if (!canJointNonActiveBoardPanels && !canJointActiveBoardPanels) {
             ctrl.active(false);
             setTimeout(function() {

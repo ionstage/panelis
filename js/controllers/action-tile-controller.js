@@ -12,15 +12,6 @@
     this.colLength = m.prop(option.colLength || 8);
   };
 
-  ActionTileController.prototype.canJointAnyPosition = function(panels) {
-    for (var pi = 0, plen = panels.length; pi < plen; pi++) {
-      var panel = panels[pi];
-      if (panel && this.tile.canJointAnyPosition(panel))
-        return true;
-    }
-    return false;
-  };
-
   ActionTileController.prototype.dispatchEvent = function(event) {
     switch (event.type) {
     case 'select':

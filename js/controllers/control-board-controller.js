@@ -28,11 +28,6 @@
     }
   };
 
-  ControlBoardController.prototype.calcScore = function() {
-    var score = this.score;
-    return score.red() * 100 + score.yellow() * 50 + score.green() * 300;
-  };
-
   ControlBoardController.prototype.dispatchEvent = function(event) {
     if (!this.active())
       return;

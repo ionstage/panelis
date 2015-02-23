@@ -92,8 +92,8 @@
             ctrl.active(false);
             setTimeout(function() {
               var message = '';
-              var whitePlayerScore = whiteControlBoardController.calcScore();
-              var blackPlayerScore = blackControlBoardController.calcScore();
+              var whitePlayerScore = whiteControlBoardController.score.total();
+              var blackPlayerScore = blackControlBoardController.score.total();
               if (whitePlayerScore === blackPlayerScore) {
                 message += 'Draw';
               } else {

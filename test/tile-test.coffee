@@ -77,6 +77,8 @@ describe 'Tile', ->
     assert.equal(tile.canJointAnyPosition(p2), false)
     p3 = new Panel(Panel.COLOR_WHITE, true, true, false, false)
     assert.equal(tile.canJointAnyPosition(p3), true)
+    assert.equal(tile.canJointAnyPosition([p0, p1]), true)
+    assert.equal(tile.canJointAnyPosition([p0, p2]), false)
 
   it '#isJointed', ->
     tile = new Tile(8, 8)

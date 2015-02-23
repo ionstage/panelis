@@ -137,15 +137,23 @@
     if (row === 0 || col === 0)
       return false;
 
-    var panel = _panel.clone();
-    for (var ri = 0; ri < row; ri++) {
-      for (var ci = 0; ci < col; ci++) {
-        if (panels[ri][ci])
-          continue;
-        for (var i = 0; i < 4; i++) {
-          if (this.canJoint(ri, ci, panel))
-            return true;
-          panel.rotate();
+    if (Array.isArray(_panel)) {
+      for (var pi = 0, plen = _panel.length; pi < plen; pi++) {
+        var panel = _panel[pi];
+        if (panel && this.canJointAnyPosition(panel))
+          return true;
+      }
+    } else {
+      var panel = _panel.clone();
+      for (var ri = 0; ri < row; ri++) {
+        for (var ci = 0; ci < col; ci++) {
+          if (panels[ri][ci])
+            continue;
+          for (var i = 0; i < 4; i++) {
+            if (this.canJoint(ri, ci, panel))
+              return true;
+            panel.rotate();
+          }
         }
       }
     }

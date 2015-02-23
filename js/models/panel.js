@@ -59,6 +59,24 @@
     this.hasJoint(Panel.JOINT_RIGHT, tmp);
   };
 
+  Panel.prototype.resetRotation = function() {
+    for (var i = 0; i < 4; i++) {
+      var top = this.hasJoint(Panel.JOINT_TOP);
+      var right = this.hasJoint(Panel.JOINT_RIGHT);
+      var bottom = this.hasJoint(Panel.JOINT_BOTTOM);
+      var left = this.hasJoint(Panel.JOINT_LEFT);
+      for (var li = 0, llen = basePanelList.length; li < llen; li++) {
+        var basePanel = basePanelList[li];
+        if (basePanel.hasJoint(Panel.JOINT_TOP) === top &&
+            basePanel.hasJoint(Panel.JOINT_RIGHT) === right &&
+            basePanel.hasJoint(Panel.JOINT_BOTTOM) === bottom &&
+            basePanel.hasJoint(Panel.JOINT_LEFT) === left)
+          return;
+      }
+      this.rotate();
+    }
+  };
+
   Panel.prototype.clone = function() {
     var clone = new Panel(
       this.color(),

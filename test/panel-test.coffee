@@ -50,6 +50,14 @@ describe 'Panel', ->
     panel.rotate()
     assertHasJoint(panel, false, true, false, true)
 
+  it '#resetRotation', ->
+    panel = new Panel()
+    panel.setJoint(true, false, false, false)
+    panel.rotate()
+    panel.rotate()
+    panel.resetRotation()
+    assertHasJoint(panel, true, false, false, false)
+
   it '#clone', ->
     orig = new Panel(Panel.COLOR_WHITE, true, false, true, false)
     clone = orig.clone()

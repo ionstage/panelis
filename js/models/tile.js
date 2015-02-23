@@ -125,16 +125,10 @@
 
   Tile.prototype.canJointAnyPosition = function(_panel) {
     var panels = this.panels;
-    var row = 0;
-    var col = 0;
+    var rowLength = this.rowLength();
+    var colLength = this.colLength();
 
-    if (panels)
-      row = panels.length;
-
-    if (panels[0])
-      col = panels[0].length;
-
-    if (row === 0 || col === 0)
+    if (rowLength === 0 || colLength === 0)
       return false;
 
     if (Array.isArray(_panel)) {
@@ -145,8 +139,8 @@
       }
     } else {
       var panel = _panel.clone();
-      for (var ri = 0; ri < row; ri++) {
-        for (var ci = 0; ci < col; ci++) {
+      for (var ri = 0; ri < rowLength; ri++) {
+        for (var ci = 0; ci < colLength; ci++) {
           if (panels[ri][ci])
             continue;
           for (var i = 0; i < 4; i++) {

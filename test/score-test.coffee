@@ -22,3 +22,7 @@ describe 'Score', ->
     assert.equal(score.red(), 0)
     assert.equal(score.yellow(), 0)
     assert.equal(score.green(), 0)
+
+  it '#total', ->
+    score = new Score(1, 2, 3)
+    assert.equal(score.total(), 1100)

@@ -19,6 +19,10 @@
     this.green(0);
   };
 
+  Score.prototype.total = function() {
+    return this.red() * 100 + this.yellow() * 50 + this.green() * 300;
+  };
+
   Score.COLOR_RED = 'red';
   Score.COLOR_YELLOW = 'yellow';
   Score.COLOR_GREEN = 'green';

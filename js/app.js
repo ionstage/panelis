@@ -193,7 +193,7 @@
     return lpt.matrixTransform(stageElement.getScreenCTM().inverse());
   };
 
-  app.view.panelModule = function(option) {
+  app.view.panel = function(option) {
     return app.panelView(new app.PanelController({
       panel: option.panel,
       x: option.x,

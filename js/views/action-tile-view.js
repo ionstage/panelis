@@ -45,7 +45,7 @@
           });
         }
       }, [
-        app.view.panelModule({
+        app.view.panel({
           panel: selectedPanel,
           x: 0,
           y: 0,

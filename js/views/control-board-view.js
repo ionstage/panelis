@@ -85,7 +85,7 @@
         panelViews[pi] = m('g',
           {className: isSelected ? 'selected' : ''},
           [
-            app.view.panelModule({
+            app.view.panel({
               panel: panel,
               x: -36 + dx + panelWidth / 2,
               y: -120 + 84 * pi + panelWidth / 2,

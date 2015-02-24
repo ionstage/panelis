@@ -204,7 +204,6 @@
       rightPanel.mixColor(color);
       isReleased = true;
     }
-      
 
     var bottomPanel = this.panel(row + 1, col);
     if (bottomPanel && !bottomPanel.isFixed() &&
@@ -214,7 +213,6 @@
       bottomPanel.mixColor(color);
       isReleased = true;
     }
-      
 
     var leftPanel = this.panel(row, col - 1);
     if (leftPanel && !leftPanel.isFixed() &&

@@ -4,12 +4,12 @@
   var m = global.m || require('mithril');
 
   var scoreAnimationView = function(ctrl) {
+    var scoreColors = ctrl.scoreColors();
     var panelWidth = ctrl.panelWidth();
     var rowLength = ctrl.rowLength();
     var colLength = ctrl.colLength();
 
     var view = [];
-    var scoreColors = ctrl.scoreColors || [];
 
     for (var ci = 0, clen = scoreColors.length; ci < clen; ci++) {
       var scoreColor = scoreColors[ci];

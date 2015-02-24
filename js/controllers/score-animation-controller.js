@@ -10,8 +10,8 @@
   var COLOR_GRAY = Panel.COLOR_GRAY;
 
   var fixJointedPanel = function(row0, col0, row1, col1, score) {
-    var tile = this.tile;
-    var scoreColors = this.scoreColors;
+    var tile = this.tile();
+    var scoreColors = this.scoreColors();
     var jointedPanel = tile.panel(row1, col1);
 
     if (!jointedPanel || !tile.isJointed(row0, col0, row1, col1))
@@ -35,8 +35,8 @@
   };
 
   var ScoreAnimationController = function(option) {
-    this.scoreColors = option.scoreColors;
-    this.tile = option.tile;
+    this.scoreColors = m.prop(option.scoreColors || null);
+    this.tile = m.prop(option.tile || null);
     this.panelWidth = m.prop(option.panelWidth || 72);
     this.rowLength = m.prop(option.rowLength || 8);
     this.colLength = m.prop(option.colLength || 8);
@@ -44,7 +44,7 @@
 
   ScoreAnimationController.prototype.start = function(row, col, score, callback) {
     var ctrl = this;
-    var tile = ctrl.tile;
+    var tile = ctrl.tile();
     var startPanel = tile.panel(row, col);
 
     if (!startPanel) {
@@ -53,17 +53,17 @@
     }
 
     m.redraw.strategy('none');
-    ctrl.scoreColors = [];
+    ctrl.scoreColors([]);
 
     var animations = [
       function() {
         var canFix = tile.canFix(row, col);
         if (canFix){
           tile.fix(row, col);
-          ctrl.scoreColors.push({row: row, col: col, color: Score.COLOR_GREEN});
+          ctrl.scoreColors().push({row: row, col: col, color: Score.COLOR_GREEN});
           score.add(Score.COLOR_GREEN, 1);
           m.redraw(true);
-          ctrl.scoreColors = [];
+          ctrl.scoreColors([]);
         }
         return canFix;
       },
@@ -71,7 +71,7 @@
         return tile.releaseColor(row, col);
       },
       function() {
-        ctrl.scoreColors = [];
+        ctrl.scoreColors([]);
 
         // top
         fixJointedPanel.call(ctrl, row, col, row - 1, col, score);
@@ -82,9 +82,9 @@
         // left
         fixJointedPanel.call(ctrl, row, col, row, col - 1, score);
 
-        var isFixed = ctrl.scoreColors.length > 0;
+        var isFixed = ctrl.scoreColors().length > 0;
         m.redraw(true);
-        ctrl.scoreColors = [];
+        ctrl.scoreColors([]);
         return isFixed;
       },
       function() {
@@ -97,14 +97,14 @@
           var chains = chainList[li];
           var chainAnimation = (function(chains) {
             return function() {
-              ctrl.scoreColors = [];
+              ctrl.scoreColors([]);
               for (var ci = 0, clen = chains.length; ci < clen; ci++) {
                 var chain = chains[ci];
-                ctrl.scoreColors.push({row: chain.row, col: chain.col, color: Score.COLOR_YELLOW});
+                ctrl.scoreColors().push({row: chain.row, col: chain.col, color: Score.COLOR_YELLOW});
                 score.add(Score.COLOR_YELLOW, 1);
               }
               m.redraw(true);
-              ctrl.scoreColors = [];
+              ctrl.scoreColors([]);
               return true;
             };
           }(chains));

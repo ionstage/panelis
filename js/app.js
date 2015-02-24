@@ -194,12 +194,12 @@
   };
 
   app.view.panel = function(option) {
-    return app.panelView(new app.PanelController({
-      panel: option.panel,
-      x: option.x,
-      y: option.y,
-      width: option.width
-    }));
+    return app.panelView({
+      panel: m.prop(option.panel || null),
+      x: m.prop(option.x || 0),
+      y: m.prop(option.y || 0),
+      width: m.prop(option.width || 72)
+    });
   };
 
   m.module(document.getElementById('container'), app);

@@ -43,7 +43,7 @@
           });
         }
       }, [
-        app.panelView({
+        app.view.panelModule({
           panel: ctrl.selectedPanel(),
           x: 0,
           y: 0,

@@ -193,6 +193,15 @@
     return lpt.matrixTransform(stageElement.getScreenCTM().inverse());
   };
 
+  app.view.panelModule = function(option) {
+    return app.panelView(new app.PanelController({
+      panel: option.panel,
+      x: option.x,
+      y: option.y,
+      width: option.width
+    }));
+  };
+
   m.module(document.getElementById('container'), app);
   global.app = app;
 })(this);

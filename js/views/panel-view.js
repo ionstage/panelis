@@ -148,10 +148,10 @@
   };
 
   var panelView = function(ctrl) {
-    var panel = ctrl.panel;
-    var x = ctrl.x;
-    var y = ctrl.y;
-    var width = ctrl.width;
+    var panel = ctrl.panel();
+    var x = ctrl.x();
+    var y = ctrl.y();
+    var width = ctrl.width();
 
     var view = [];
 

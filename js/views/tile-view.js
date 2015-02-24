@@ -18,7 +18,7 @@
         }),
         m('g', ctrl.panels.map(function(cols, ri) {
           return cols.map(function(panel, ci) {
-            return app.panelView({
+            return app.view.panelModule({
               panel: panel,
               x: -(panelWidth * colLength / 2) + ci * panelWidth + panelWidth / 2, 
               y: -(panelWidth * rowLength / 2) + ri * panelWidth + panelWidth / 2,

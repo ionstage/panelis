@@ -4,6 +4,7 @@
   var m = global.m || require('mithril');
 
   var tileView = function(ctrl) {
+    var panels = ctrl.panels();
     var panelWidth = ctrl.panelWidth();
     var rowLength = ctrl.rowLength();
     var colLength = ctrl.colLength();
@@ -16,7 +17,7 @@
           width: panelWidth * colLength,
           height: panelWidth * rowLength
         }),
-        m('g', ctrl.panels.map(function(cols, ri) {
+        m('g', panels.map(function(cols, ri) {
           return cols.map(function(panel, ci) {
             return app.view.panelModule({
               panel: panel,

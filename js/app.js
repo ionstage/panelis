@@ -15,12 +15,12 @@
     var selectedPanel = m.prop(null);
     var panelWidth = 72;
 
-    this.tileController = {
+    this.tileController = new app.TileController({
       panels: tile.panels,
-      panelWidth: m.prop(panelWidth),
-      rowLength: m.prop(rowLength),
-      colLength: m.prop(colLength)
-    };
+      panelWidth: panelWidth,
+      rowLength: rowLength,
+      colLength: colLength
+    });
 
     var actionTileController = this.actionTileController = new app.ActionTileController({
       tile: tile,

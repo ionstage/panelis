@@ -10,17 +10,17 @@
   var ControlBoardController = function(option) {
     this.color = m.prop(option.color || Panel.COLOR_WHITE);
     this.active = m.prop(option.active || false);
-    this.panels = option.panels || [null, null, null];
+    this.panels = m.prop(option.panels || null);
     this.selectedIndex = m.prop(-1);
     this.selectedPanel = option.selectedPanel || m.prop(null);
-    this.score = option.score || new app.Score();
+    this.score = m.prop(option.score || null);
     this.panelWidth = m.prop(option.panelWidth || 72);
     this.onok = option.onok || noop;
     this.onback = option.onback || noop;
   };
 
   ControlBoardController.prototype.supplyPanel = function() {
-    var panels = this.panels;
+    var panels = this.panels();
     for (var pi = 0; pi < 3; pi++) {
       var panel = panels[pi];
       if (!panel)
@@ -46,7 +46,7 @@
       var index = event.index;
       if (this.selectedIndex() === -1) {
         this.selectedIndex(index);
-        this.selectedPanel(this.panels[index]);
+        this.selectedPanel(this.panels()[index]);
       }
       break;
     default:

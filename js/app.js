@@ -56,7 +56,7 @@
         if (!panel)
           return;
 
-        var canJointPanels = tile.canJointAnyPosition(ctrl.panels);
+        var canJointPanels = tile.canJointAnyPosition(ctrl.panels());
         var position = actionTileController.selectedPosition();
 
         if (canJointPanels && !position)
@@ -74,7 +74,7 @@
         }
 
         ctrl.active(false);
-        ctrl.panels[ctrl.selectedIndex()] = null;
+        ctrl.panels()[ctrl.selectedIndex()] = null;
         ctrl.selectedIndex(-1);
         selectedPanel(null);
         actionTileController.selectedPosition(null);
@@ -86,16 +86,16 @@
           return;
         }
 
-        scoreAnimationController.start(row, col, ctrl.score, function() {
+        scoreAnimationController.start(row, col, ctrl.score(), function() {
           nonActiveControlBoardController.supplyPanel();
-          var canJointNonActiveBoardPanels = tile.canJointAnyPosition(nonActiveControlBoardController.panels);
-          var canJointActiveBoardPanels = tile.canJointAnyPosition(ctrl.panels);
+          var canJointNonActiveBoardPanels = tile.canJointAnyPosition(nonActiveControlBoardController.panels());
+          var canJointActiveBoardPanels = tile.canJointAnyPosition(ctrl.panels());
           if (!canJointNonActiveBoardPanels && !canJointActiveBoardPanels) {
             ctrl.active(false);
             setTimeout(function() {
               var message = '';
-              var whitePlayerScore = whiteControlBoardController.score.total();
-              var blackPlayerScore = blackControlBoardController.score.total();
+              var whitePlayerScore = whiteControlBoardController.score().total();
+              var blackPlayerScore = blackControlBoardController.score().total();
               if (whitePlayerScore === blackPlayerScore) {
                 message += 'Draw';
               } else {
@@ -109,19 +109,19 @@
               tile.reset();
               tile.randomEdge();
 
-              nonActiveControlBoardController.panels = [
+              nonActiveControlBoardController.panels([
                 Panel.sample(nonActiveControlBoardController.color()),
                 Panel.sample(nonActiveControlBoardController.color()),
                 Panel.sample(nonActiveControlBoardController.color())
-              ];
-              nonActiveControlBoardController.score.reset();
+              ]);
+              nonActiveControlBoardController.score().reset();
 
-              ctrl.panels = [
+              ctrl.panels([
                 Panel.sample(ctrl.color()),
                 Panel.sample(ctrl.color()),
                 null
-              ];
-              ctrl.score.reset();
+              ]);
+              ctrl.score().reset();
 
               nonActiveControlBoardController.active(true);
               nonActiveControlBoardController = ctrl;

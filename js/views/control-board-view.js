@@ -8,9 +8,9 @@
   var controlBoardView = function(ctrl) {
     var color = ctrl.color();
     var active = ctrl.active();
-    var panels = ctrl.panels;
+    var panels = ctrl.panels();
     var selectedIndex = ctrl.selectedIndex();
-    var score = ctrl.score;
+    var score = ctrl.score();
     var panelWidth = ctrl.panelWidth();
 
     var view = [];
@@ -27,7 +27,7 @@
       dy = 0;
       className = 'black';
     }
-    
+
     if (active) {
       view.push(m('rect.active', {
         x: -84 + dx,

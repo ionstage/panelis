@@ -20,7 +20,7 @@
           return cols.map(function(panel, ci) {
             return app.view.panelModule({
               panel: panel,
-              x: -(panelWidth * colLength / 2) + ci * panelWidth + panelWidth / 2, 
+              x: -(panelWidth * colLength / 2) + ci * panelWidth + panelWidth / 2,
               y: -(panelWidth * rowLength / 2) + ri * panelWidth + panelWidth / 2,
               width: panelWidth
             });

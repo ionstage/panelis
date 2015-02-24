@@ -13,10 +13,10 @@
     this.panels = option.panels || [null, null, null];
     this.selectedIndex = m.prop(-1);
     this.selectedPanel = option.selectedPanel || m.prop(null);
-    this.onok = option.onok || noop;
-    this.onback = option.onback || noop;
     this.score = option.score || new app.Score();
     this.panelWidth = m.prop(option.panelWidth || 72);
+    this.onok = option.onok || noop;
+    this.onback = option.onback || noop;
   };
 
   ControlBoardController.prototype.supplyPanel = function() {

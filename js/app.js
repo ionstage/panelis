@@ -46,6 +46,8 @@
         Panel.sample(Panel.COLOR_WHITE)
       ],
       selectedPanel: selectedPanel,
+      score: new app.Score(),
+      panelWidth: panelWidth,
       onok: function() {
         var ctrl = this;
 
@@ -136,9 +138,7 @@
       onback: function(selectedPanel) {
         actionTileController.selectedPosition(null);
         selectedPanel.resetRotation();
-      },
-      score: new app.Score(),
-      panelWidth: panelWidth
+      }
     });
 
     var blackControlBoardController = this.blackControlBoardController = new app.ControlBoardController({
@@ -149,10 +149,10 @@
         null
       ],
       selectedPanel: selectedPanel,
-      onok: whiteControlBoardController.onok,
-      onback: whiteControlBoardController.onback,
       score: new app.Score(),
-      panelWidth: panelWidth
+      panelWidth: panelWidth,
+      onok: whiteControlBoardController.onok,
+      onback: whiteControlBoardController.onback
     });
 
     whiteControlBoardController.active(true);

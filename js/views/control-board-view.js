@@ -6,11 +6,15 @@
   var Panel = app.Panel;
 
   var controlBoardView = function(ctrl) {
+    var color = ctrl.color();
+    var active = ctrl.active();
+    var panels = ctrl.panels;
+    var selectedIndex = ctrl.selectedIndex();
+    var score = ctrl.score;
     var panelWidth = ctrl.panelWidth();
 
     var view = [];
 
-    var color = ctrl.color();
     var className = '';
     var dx = 0;
     var dy = 0;
@@ -23,8 +27,7 @@
       dy = 0;
       className = 'black';
     }
-
-    var active = ctrl.active();
+    
     if (active) {
       view.push(m('rect.active', {
         x: -84 + dx,
@@ -73,12 +76,11 @@
       }, 'Back')
     ]));
 
-    var panels = ctrl.panels;
     var panelViews = [null, null, null];
     var panelHitAreaViews = [null, null, null];
     for (var pi = 0; pi < 3; pi++) {
       var panel = panels[pi];
-      var isSelected = ctrl.selectedIndex() === pi;
+      var isSelected = selectedIndex === pi;
       if (panel) {
         panelViews[pi] = m('g',
           {className: isSelected ? 'selected' : ''},
@@ -141,7 +143,7 @@
         m('text.text', {
           x: 16 + dx,
           y: 190 - 3 + dy
-        }, ctrl.score.red())
+        }, score.red())
       ]),
       m('g.yellow', [
         m('circle.circle', {
@@ -156,7 +158,7 @@
         m('text.text', {
           x: 16 + dx,
           y: 224 - 3 + dy
-        }, ctrl.score.yellow())
+        }, score.yellow())
       ]),
       m('g.green', [
         m('circle.circle', {
@@ -171,7 +173,7 @@
         m('text.text', {
           x: 16 + dx,
           y: 258 - 3 + dy
-        }, ctrl.score.green())
+        }, score.green())
       ])
     ]));
 

@@ -13,6 +13,8 @@
   };
 
   var actionTileView = function(ctrl) {
+    var selectedPanel = ctrl.selectedPanel();
+    var selectedPosition = ctrl.selectedPosition();
     var panelWidth = ctrl.panelWidth();
     var rowLength = ctrl.rowLength();
     var colLength = ctrl.colLength();
@@ -21,9 +23,9 @@
 
     var panelElement = null;
 
-    if (ctrl.selectedPanel() && ctrl.selectedPosition()) {
-      var x = (ctrl.selectedPosition().col - colLength / 2) * panelWidth + panelWidth / 2;
-      var y = (ctrl.selectedPosition().row - rowLength / 2) * panelWidth + panelWidth / 2;
+    if (selectedPanel && selectedPosition) {
+      var x = (selectedPosition.col - colLength / 2) * panelWidth + panelWidth / 2;
+      var y = (selectedPosition.row - rowLength / 2) * panelWidth + panelWidth / 2;
       var transform = 'translate(' + x + ' ' + y +  ')';
 
       view.push(m('g', {
@@ -44,7 +46,7 @@
         }
       }, [
         app.view.panelModule({
-          panel: ctrl.selectedPanel(),
+          panel: selectedPanel,
           x: 0,
           y: 0,
           width: panelWidth
@@ -59,7 +61,7 @@
       height: panelWidth * rowLength,
       startHandler: function(event) {
         // rotate
-        if (ctrl.selectedPanel() && ctrl.selectedPosition()) {
+        if (selectedPanel && selectedPosition) {
           if (app.view.supportsTransitionEnd) {
             replaceClass(panelElement, 'stop', 'rotate');
           } else {

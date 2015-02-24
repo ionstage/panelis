@@ -23,8 +23,8 @@
     };
 
     var actionTileController = this.actionTileController = new app.ActionTileController({
-      selectedPanel: selectedPanel,
       tile: tile,
+      selectedPanel: selectedPanel,
       panelWidth: panelWidth,
       rowLength: rowLength,
       colLength: colLength

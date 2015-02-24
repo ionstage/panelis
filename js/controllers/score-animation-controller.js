@@ -35,8 +35,8 @@
   };
 
   var ScoreAnimationController = function(option) {
-    this.scoreColors = m.prop(option.scoreColors || null);
     this.tile = m.prop(option.tile || null);
+    this.scoreColors = m.prop(option.scoreColors || null);
     this.panelWidth = m.prop(option.panelWidth || 72);
     this.rowLength = m.prop(option.rowLength || 8);
     this.colLength = m.prop(option.colLength || 8);

@@ -31,8 +31,8 @@
     });
 
     var scoreAnimationController = this.scoreAnimationController = new app.ScoreAnimationController({
-      scoreColors: [],
       tile: tile,
+      scoreColors: [],
       panelWidth: panelWidth,
       rowLength: rowLength,
       colLength: colLength

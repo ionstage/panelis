@@ -93,17 +93,10 @@
           if (!canJointNonActiveBoardPanels && !canJointActiveBoardPanels) {
             ctrl.active(false);
             setTimeout(function() {
-              var message = '';
-              var whitePlayerScore = whiteControlBoardController.score().total();
-              var blackPlayerScore = blackControlBoardController.score().total();
-              if (whitePlayerScore === blackPlayerScore) {
-                message += 'Draw';
-              } else {
-                var winnerColor = (whitePlayerScore > blackPlayerScore) ? 'white' : 'black';
-                message += 'The ' + winnerColor + ' player wins!';
-              }
-              message += '\n\n[Score]\nwhite: ' + whitePlayerScore + '\nblack: ' + blackPlayerScore;
-              alert(message);
+              // show result
+              var whitePlayerScore = whiteControlBoardController.score();
+              var blackPlayerScore = blackControlBoardController.score();
+              app.view.showResult(whitePlayerScore, blackPlayerScore);
 
               // reset
               tile.reset();
@@ -200,6 +193,20 @@
       y: m.prop(option.y || 0),
       width: m.prop(option.width || 72)
     });
+  };
+
+  app.view.showResult = function(whitePlayerScore, blackPlayerScore) {
+    var message = '';
+    var whitePlayerScoreTotal = whitePlayerScore.total();
+    var blackPlayerScoreTotal = blackPlayerScore.total();
+    if (whitePlayerScoreTotal === blackPlayerScoreTotal) {
+      message += 'Draw';
+    } else {
+      var winnerColor = (whitePlayerScoreTotal > blackPlayerScoreTotal) ? 'white' : 'black';
+      message += 'The ' + winnerColor + ' player wins!';
+    }
+    message += '\n\n[Score]\nwhite: ' + whitePlayerScoreTotal + '\nblack: ' + blackPlayerScoreTotal;
+    alert(message);
   };
 
   m.module(document.getElementById('container'), app);

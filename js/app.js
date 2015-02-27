@@ -32,7 +32,6 @@
 
     var scoreAnimationController = this.scoreAnimationController = new app.ScoreAnimationController({
       tile: tile,
-      scoreColors: [],
       panelWidth: panelWidth,
       rowLength: rowLength,
       colLength: colLength
@@ -86,7 +85,9 @@
           return;
         }
 
-        scoreAnimationController.start(row, col, ctrl.score(), function() {
+        scoreAnimationController.score = ctrl.score;
+
+        scoreAnimationController.start(row, col, function() {
           nonActiveControlBoardController.supplyPanel();
           var canJointNonActiveBoardPanels = tile.canJointAnyPosition(nonActiveControlBoardController.panels());
           var canJointActiveBoardPanels = tile.canJointAnyPosition(ctrl.panels());

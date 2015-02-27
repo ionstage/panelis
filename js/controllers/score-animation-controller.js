@@ -7,6 +7,8 @@
   var Tile = app.Tile;
   var Score = app.Score;
 
+  var noop = function() {};
+
   var ScoreAnimationController = function(option) {
     this.tile = m.prop(option.tile || new Tile());
     this.panelWidth = m.prop(option.panelWidth || 72);
@@ -14,6 +16,7 @@
     this.colLength = m.prop(option.colLength || 8);
     this.scoreColors = m.prop(option.scoreColors || []);
     this.score = m.prop(option.score || new Score());
+    this.onanimationend = option.onanimationend || noop;
   };
 
   ScoreAnimationController.prototype.pushScoreColor = function(scoreColor) {
@@ -40,7 +43,7 @@
       (function animate(index) {
         var animation = animations[index];
         if (!animation) {
-          callback();
+          ctrl.onanimationend();
           return;
         }
 

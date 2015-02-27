@@ -87,7 +87,7 @@
 
         scoreAnimationController.score = ctrl.score;
 
-        scoreAnimationController.start(row, col, function() {
+        scoreAnimationController.onanimationend = function() {
           nonActiveControlBoardController.supplyPanel();
           var canJointNonActiveBoardPanels = tile.canJointAnyPosition(nonActiveControlBoardController.panels());
           var canJointActiveBoardPanels = tile.canJointAnyPosition(ctrl.panels());
@@ -127,7 +127,9 @@
           }
 
           m.redraw(true);
-        });
+        };
+
+        scoreAnimationController.start(row, col);
       },
       onback: function(selectedPanel) {
         actionTileController.selectedPosition(null);

@@ -4,10 +4,11 @@
   var m = global.m || require('mithril');
 
   var tileView = function(ctrl) {
-    var panels = ctrl.panels();
+    var tile = ctrl.tile();
     var panelWidth = ctrl.panelWidth();
     var rowLength = ctrl.rowLength();
     var colLength = ctrl.colLength();
+    var scoreColors = ctrl.scoreColors();
 
     return [
       m('g.tile', [
@@ -17,7 +18,7 @@
           width: panelWidth * colLength,
           height: panelWidth * rowLength
         }),
-        m('g', panels.map(function(cols, ri) {
+        m('g', tile.panels.map(function(cols, ri) {
           return cols.map(function(panel, ci) {
             return app.view.panel({
               panel: panel,
@@ -27,7 +28,15 @@
             });
           });
         }))
-      ])
+      ]),
+      m('g.score-animation', scoreColors.map(function(scoreColor) {
+        return m('circle.circle', {
+          className: scoreColor.color + (app.view.supportsTransitionEnd ? ' animation' : ''),
+          cx: (scoreColor.col - colLength / 2) * panelWidth + panelWidth / 2,
+          cy: (scoreColor.row - rowLength / 2) * panelWidth + panelWidth / 2,
+          r: panelWidth / 3.2
+        });
+      }))
     ];
   };
 

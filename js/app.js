@@ -15,8 +15,8 @@
     var selectedPanel = m.prop(null);
     var panelWidth = 72;
 
-    this.tileController = new app.TileController({
-      panels: tile.panels,
+    var tileController = this.tileController = new app.TileController({
+      tile: tile,
       panelWidth: panelWidth,
       rowLength: rowLength,
       colLength: colLength
@@ -25,13 +25,6 @@
     var actionTileController = this.actionTileController = new app.ActionTileController({
       tile: tile,
       selectedPanel: selectedPanel,
-      panelWidth: panelWidth,
-      rowLength: rowLength,
-      colLength: colLength
-    });
-
-    var scoreAnimationController = this.scoreAnimationController = new app.ScoreAnimationController({
-      tile: tile,
       panelWidth: panelWidth,
       rowLength: rowLength,
       colLength: colLength
@@ -85,9 +78,7 @@
           return;
         }
 
-        scoreAnimationController.score = ctrl.score;
-
-        scoreAnimationController.onanimationend = function() {
+        tileController.onscoreanimationend = function() {
           nonActiveControlBoardController.supplyPanel();
           var canJointNonActiveBoardPanels = tile.canJointAnyPosition(nonActiveControlBoardController.panels());
           var canJointActiveBoardPanels = tile.canJointAnyPosition(ctrl.panels());
@@ -129,7 +120,7 @@
           m.redraw(true);
         };
 
-        scoreAnimationController.start(row, col);
+        tileController.startScoreAnimation(row, col, ctrl.score());
       },
       onback: function(selectedPanel) {
         actionTileController.selectedPosition(null);
@@ -167,7 +158,6 @@
       app.tileView(ctrl.tileController),
       app.controlBoardView(ctrl.whiteControlBoardController),
       app.controlBoardView(ctrl.blackControlBoardController),
-      app.scoreAnimationView(ctrl.scoreAnimationController),
       app.actionTileView(ctrl.actionTileController)
     ]);
   };

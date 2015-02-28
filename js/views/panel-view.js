@@ -23,11 +23,11 @@
     var classes = [];
     var isEdge = panel && panel.color() === Panel.COLOR_BROWN;
     var isFixed = !panel || panel.isFixed();
-    if (isEdge) {
+
+    if (isEdge)
       classes.push('edge');
-    } else if (panel) {
+    else if (panel)
       classes.push(isFixed ? 'fixed' : 'unfixed');
-    }
 
     view.push(m('rect.base', {
       x: -(width / 2) + 0.5,

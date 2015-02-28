@@ -83,6 +83,8 @@
 
   var onScoreAnimationEndActionTileController = function() {
     var actionTileController = this.actionTileController();
+    var whiteControlBoardController = this.whiteControlBoardController();
+    var blackControlBoardController = this.blackControlBoardController();
     var activeControlBoardController = this.activeControlBoardController();
     var nonActiveControlBoardController = this.nonActiveControlBoardController();
 
@@ -94,7 +96,7 @@
 
     if (!canJointNonActiveBoardPanels && !canJointActiveBoardPanels) {
       activeControlBoardController.active(false);
-      setTimeout(function() {
+      setTimeout((function() {
         // show result
         var whitePlayerScore = whiteControlBoardController.score();
         var blackPlayerScore = blackControlBoardController.score();
@@ -122,7 +124,7 @@
         nonActiveControlBoardController.active(true);
 
         m.redraw(true);
-      }, 500);
+      }).bind(this), 500);
     } else {
       this.toggleTurnPlayerColor();
       nonActiveControlBoardController.active(true);

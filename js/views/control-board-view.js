@@ -42,7 +42,7 @@
     view.push(slotView(panels, selectedIndex, panelWidth, -48 + dx, -132 + dy, function(event) {
       ctrl.dispatchEvent({
         type: 'select',
-        index: event.selectedIndex
+        selectedIndex: event.selectedIndex
       });
     }));
 

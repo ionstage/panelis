@@ -64,7 +64,7 @@
     case 'select':
       if (selectedPanel)
         break;
-      var panel = panels[event.index];
+      var panel = panels[event.selectedIndex];
       this.selectedPanel(panel);
       this.onselect({panel: panel});
       break;

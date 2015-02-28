@@ -46,6 +46,7 @@
 
     if (!active)
       return;
+
     switch (event.type) {
     case 'ok':
       if (!selectedPanel)

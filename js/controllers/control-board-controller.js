@@ -12,12 +12,23 @@
     this.color = m.prop(option.color);
     this.active = m.prop(false);
     this.panels = m.prop([]);
-    this.selectedIndex = m.prop(-1);
     this.selectedPanel = m.prop(null);
     this.score = m.prop(new Score());
     this.panelWidth = m.prop(72);
     this.onok = noop;
     this.onback = noop;
+    this.onselect = noop;
+  };
+
+  ControlBoardController.prototype.selectedIndex = function() {
+    var panels = this.panels();
+    var selectedPanel = this.selectedPanel();
+    for (var pi = 0; pi < 3; pi++) {
+      var panel = panels[pi];
+      if (panel === selectedPanel)
+        return pi;
+    }
+    return -1;
   };
 
   ControlBoardController.prototype.supplyPanel = function() {
@@ -39,16 +50,18 @@
       break;
     case 'back':
       var selectedPanel = this.selectedPanel();
-      this.selectedIndex(-1);
       this.selectedPanel(null);
-      if (selectedPanel)
-        this.onback(selectedPanel);
+      if (selectedPanel) {
+        selectedPanel.resetRotation();
+        this.onback();
+      }
       break;
     case 'select':
       var index = event.index;
       if (this.selectedIndex() === -1) {
-        this.selectedIndex(index);
-        this.selectedPanel(this.panels()[index]);
+        var panel = this.panels()[index];
+        this.selectedPanel(panel);
+        this.onselect({panel: panel});
       }
       break;
     default:

@@ -33,14 +33,10 @@
 
     nonActiveControlBoardController.panels()[2] = null;
 
-    actionTileController.selectedPanel = selectedPanel;
-    whiteControlBoardController.selectedPanel = selectedPanel;
-    blackControlBoardController.selectedPanel = selectedPanel;
-
     whiteControlBoardController.onok = function() {
       var ctrl = this;
 
-      var panel = selectedPanel();
+      var panel = actionTileController.selectedPanel();
 
       if (!panel)
         return;
@@ -64,7 +60,6 @@
 
       ctrl.active(false);
       ctrl.panels()[ctrl.selectedIndex()] = null;
-      ctrl.selectedIndex(-1);
       selectedPanel(null);
       actionTileController.selectedPosition(null);
 
@@ -127,13 +122,18 @@
       actionTileController.startScoreAnimation(row, col);
     };
 
-    whiteControlBoardController.onback = function(selectedPanel) {
+    whiteControlBoardController.onback = function() {
+      actionTileController.selectedPanel(null);
       actionTileController.selectedPosition(null);
-      selectedPanel.resetRotation();
+    };
+
+    whiteControlBoardController.onselect = function(event) {
+      actionTileController.selectedPanel(event.panel);
     };
 
     blackControlBoardController.onok = whiteControlBoardController.onok;
     blackControlBoardController.onback = whiteControlBoardController.onback;
+    blackControlBoardController.onselect = whiteControlBoardController.onselect;
 
     if (firstMoveColor === Panel.COLOR_WHITE)
       whiteControlBoardController.active(true);

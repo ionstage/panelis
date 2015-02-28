@@ -13,8 +13,6 @@
 
     var tile = new Tile(rowLength, colLength);
 
-    var selectedPanel = m.prop(null);
-
     var tileController = this.tileController = new app.TileController({
       tile: tile,
       panelWidth: panelWidth,
@@ -29,130 +27,25 @@
       colLength: colLength
     });
 
-    actionTileController.selectedPanel = selectedPanel;
-
     var whiteControlBoardController = this.whiteControlBoardController = new app.ControlBoardController({
       color: Panel.COLOR_WHITE,
-      panels: [
-        Panel.sample(Panel.COLOR_WHITE),
-        Panel.sample(Panel.COLOR_WHITE),
-        Panel.sample(Panel.COLOR_WHITE)
-      ],
       score: new app.Score(),
       panelWidth: panelWidth
     });
-
-    whiteControlBoardController.selectedPanel = selectedPanel;
-
-    whiteControlBoardController.onok = function() {
-      var ctrl = this;
-
-      var panel = selectedPanel();
-
-      if (!panel)
-        return;
-
-      var canJointPanels = tile.canJointAnyPosition(ctrl.panels());
-      var position = actionTileController.selectedPosition();
-
-      if (canJointPanels && !position)
-        return;
-
-      if (canJointPanels && position) {
-        var row = position.row;
-        var col = position.col;
-        var canJoint = tile.canJoint(row, col, panel);
-
-        if (!canJoint)
-          return;
-
-        tile.panel(row, col, panel);
-      }
-
-      ctrl.active(false);
-      ctrl.panels()[ctrl.selectedIndex()] = null;
-      ctrl.selectedIndex(-1);
-      selectedPanel(null);
-      actionTileController.selectedPosition(null);
-
-      if (!canJointPanels && panel) {
-        nonActiveControlBoardController.supplyPanel();
-        nonActiveControlBoardController.active(true);
-        nonActiveControlBoardController = ctrl;
-        return;
-      }
-
-      tileController.onscoreanimationend = function() {
-        nonActiveControlBoardController.supplyPanel();
-        var canJointNonActiveBoardPanels = tile.canJointAnyPosition(nonActiveControlBoardController.panels());
-        var canJointActiveBoardPanels = tile.canJointAnyPosition(ctrl.panels());
-        if (!canJointNonActiveBoardPanels && !canJointActiveBoardPanels) {
-          ctrl.active(false);
-          setTimeout(function() {
-            // show result
-            var whitePlayerScore = whiteControlBoardController.score();
-            var blackPlayerScore = blackControlBoardController.score();
-            app.view.showResult(whitePlayerScore, blackPlayerScore);
-
-            // reset
-            tile.reset();
-            tile.randomEdge();
-
-            nonActiveControlBoardController.panels([
-              Panel.sample(nonActiveControlBoardController.color()),
-              Panel.sample(nonActiveControlBoardController.color()),
-              Panel.sample(nonActiveControlBoardController.color())
-            ]);
-            nonActiveControlBoardController.score().reset();
-
-            ctrl.panels([
-              Panel.sample(ctrl.color()),
-              Panel.sample(ctrl.color()),
-              null
-            ]);
-            ctrl.score().reset();
-
-            nonActiveControlBoardController.active(true);
-            nonActiveControlBoardController = ctrl;
-            m.redraw(true);
-          }, 500);
-        } else {
-          nonActiveControlBoardController.active(true);
-          nonActiveControlBoardController = ctrl;
-        }
-
-        m.redraw(true);
-      };
-
-      tileController.startScoreAnimation(row, col, ctrl.score());
-    };
-
-    whiteControlBoardController.onback = function(selectedPanel) {
-      actionTileController.selectedPosition(null);
-      selectedPanel.resetRotation();
-    };
 
     var blackControlBoardController = this.blackControlBoardController = new app.ControlBoardController({
       color: Panel.COLOR_BLACK,
-      panels: [
-        Panel.sample(Panel.COLOR_BLACK),
-        Panel.sample(Panel.COLOR_BLACK),
-        null
-      ],
       score: new app.Score(),
       panelWidth: panelWidth
     });
 
-    blackControlBoardController.selectedPanel = selectedPanel;
-
-    blackControlBoardController.onok = whiteControlBoardController.onok;
-
-    blackControlBoardController.onback = whiteControlBoardController.onback;
-
-    var nonActiveControlBoardController = blackControlBoardController;
-
-    tile.randomEdge();
-    whiteControlBoardController.active(true);
+    new app.TurnController({
+      firstMoveColor: Panel.COLOR_WHITE,
+      tileController: tileController,
+      actionTileController: actionTileController,
+      whiteControlBoardController: whiteControlBoardController,
+      blackControlBoardController: blackControlBoardController
+    }).start();
   };
 
   app.view = function(ctrl) {

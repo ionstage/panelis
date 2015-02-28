@@ -10,7 +10,7 @@
   var ControlBoardController = function(option) {
     this.color = m.prop(option.color || Panel.COLOR_WHITE);
     this.active = m.prop(option.active || false);
-    this.panels = m.prop(option.panels || null);
+    this.panels = m.prop(option.panels || []);
     this.selectedIndex = m.prop(-1);
     this.selectedPanel = option.selectedPanel || m.prop(null);
     this.score = m.prop(option.score || null);

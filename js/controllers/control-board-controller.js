@@ -11,7 +11,7 @@
   var ControlBoardController = function(option) {
     this.color = m.prop(option.color);
     this.active = m.prop(false);
-    this.panels = m.prop([]);
+    this.panels = m.prop([null, null, null]);
     this.selectedPanel = m.prop(null);
     this.score = m.prop(new Score());
     this.panelWidth = m.prop(72);
@@ -23,7 +23,7 @@
   ControlBoardController.prototype.selectedIndex = function() {
     var panels = this.panels();
     var selectedPanel = this.selectedPanel();
-    for (var pi = 0; pi < 3; pi++) {
+    for (var pi = 0, plen = panels.length; pi < plen; pi++) {
       if (panels[pi] === selectedPanel)
         return pi;
     }
@@ -33,7 +33,7 @@
   ControlBoardController.prototype.supplyPanel = function() {
     var color = this.color();
     var panels = this.panels();
-    for (var pi = 0; pi < 3; pi++) {
+    for (var pi = 0, plen = panels.length; pi < plen; pi++) {
       if (!panels[pi])
         panels[pi] = Panel.sample(color);
     }

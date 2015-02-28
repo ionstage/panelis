@@ -102,42 +102,45 @@
   };
 
   var slotView = function(panels, selectedIndex, panelWidth, x, y, onselect) {
-    var panelViews = [null, null, null];
-    var panelHitAreaViews = [null, null, null];
+    var panelViews = panels.map(function(panel, index) {
+      if (!panels)
+        return null;
 
-    panels.forEach(function(panel, index) {
       var isSelected = selectedIndex === index;
-      if (panel) {
-        panelViews[index] = m('g',
-          {className: isSelected ? 'selected' : ''},
-          [
-            app.view.panel({
-              panel: panel,
-              x: x + 12 + panelWidth / 2,
-              y: y + 12 + (panelWidth + 12) * index + panelWidth / 2,
-              width: panelWidth
-            })
-          ]);
-        var hitAreaAttr = {
-          x: x + 12,
-          y: y + 12 + (panelWidth + 12) * index,
-          width: panelWidth,
-          height: panelWidth,
-          index: index,
-          selectHandler: (function(selectedIndex) {
-            return function() {
-              onselect({selectedIndex: selectedIndex});
-            };
-          }(index)),
-          config: function(element, isInitialized) {
-            if (isInitialized)
-              return;
-            var eventName = app.view.supportsTouch ? 'touchstart' : 'mousedown';
-            element.addEventListener(eventName, this.attrs.selectHandler);
-          }
-        };
-        panelHitAreaViews[index] = m('rect.hitarea', hitAreaAttr);
-      }
+      return m('g', {className: isSelected ? 'selected' : ''}, [
+        app.view.panel({
+          panel: panel,
+          x: x + 12 + panelWidth / 2,
+          y: y + 12 + (panelWidth + 12) * index + panelWidth / 2,
+          width: panelWidth
+        })
+      ]);
+    });
+
+    var panelHitAreaViews = panels.map(function(panel, index) {
+      if (!panels)
+        return null;
+
+      var hitAreaAttr = {
+        x: x + 12,
+        y: y + 12 + (panelWidth + 12) * index,
+        width: panelWidth,
+        height: panelWidth,
+        index: index,
+        selectHandler: (function(selectedIndex) {
+          return function() {
+            onselect({selectedIndex: selectedIndex});
+          };
+        }(index)),
+        config: function(element, isInitialized) {
+          if (isInitialized)
+            return;
+          var eventName = app.view.supportsTouch ? 'touchstart' : 'mousedown';
+          element.addEventListener(eventName, this.attrs.selectHandler);
+        }
+      };
+
+      return m('rect.hitarea', hitAreaAttr);
     });
 
     return m('g.slot', [

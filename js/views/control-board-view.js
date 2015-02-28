@@ -127,7 +127,6 @@
           selectHandler: (function(selectedIndex) {
             return function() {
               onselect({selectedIndex: selectedIndex});
-              m.redraw(true);
             };
           }(index)),
           config: function(element, isInitialized) {

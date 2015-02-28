@@ -23,19 +23,16 @@
   ControlBoardController.prototype.selectedIndex = function() {
     var panels = this.panels();
     var selectedPanel = this.selectedPanel();
-
     for (var pi = 0; pi < 3; pi++) {
       if (panels[pi] === selectedPanel)
         return pi;
     }
-
     return -1;
   };
 
   ControlBoardController.prototype.supplyPanel = function() {
     var color = this.color();
     var panels = this.panels();
-
     for (var pi = 0; pi < 3; pi++) {
       if (!panels[pi])
         panels[pi] = Panel.sample(color);
@@ -51,8 +48,9 @@
       return;
     switch (event.type) {
     case 'ok':
-      if (selectedPanel)
-        this.onok();
+      if (!selectedPanel)
+        break;
+      this.onok();
       break;
     case 'back':
       if (!selectedPanel)
@@ -66,6 +64,7 @@
         break;
       var panel = panels[event.selectedIndex];
       this.selectedPanel(panel);
+      m.redraw(true);
       this.onselect({panel: panel});
       break;
     default:

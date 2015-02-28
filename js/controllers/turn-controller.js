@@ -4,6 +4,7 @@
   var m = global.m || require('mithril');
 
   var Panel = app.Panel;
+  var Score = app.Score;
   var TileController = app.TileController;
   var ActionTileController = app.ActionTileController;
   var ControlBoardController = app.ControlBoardController;
@@ -74,6 +75,13 @@
         return;
       }
 
+      actionTileController.onscorechange = function(event) {
+        var score = ctrl.score();
+        score.add(Score.COLOR_RED, event.red);
+        score.add(Score.COLOR_YELLOW, event.yellow);
+        score.add(Score.COLOR_GREEN, event.green);
+      };
+
       actionTileController.onscoreanimationend = function() {
         nonActiveControlBoardController.supplyPanel();
         var canJointNonActiveBoardPanels = tile.canJointAnyPosition(nonActiveControlBoardController.panels());
@@ -116,7 +124,7 @@
         m.redraw(true);
       };
 
-      actionTileController.startScoreAnimation(row, col, ctrl.score());
+      actionTileController.startScoreAnimation(row, col);
     };
 
     whiteControlBoardController.onback = function(selectedPanel) {

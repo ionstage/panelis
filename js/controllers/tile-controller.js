@@ -13,6 +13,7 @@
     this.tile = m.prop(new Tile());
     this.panelWidth = m.prop(72);
     this.scoreColors = m.prop([]);
+    this.onscorechange = noop;
     this.onscoreanimationend = noop;
   };
 
@@ -24,7 +25,7 @@
     this.scoreColors([]);
   };
 
-  TileController.prototype.startScoreAnimation = function(row, col, score) {
+  TileController.prototype.startScoreAnimation = function(row, col) {
     var ctrl = this;
     var animations = [
       fixStartPanelAnimation,
@@ -41,7 +42,7 @@
           return;
         }
 
-        var wait = animation(ctrl, row, col, score, animations);
+        var wait = animation(ctrl, row, col, animations);
         if (wait) {
           m.redraw(true);
         }
@@ -54,20 +55,20 @@
     }, 250);
   };
 
-  var fixStartPanelAnimation = function(ctrl, row, col, score) {
+  var fixStartPanelAnimation = function(ctrl, row, col) {
     var tile = ctrl.tile();
 
     if (tile.canFix(row, col)){
       tile.fix(row, col);
       ctrl.pushScoreColor({row: row, col: col, color: Score.COLOR_GREEN});
-      score.add(Score.COLOR_GREEN, 1);
+      ctrl.onscorechange({red: 0, yellow:0, green: 1});
       return true;
     }
 
     return false;
   };
 
-  var releaseColorAnimation = function(ctrl, row, col, score) {
+  var releaseColorAnimation = function(ctrl, row, col) {
     return ctrl.tile().releaseColor(row, col);
   };
 
@@ -87,18 +88,19 @@
     if (jointedPanel.color() === Panel.COLOR_GRAY) {
       tile.panel(row1, col1, null);
       ctrl.pushScoreColor({row: row0, col: col0, color: app.Score.COLOR_RED});
-      score.add(Score.COLOR_RED, 1);
+      score.red += 1;
     } else {
       tile.fix(row1, col1);
       ctrl.pushScoreColor({row: row1, col: col1, color: app.Score.COLOR_GREEN});
-      score.add(Score.COLOR_GREEN, 1);
+      score.green += 1;
     }
 
     return true;
   };
 
-  var fixJointedPanelAnimation = function(ctrl, row, col, score) {
+  var fixJointedPanelAnimation = function(ctrl, row, col) {
     var isFixed = false;
+    var score = {red: 0, yellow: 0, green: 0};
 
     // top
     isFixed = fixJointedPanel(ctrl, row, col, row - 1, col, score) || isFixed;
@@ -109,10 +111,12 @@
     // left
     isFixed = fixJointedPanel(ctrl, row, col, row, col - 1, score) || isFixed;
 
+    ctrl.onscorechange(score);
+
     return isFixed;
   };
 
-  var chainAnimation = function(ctrl, row, col, score, animations) {
+  var chainAnimation = function(ctrl, row, col, animations) {
     var tile = ctrl.tile();
     var chainList = tile.calcChain(row, col);
 
@@ -127,7 +131,7 @@
             col: chain.col,
             color: Score.COLOR_YELLOW
           });
-          score.add(Score.COLOR_YELLOW, 1);
+          ctrl.onscorechange({red: 0, yellow:1, green: 0});
         });
         return true;
       };

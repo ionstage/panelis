@@ -7,13 +7,13 @@
     return Math.floor(Math.random() * 2) === 0;
   };
 
-  var Panel = function(color, top, right, bottom, left) {
+  var Panel = function(color, top, right, bottom, left, isFixed) {
     this.color = m.prop(color || Panel.COLOR_BROWN);
-    this.isFixed = m.prop(false);
     this.top = m.prop(top || false);
     this.right = m.prop(right || false);
     this.bottom = m.prop(bottom || false);
     this.left = m.prop(left || false);
+    this.isFixed = m.prop(isFixed || false);
   };
 
   Panel.prototype.mixColor = function(color) {
@@ -78,15 +78,14 @@
   };
 
   Panel.prototype.clone = function() {
-    var clone = new Panel(
+    return new Panel(
       this.color(),
       this.hasJoint(Panel.JOINT_TOP),
       this.hasJoint(Panel.JOINT_RIGHT),
       this.hasJoint(Panel.JOINT_BOTTOM),
-      this.hasJoint(Panel.JOINT_LEFT)
+      this.hasJoint(Panel.JOINT_LEFT),
+      this.isFixed()
     );
-    clone.isFixed(this.isFixed());
-    return clone;
   };
 
   var basePanelList = [

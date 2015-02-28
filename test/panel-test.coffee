@@ -18,15 +18,15 @@ describe 'Panel', ->
     panel = new Panel(Panel.COLOR_BLACK)
     assert.equal(panel.color(), Panel.COLOR_BLACK)
 
-  it '#mixColor', ->
-    panel = new Panel(Panel.COLOR_BLACK)
-    panel.mixColor(Panel.COLOR_WHITE)
-    assert.equal(panel.color(), Panel.COLOR_GRAY)
-
   it '#isFixed', ->
     panel = new Panel()
     panel.isFixed(true)
     assert.equal(panel.isFixed(), true)
+
+  it '#mixColor', ->
+    panel = new Panel(Panel.COLOR_BLACK)
+    panel.mixColor(Panel.COLOR_WHITE)
+    assert.equal(panel.color(), Panel.COLOR_GRAY)
 
   it '#hasJoint', ->
     panel = new Panel()
@@ -59,7 +59,7 @@ describe 'Panel', ->
     assertHasJoint(panel, true, false, false, false)
 
   it '#clone', ->
-    orig = new Panel(Panel.COLOR_WHITE, true, false, true, false)
+    orig = new Panel(Panel.COLOR_WHITE, true, false, true, false, true)
     clone = orig.clone()
     assert(clone != orig)
     assert.equal(clone.color(), orig.color())

@@ -18,7 +18,7 @@
           width: panelWidth * colLength,
           height: panelWidth * rowLength
         }),
-        m('g', tile.panels.map(function(cols, ri) {
+        m('g', tile.panels().map(function(cols, ri) {
           return cols.map(function(panel, ci) {
             return app.view.panel({
               panel: panel,

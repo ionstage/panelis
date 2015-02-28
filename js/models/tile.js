@@ -33,17 +33,19 @@
   };
 
   var Tile = function(rowLength, colLength) {
-    this.panels = [[]];
+    this.panels = m.prop([[]]);
     this.rowLength = m.prop(rowLength || 8);
     this.colLength = m.prop(colLength || 8);
     this.reset();
   };
 
   Tile.prototype.panel = function(row, col, panel) {
-    if (typeof panel === 'undefined')
-      return this.panels[row][col];
+    var panels = this.panels();
 
-    this.panels[row][col] = panel;
+    if (typeof panel === 'undefined')
+      return panels[row][col];
+
+    panels[row][col] = panel;
   };
 
   Tile.prototype.fix = function(row, col) {
@@ -52,7 +54,7 @@
   };
 
   Tile.prototype.canFix = function(row, col, _panel) {
-    var panels = this.panels;
+    var panels = this.panels();
 
     if (row <= 0 || row >= panels.length - 1)
       return false;
@@ -86,7 +88,7 @@
   };
 
   Tile.prototype.canJoint = function(row, col, _panel) {
-    var panels = this.panels;
+    var panels = this.panels();
 
     if (row <= 0 || row >= panels.length - 1)
       return false;
@@ -124,7 +126,7 @@
   };
 
   Tile.prototype.canJointAnyPosition = function(_panel) {
-    var panels = this.panels;
+    var panels = this.panels();
     var rowLength = this.rowLength();
     var colLength = this.colLength();
 
@@ -279,7 +281,7 @@
   };
 
   Tile.prototype.reset = function() {
-    var panels = this.panels;
+    var panels = this.panels();
     var rowLength = this.rowLength();
     var colLength = this.colLength();
 
@@ -292,7 +294,7 @@
   };
 
   Tile.prototype.randomEdge = function() {
-    var panels = this.panels;
+    var panels = this.panels();
     var rowLength = this.rowLength();
     var colLength = this.colLength();
 

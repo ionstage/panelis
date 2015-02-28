@@ -5,10 +5,10 @@
 
   var TileController = app.TileController;
 
-  var ActionTileController = function(option) {
-    TileController.call(this, option);
-    this.selectedPanel = option.selectedPanel || m.prop(null);
-    this.selectedPosition = m.prop(option.selectedPosition || null);
+  var ActionTileController = function() {
+    TileController.call(this);
+    this.selectedPanel = m.prop(null);
+    this.selectedPosition = m.prop(null);
   };
 
   ActionTileController.prototype = Object.create(TileController.prototype);

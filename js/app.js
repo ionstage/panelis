@@ -4,35 +4,21 @@
   var m = global.m || require('mithril');
 
   var Panel = app.Panel;
-  var Tile = app.Tile;
 
   app.controller = function() {
-    var rowLength = 8;
-    var colLength = 8;
-    var panelWidth = 72;
-
-    var tile = new Tile(rowLength, colLength);
-
-    var actionTileController = this.actionTileController = new app.ActionTileController({
-      tile: tile,
-      panelWidth: panelWidth
-    });
+    this.actionTileController = new app.ActionTileController();
 
     var whiteControlBoardController = this.whiteControlBoardController = new app.ControlBoardController({
-      color: Panel.COLOR_WHITE,
-      score: new app.Score(),
-      panelWidth: panelWidth
+      color: Panel.COLOR_WHITE
     });
 
     var blackControlBoardController = this.blackControlBoardController = new app.ControlBoardController({
-      color: Panel.COLOR_BLACK,
-      score: new app.Score(),
-      panelWidth: panelWidth
+      color: Panel.COLOR_BLACK
     });
 
     new app.TurnController({
       firstMoveColor: Panel.COLOR_WHITE,
-      actionTileController: actionTileController,
+      actionTileController: this.actionTileController,
       whiteControlBoardController: whiteControlBoardController,
       blackControlBoardController: blackControlBoardController
     }).start();

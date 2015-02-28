@@ -7,6 +7,7 @@
     var tile = ctrl.tile();
     var panelWidth = ctrl.panelWidth();
     var scoreColors = ctrl.scoreColors();
+
     var rowLength = tile.rowLength();
     var colLength = tile.colLength();
 

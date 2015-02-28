@@ -4,6 +4,7 @@
   var m = global.m || require('mithril');
 
   var Panel = app.Panel;
+  var Score = app.Score;
 
   var noop = function() {};
 
@@ -13,7 +14,7 @@
     this.panels = m.prop(option.panels || []);
     this.selectedIndex = m.prop(-1);
     this.selectedPanel = option.selectedPanel || m.prop(null);
-    this.score = m.prop(option.score || null);
+    this.score = m.prop(option.score || new Score());
     this.panelWidth = m.prop(option.panelWidth || 72);
     this.onok = option.onok || noop;
     this.onback = option.onback || noop;

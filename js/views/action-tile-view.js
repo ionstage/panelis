@@ -19,6 +19,7 @@
     var selectedPanel = ctrl.selectedPanel();
     var selectedPosition = ctrl.selectedPosition();
     var panelWidth = ctrl.panelWidth();
+
     var rowLength = tile.rowLength();
     var colLength = tile.colLength();
 

@@ -9,11 +9,11 @@
 
   var noop = function() {};
 
-  var TileController = function(option) {
-    this.tile = m.prop(option.tile || new Tile());
-    this.panelWidth = m.prop(option.panelWidth || 72);
-    this.scoreColors = m.prop(option.scoreColors || []);
-    this.onscoreanimationend = option.onscoreanimationend || noop;
+  var TileController = function() {
+    this.tile = m.prop(new Tile());
+    this.panelWidth = m.prop(72);
+    this.scoreColors = m.prop([]);
+    this.onscoreanimationend = noop;
   };
 
   TileController.prototype.pushScoreColor = function(scoreColor) {

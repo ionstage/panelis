@@ -191,6 +191,7 @@
 
     var topPanel = this.panel(row - 1, col);
     if (topPanel && !topPanel.isFixed() &&
+        topPanel.color() !== color &&
         topPanel.color() !== Panel.COLOR_BROWN &&
         topPanel.hasJoint(Panel.JOINT_BOTTOM) &&
            panel.hasJoint(Panel.JOINT_TOP)) {
@@ -200,6 +201,7 @@
 
     var rightPanel = this.panel(row, col + 1);
     if (rightPanel && !rightPanel.isFixed() &&
+        rightPanel.color() !== color &&
         rightPanel.color() !== Panel.COLOR_BROWN &&
         rightPanel.hasJoint(Panel.JOINT_LEFT) &&
              panel.hasJoint(Panel.JOINT_RIGHT)) {
@@ -209,6 +211,7 @@
 
     var bottomPanel = this.panel(row + 1, col);
     if (bottomPanel && !bottomPanel.isFixed() &&
+        bottomPanel.color() !== color &&
         bottomPanel.color() !== Panel.COLOR_BROWN &&
         bottomPanel.hasJoint(Panel.JOINT_TOP) &&
               panel.hasJoint(Panel.JOINT_BOTTOM)) {
@@ -218,6 +221,7 @@
 
     var leftPanel = this.panel(row, col - 1);
     if (leftPanel && !leftPanel.isFixed() &&
+        leftPanel.color() !== color &&
         leftPanel.color() !== Panel.COLOR_BROWN &&
         leftPanel.hasJoint(Panel.JOINT_RIGHT) &&
             panel.hasJoint(Panel.JOINT_LEFT)) {

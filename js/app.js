@@ -13,11 +13,6 @@
 
     var tile = new Tile(rowLength, colLength);
 
-    var tileController = this.tileController = new app.TileController({
-      tile: tile,
-      panelWidth: panelWidth
-    });
-
     var actionTileController = this.actionTileController = new app.ActionTileController({
       tile: tile,
       panelWidth: panelWidth
@@ -37,7 +32,6 @@
 
     new app.TurnController({
       firstMoveColor: Panel.COLOR_WHITE,
-      tileController: tileController,
       actionTileController: actionTileController,
       whiteControlBoardController: whiteControlBoardController,
       blackControlBoardController: blackControlBoardController
@@ -53,10 +47,9 @@
         app.view.stageElement = element;
       }
     }, [
-      app.tileView(ctrl.tileController),
+      app.actionTileView(ctrl.actionTileController),
       app.controlBoardView(ctrl.whiteControlBoardController),
-      app.controlBoardView(ctrl.blackControlBoardController),
-      app.actionTileView(ctrl.actionTileController)
+      app.controlBoardView(ctrl.blackControlBoardController)
     ]);
   };
 

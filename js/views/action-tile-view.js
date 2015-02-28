@@ -3,6 +3,8 @@
   var app = global.app || {};
   var m = global.m || require('mithril');
 
+  var tileView = app.tileView;
+
   var addClass = function(el, className) {
     el.setAttribute('class', el.getAttribute('class') + ' ' + className);
   };
@@ -95,7 +97,10 @@
       }
     }));
 
-    return m('g.action-tile', view);
+    return [
+      tileView(ctrl),
+      m('g.action-tile', view)
+    ];
   };
 
   app.actionTileView = actionTileView;

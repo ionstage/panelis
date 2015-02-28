@@ -10,7 +10,6 @@
 
   var TurnController = function(option) {
     this.firstMoveColor = m.prop(option.firstMoveColor || Panel.COLOR_WHITE);
-    this.tileController = m.prop(option.tileController || new TileController());
     this.actionTileController = m.prop(option.actionTileController || new ActionTileController());
     this.whiteControlBoardController = m.prop(option.whiteControlBoardController || new ControlBoardController());
     this.blackControlBoardController = m.prop(option.blackControlBoardController || new ControlBoardController());
@@ -18,12 +17,11 @@
 
   TurnController.prototype.start = function() {
     var firstMoveColor = this.firstMoveColor();
-    var tileController = this.tileController();
     var actionTileController = this.actionTileController();
     var whiteControlBoardController = this.whiteControlBoardController();
     var blackControlBoardController = this.blackControlBoardController();
 
-    var tile = tileController.tile();
+    var tile = actionTileController.tile();
     var selectedPanel = m.prop(null);
     var nonActiveControlBoardController = (firstMoveColor === Panel.COLOR_WHITE) ? blackControlBoardController : whiteControlBoardController;
 
@@ -76,7 +74,7 @@
         return;
       }
 
-      tileController.onscoreanimationend = function() {
+      actionTileController.onscoreanimationend = function() {
         nonActiveControlBoardController.supplyPanel();
         var canJointNonActiveBoardPanels = tile.canJointAnyPosition(nonActiveControlBoardController.panels());
         var canJointActiveBoardPanels = tile.canJointAnyPosition(ctrl.panels());
@@ -118,7 +116,7 @@
         m.redraw(true);
       };
 
-      tileController.startScoreAnimation(row, col, ctrl.score());
+      actionTileController.startScoreAnimation(row, col, ctrl.score());
     };
 
     whiteControlBoardController.onback = function(selectedPanel) {

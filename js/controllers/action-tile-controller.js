@@ -3,12 +3,16 @@
   var app = global.app || {};
   var m = global.m || require('mithril');
 
+  var TileController = app.TileController;
+
   var ActionTileController = function(option) {
-    this.tile = m.prop(option.tile || null);
+    TileController.call(this, option);
     this.selectedPanel = option.selectedPanel || m.prop(null);
     this.selectedPosition = m.prop(option.selectedPosition || null);
-    this.panelWidth = m.prop(option.panelWidth || 72);
   };
+
+  ActionTileController.prototype = Object.create(TileController.prototype);
+  ActionTileController.prototype.constructor = ActionTileController;
 
   ActionTileController.prototype.dispatchEvent = function(event) {
     var tile = this.tile();

@@ -87,11 +87,11 @@
 
     if (jointedPanel.color() === Panel.COLOR_GRAY) {
       tile.panel(row1, col1, null);
-      ctrl.pushScoreColor({row: row0, col: col0, color: app.Score.COLOR_RED});
+      ctrl.pushScoreColor({row: row0, col: col0, color: Score.COLOR_RED});
       score.red += 1;
     } else {
       tile.fix(row1, col1);
-      ctrl.pushScoreColor({row: row1, col: col1, color: app.Score.COLOR_GREEN});
+      ctrl.pushScoreColor({row: row1, col: col1, color: Score.COLOR_GREEN});
       score.green += 1;
     }
 

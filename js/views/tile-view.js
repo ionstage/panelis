@@ -6,9 +6,9 @@
   var tileView = function(ctrl) {
     var tile = ctrl.tile();
     var panelWidth = ctrl.panelWidth();
-    var rowLength = ctrl.rowLength();
-    var colLength = ctrl.colLength();
     var scoreColors = ctrl.scoreColors();
+    var rowLength = tile.rowLength();
+    var colLength = tile.colLength();
 
     return [
       m('g.tile', [

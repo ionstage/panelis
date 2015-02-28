@@ -12,8 +12,6 @@
   var TileController = function(option) {
     this.tile = m.prop(option.tile || new Tile());
     this.panelWidth = m.prop(option.panelWidth || 72);
-    this.rowLength = m.prop(option.rowLength || 8);
-    this.colLength = m.prop(option.colLength || 8);
     this.scoreColors = m.prop(option.scoreColors || []);
     this.onscoreanimationend = option.onscoreanimationend || noop;
   };

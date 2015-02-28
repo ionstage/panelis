@@ -8,8 +8,6 @@
     this.selectedPanel = option.selectedPanel || m.prop(null);
     this.selectedPosition = m.prop(option.selectedPosition || null);
     this.panelWidth = m.prop(option.panelWidth || 72);
-    this.rowLength = m.prop(option.rowLength || 8);
-    this.colLength = m.prop(option.colLength || 8);
   };
 
   ActionTileController.prototype.dispatchEvent = function(event) {

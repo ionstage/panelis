@@ -15,16 +15,12 @@
 
     var tileController = this.tileController = new app.TileController({
       tile: tile,
-      panelWidth: panelWidth,
-      rowLength: rowLength,
-      colLength: colLength
+      panelWidth: panelWidth
     });
 
     var actionTileController = this.actionTileController = new app.ActionTileController({
       tile: tile,
-      panelWidth: panelWidth,
-      rowLength: rowLength,
-      colLength: colLength
+      panelWidth: panelWidth
     });
 
     var whiteControlBoardController = this.whiteControlBoardController = new app.ControlBoardController({

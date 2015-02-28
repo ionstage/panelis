@@ -13,11 +13,12 @@
   };
 
   var actionTileView = function(ctrl) {
+    var tile = ctrl.tile();
     var selectedPanel = ctrl.selectedPanel();
     var selectedPosition = ctrl.selectedPosition();
     var panelWidth = ctrl.panelWidth();
-    var rowLength = ctrl.rowLength();
-    var colLength = ctrl.colLength();
+    var rowLength = tile.rowLength();
+    var colLength = tile.colLength();
 
     var view = [];
 

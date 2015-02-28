@@ -43,9 +43,9 @@
         }
 
         var wait = animation(ctrl, row, col, animations);
-        if (wait) {
+        if (wait)
           m.redraw(true);
-        }
+
         setTimeout(function() {
           m.redraw(true);
           animate(index + 1);
@@ -58,14 +58,14 @@
   var fixStartPanelAnimation = function(ctrl, row, col) {
     var tile = ctrl.tile();
 
-    if (tile.canFix(row, col)){
-      tile.fix(row, col);
-      ctrl.pushScoreColor({row: row, col: col, color: Score.COLOR_GREEN});
-      ctrl.onscorechange({red: 0, yellow:0, green: 1});
-      return true;
-    }
+    if (!tile.canFix(row, col))
+      return false;
 
-    return false;
+    tile.fix(row, col);
+    ctrl.pushScoreColor({row: row, col: col, color: Score.COLOR_GREEN});
+    ctrl.onscorechange({red: 0, yellow:0, green: 1});
+
+    return true;
   };
 
   var releaseColorAnimation = function(ctrl, row, col) {

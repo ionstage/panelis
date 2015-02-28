@@ -43,15 +43,14 @@
           return;
         }
 
-        m.startComputation();
         var wait = animation(ctrl, row, col, score, animations);
         if (wait) {
           m.redraw(true);
-          ctrl.clearScoreColors();
         }
         setTimeout(function() {
-          m.endComputation();
+          m.redraw(true);
           animate(index + 1);
+          ctrl.clearScoreColors();
         }, wait ? 500 : 0);
       }(0));
     }, 250);
@@ -101,8 +100,6 @@
   };
 
   var fixJointedPanelAnimation = function(ctrl, row, col, score) {
-    ctrl.clearScoreColors();
-
     var isFixed = false;
 
     // top

@@ -12,6 +12,84 @@
     Panel.JOINT_LEFT
   ];
 
+  var panelView = function(ctrl) {
+    var panel = ctrl.panel();
+    var x = ctrl.x();
+    var y = ctrl.y();
+    var width = ctrl.width();
+
+    var view = [];
+
+    var classes = [];
+    var isEdge = panel && panel.color() === Panel.COLOR_BROWN;
+    var isFixed = !panel || panel.isFixed();
+    if (isEdge) {
+      classes.push('edge');
+    } else if (panel) {
+      classes.push(isFixed ? 'fixed' : 'unfixed');
+    }
+
+    view.push(m('rect.base', {
+      x: -(width / 2) + 0.5,
+      y: -(width / 2) + 0.5,
+      width: width - 1,
+      height: width - 1
+    }));
+
+    var transform = 'translate(' + x + ' ' + y +  ')';
+
+    if (!panel) {
+      return m('g.panel ' + classes.join('.'), {
+        transform: transform
+      }, view);
+    }
+
+    var color = panel.color();
+    if (color === Panel.COLOR_GRAY)
+      classes.push('gray');
+    else if (color === Panel.COLOR_WHITE)
+      classes.push('white');
+    else if (color === Panel.COLOR_BLACK)
+      classes.push('black');
+
+    if (!isFixed && !isEdge) {
+      panelJointList.forEach(function(joint) {
+        if (panel.hasJoint(joint))
+          view.push(panelJointBackBorderView(width, joint));
+      });
+
+      view.push(m('circle.color.back', {
+        cx: 0,
+        cy: 0,
+        r: width / 3.2 + 3
+      }));
+
+      panelJointList.forEach(function(joint) {
+        if (panel.hasJoint(joint))
+          view.push(panelJointBackView(width, joint));
+      });
+    }
+
+    panelJointList.forEach(function(joint) {
+      if (panel.hasJoint(joint)) {
+        view.push(panelJointHandleBorderView(width, joint));
+        view.push(panelJointHandleView(width, joint));
+      }
+    });
+
+    if (!isEdge) {
+      view.push(m('circle.color.circle', {
+        cx: 0,
+        cy: 0,
+        r: width / 3.2
+      }));
+    }
+
+    return m('g.panel ' + classes.join('.'), {
+      transform: transform
+    }, view);
+  };
+
   var panelJointBackBorderView = function(width, joint) {
     var attr = {
       width: width / 4,
@@ -145,84 +223,6 @@
     }
 
     return m('rect.joint.handle', attr);
-  };
-
-  var panelView = function(ctrl) {
-    var panel = ctrl.panel();
-    var x = ctrl.x();
-    var y = ctrl.y();
-    var width = ctrl.width();
-
-    var view = [];
-
-    var classes = [];
-    var isEdge = panel && panel.color() === Panel.COLOR_BROWN;
-    var isFixed = !panel || panel.isFixed();
-    if (isEdge) {
-      classes.push('edge');
-    } else if (panel) {
-      classes.push(isFixed ? 'fixed' : 'unfixed');
-    }
-
-    view.push(m('rect.base', {
-      x: -(width / 2) + 0.5,
-      y: -(width / 2) + 0.5,
-      width: width - 1,
-      height: width - 1
-    }));
-
-    var transform = 'translate(' + x + ' ' + y +  ')';
-
-    if (!panel) {
-      return m('g.panel ' + classes.join('.'), {
-        transform: transform
-      }, view);
-    }
-
-    var color = panel.color();
-    if (color === Panel.COLOR_GRAY)
-      classes.push('gray');
-    else if (color === Panel.COLOR_WHITE)
-      classes.push('white');
-    else if (color === Panel.COLOR_BLACK)
-      classes.push('black');
-
-    if (!isFixed && !isEdge) {
-      panelJointList.forEach(function(joint) {
-        if (panel.hasJoint(joint))
-          view.push(panelJointBackBorderView(width, joint));
-      });
-
-      view.push(m('circle.color.back', {
-        cx: 0,
-        cy: 0,
-        r: width / 3.2 + 3
-      }));
-
-      panelJointList.forEach(function(joint) {
-        if (panel.hasJoint(joint))
-          view.push(panelJointBackView(width, joint));
-      });
-    }
-
-    panelJointList.forEach(function(joint) {
-      if (panel.hasJoint(joint)) {
-        view.push(panelJointHandleBorderView(width, joint));
-        view.push(panelJointHandleView(width, joint));
-      }
-    });
-
-    if (!isEdge) {
-      view.push(m('circle.color.circle', {
-        cx: 0,
-        cy: 0,
-        r: width / 3.2
-      }));
-    }
-
-    return m('g.panel ' + classes.join('.'), {
-      transform: transform
-    }, view);
   };
 
   app.panelView = panelView;

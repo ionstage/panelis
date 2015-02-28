@@ -15,6 +15,27 @@
   };
 
   var actionTileView = function(ctrl) {
+    var selectedPanel = ctrl.selectedPanel();
+    var selectedPosition = ctrl.selectedPosition();
+
+    var view = [];
+    var panelElement = m.prop(null);
+
+    if (selectedPanel && selectedPosition) {
+      view.push(selectedPanelView(ctrl, function(event) {
+        panelElement(event.element);
+      }));
+    }
+
+    view.push(hitAreaView(ctrl, panelElement));
+
+    return [
+      tileView(ctrl),
+      m('g.action-tile', view)
+    ];
+  };
+
+  var selectedPanelView = function(ctrl, oninitialize) {
     var tile = ctrl.tile();
     var selectedPanel = ctrl.selectedPanel();
     var selectedPosition = ctrl.selectedPosition();
@@ -23,42 +44,47 @@
     var rowLength = tile.rowLength();
     var colLength = tile.colLength();
 
-    var view = [];
+    var x = (selectedPosition.col - colLength / 2) * panelWidth + panelWidth / 2;
+    var y = (selectedPosition.row - rowLength / 2) * panelWidth + panelWidth / 2;
 
-    var panelElement = null;
+    return m('g', {
+      transform: 'translate(' + x + ' ' + y +  ')',
+      config: function(element, isInitialized) {
+        if (isInitialized)
+          return;
+        var panelElement = element.childNodes[0];
+        addClass(panelElement, 'stop');
 
-    if (selectedPanel && selectedPosition) {
-      var x = (selectedPosition.col - colLength / 2) * panelWidth + panelWidth / 2;
-      var y = (selectedPosition.row - rowLength / 2) * panelWidth + panelWidth / 2;
-      var transform = 'translate(' + x + ' ' + y +  ')';
-
-      view.push(m('g', {
-        transform: transform,
-        config: function(element, isInitialized) {
-          if (isInitialized)
-            return;
-          panelElement = element.childNodes[0];
-          addClass(panelElement, 'stop');
-
-          // rotation end
-          panelElement.addEventListener('transitionend', function() {
-            ctrl.dispatchEvent({
-              type: 'rotationend'
-            });
-            replaceClass(panelElement, 'rotate', 'stop');
+        // rotation end
+        panelElement.addEventListener('transitionend', function() {
+          ctrl.dispatchEvent({
+            type: 'rotationend'
           });
-        }
-      }, [
-        app.view.panel({
-          panel: selectedPanel,
-          x: 0,
-          y: 0,
-          width: panelWidth
-        })
-      ]));
-    }
+          replaceClass(panelElement, 'rotate', 'stop');
+        });
 
-    view.push(m('rect.hitarea', {
+        oninitialize({element: panelElement});
+      }
+    }, [
+      app.view.panel({
+        panel: selectedPanel,
+        x: 0,
+        y: 0,
+        width: panelWidth
+      })
+    ]);
+  };
+
+  var hitAreaView = function(ctrl, panelElementProp) {
+    var tile = ctrl.tile();
+    var selectedPanel = ctrl.selectedPanel();
+    var selectedPosition = ctrl.selectedPosition();
+    var panelWidth = ctrl.panelWidth();
+
+    var rowLength = tile.rowLength();
+    var colLength = tile.colLength();
+
+    return m('rect.hitarea', {
       x: -(panelWidth * colLength / 2),
       y: -(panelWidth * rowLength / 2),
       width: panelWidth * colLength,
@@ -67,12 +93,12 @@
         // rotate
         if (selectedPanel && selectedPosition) {
           if (app.view.supportsTransitionEnd) {
-            replaceClass(panelElement, 'stop', 'rotate');
+            replaceClass(panelElementProp(), 'stop', 'rotate');
           } else {
             ctrl.dispatchEvent({
               type: 'rotationend'
             });
-            replaceClass(panelElement, 'rotate', 'stop');
+            replaceClass(panelElementProp(), 'rotate', 'stop');
           }
           return;
         }
@@ -96,12 +122,7 @@
         var eventName = app.view.supportsTouch ? 'touchstart' : 'mousedown';
         element.addEventListener(eventName, this.attrs.startHandler);
       }
-    }));
-
-    return [
-      tileView(ctrl),
-      m('g.action-tile', view)
-    ];
+    });
   };
 
   app.actionTileView = actionTileView;

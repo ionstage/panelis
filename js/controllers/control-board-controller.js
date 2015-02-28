@@ -40,7 +40,8 @@
       var selectedPanel = this.selectedPanel();
       this.selectedIndex(-1);
       this.selectedPanel(null);
-      this.onback(selectedPanel);
+      if (selectedPanel)
+        this.onback(selectedPanel);
       break;
     case 'select':
       var index = event.index;

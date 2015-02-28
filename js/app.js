@@ -25,7 +25,7 @@
     });
 
     new TurnController({
-      firstMoveColor: Panel.COLOR_WHITE,
+      turnPlayerColor: Panel.COLOR_WHITE,
       actionTileController: this.actionTileController,
       whiteControlBoardController: this.whiteControlBoardController,
       blackControlBoardController: this.blackControlBoardController

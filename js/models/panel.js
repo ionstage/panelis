@@ -112,13 +112,7 @@
       left = basePanel.hasJoint(Panel.JOINT_LEFT);
     }
 
-    var panel = new Panel();
-    panel.color(color);
-    panel.hasJoint(Panel.JOINT_TOP, top);
-    panel.hasJoint(Panel.JOINT_RIGHT, right);
-    panel.hasJoint(Panel.JOINT_BOTTOM, bottom);
-    panel.hasJoint(Panel.JOINT_LEFT, left);
-    return panel;
+    return new Panel(color, top, right, bottom, left);
   };
 
   Panel.COLOR_BROWN = 'brown';

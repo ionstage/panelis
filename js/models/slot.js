@@ -6,20 +6,22 @@
   var Panel = app.Panel || require('./panel.js').app.Panel;
 
   var Slot = function(panels, color) {
-    this.panels = panels;
+    this.panels = m.prop(panels || []);
     this.color = m.prop(color || Panel.COLOR_BROWN);
     this.selectedIndex = m.prop(-1);
   };
 
   Slot.prototype.panel = function(index, panel) {
-    if (typeof panel === 'undefined')
-      return this.panels[index];
+    var panels = this.panels();
 
-    this.panels[index] = panel;
+    if (typeof panel === 'undefined')
+      return panels[index];
+
+    panels[index] = panel;
   };
 
   Slot.prototype.supply = function() {
-    var panels = this.panels;
+    var panels = this.panels();
     for (var pi = 0, plen = panels.length; pi < plen; pi++) {
       var panel = panels[pi];
       if (!panel)

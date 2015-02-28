@@ -23,46 +23,50 @@
   ControlBoardController.prototype.selectedIndex = function() {
     var panels = this.panels();
     var selectedPanel = this.selectedPanel();
+
     for (var pi = 0; pi < 3; pi++) {
-      var panel = panels[pi];
-      if (panel === selectedPanel)
+      if (panels[pi] === selectedPanel)
         return pi;
     }
+
     return -1;
   };
 
   ControlBoardController.prototype.supplyPanel = function() {
+    var color = this.color();
     var panels = this.panels();
+
     for (var pi = 0; pi < 3; pi++) {
-      var panel = panels[pi];
-      if (!panel)
-        panels[pi] = Panel.sample(this.color());
+      if (!panels[pi])
+        panels[pi] = Panel.sample(color);
     }
   };
 
   ControlBoardController.prototype.dispatchEvent = function(event) {
-    if (!this.active())
+    var active = this.active();
+    var panels = this.panels();
+    var selectedPanel = this.selectedPanel();
+
+    if (!active)
       return;
     switch (event.type) {
     case 'ok':
-      if (this.selectedIndex() !== -1)
+      if (selectedPanel)
         this.onok();
       break;
     case 'back':
-      var selectedPanel = this.selectedPanel();
+      if (!selectedPanel)
+        break;
+      selectedPanel.resetRotation();
       this.selectedPanel(null);
-      if (selectedPanel) {
-        selectedPanel.resetRotation();
-        this.onback();
-      }
+      this.onback();
       break;
     case 'select':
-      var index = event.index;
-      if (this.selectedIndex() === -1) {
-        var panel = this.panels()[index];
-        this.selectedPanel(panel);
-        this.onselect({panel: panel});
-      }
+      if (selectedPanel)
+        break;
+      var panel = panels[event.index];
+      this.selectedPanel(panel);
+      this.onselect({panel: panel});
       break;
     default:
       break;

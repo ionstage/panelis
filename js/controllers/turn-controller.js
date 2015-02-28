@@ -9,10 +9,10 @@
   var ControlBoardController = app.ControlBoardController;
 
   var TurnController = function(option) {
-    this.firstMoveColor = m.prop(option.firstMoveColor || Panel.COLOR_WHITE);
-    this.actionTileController = m.prop(option.actionTileController || new ActionTileController());
-    this.whiteControlBoardController = m.prop(option.whiteControlBoardController || new ControlBoardController());
-    this.blackControlBoardController = m.prop(option.blackControlBoardController || new ControlBoardController());
+    this.firstMoveColor = m.prop(option.firstMoveColor);
+    this.actionTileController = m.prop(option.actionTileController);
+    this.whiteControlBoardController = m.prop(option.whiteControlBoardController);
+    this.blackControlBoardController = m.prop(option.blackControlBoardController);
   };
 
   TurnController.prototype.start = function() {

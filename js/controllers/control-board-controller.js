@@ -9,15 +9,15 @@
   var noop = function() {};
 
   var ControlBoardController = function(option) {
-    this.color = m.prop(option.color || Panel.COLOR_WHITE);
-    this.active = m.prop(option.active || false);
-    this.panels = m.prop(option.panels || []);
+    this.color = m.prop(option.color);
+    this.active = m.prop(false);
+    this.panels = m.prop([]);
     this.selectedIndex = m.prop(-1);
-    this.selectedPanel = option.selectedPanel || m.prop(null);
-    this.score = m.prop(option.score || new Score());
-    this.panelWidth = m.prop(option.panelWidth || 72);
-    this.onok = option.onok || noop;
-    this.onback = option.onback || noop;
+    this.selectedPanel = m.prop(null);
+    this.score = m.prop(new Score());
+    this.panelWidth = m.prop(72);
+    this.onok = noop;
+    this.onback = noop;
   };
 
   ControlBoardController.prototype.supplyPanel = function() {

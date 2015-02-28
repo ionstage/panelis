@@ -5,22 +5,30 @@
 
   var Panel = app.Panel;
 
-  app.controller = function() {
-    this.actionTileController = new app.ActionTileController();
+  var ActionTileController = app.ActionTileController;
+  var ControlBoardController = app.ControlBoardController;
+  var TurnController = app.TurnController;
 
-    var whiteControlBoardController = this.whiteControlBoardController = new app.ControlBoardController({
+  var panelView = app.panelView;
+  var actionTileView = app.actionTileView;
+  var controlBoardView = app.controlBoardView;
+
+  app.controller = function() {
+    this.actionTileController = new ActionTileController();
+
+    this.whiteControlBoardController = new ControlBoardController({
       color: Panel.COLOR_WHITE
     });
 
-    var blackControlBoardController = this.blackControlBoardController = new app.ControlBoardController({
+    this.blackControlBoardController = new ControlBoardController({
       color: Panel.COLOR_BLACK
     });
 
-    new app.TurnController({
+    new TurnController({
       firstMoveColor: Panel.COLOR_WHITE,
       actionTileController: this.actionTileController,
-      whiteControlBoardController: whiteControlBoardController,
-      blackControlBoardController: blackControlBoardController
+      whiteControlBoardController: this.whiteControlBoardController,
+      blackControlBoardController: this.blackControlBoardController
     }).start();
   };
 
@@ -33,11 +41,13 @@
         app.view.stageElement = element;
       }
     }, [
-      app.actionTileView(ctrl.actionTileController),
-      app.controlBoardView(ctrl.whiteControlBoardController),
-      app.controlBoardView(ctrl.blackControlBoardController)
+      actionTileView(ctrl.actionTileController),
+      controlBoardView(ctrl.whiteControlBoardController),
+      controlBoardView(ctrl.blackControlBoardController)
     ]);
   };
+
+  app.view.stageElement = null;
 
   app.view.supportsTouch = 'createTouch' in global.document;
 
@@ -57,11 +67,11 @@
   };
 
   app.view.panel = function(option) {
-    return app.panelView({
-      panel: m.prop(option.panel || null),
-      x: m.prop(option.x || 0),
-      y: m.prop(option.y || 0),
-      width: m.prop(option.width || 72)
+    return panelView({
+      panel: m.prop(option.panel),
+      x: m.prop(option.x),
+      y: m.prop(option.y),
+      width: m.prop(option.width)
     });
   };
 
@@ -72,10 +82,12 @@
     if (whitePlayerScoreTotal === blackPlayerScoreTotal) {
       message += 'Draw';
     } else {
-      var winnerColor = (whitePlayerScoreTotal > blackPlayerScoreTotal) ? 'white' : 'black';
+      var winnerColor = (whitePlayerScoreTotal > blackPlayerScoreTotal) ?
+                        'white' : 'black';
       message += 'The ' + winnerColor + ' player wins!';
     }
-    message += '\n\n[Score]\nwhite: ' + whitePlayerScoreTotal + '\nblack: ' + blackPlayerScoreTotal;
+    message += '\n\n[Score]\nwhite: ' + whitePlayerScoreTotal +
+               '\nblack: ' + blackPlayerScoreTotal;
     alert(message);
   };
 

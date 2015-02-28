@@ -5,9 +5,9 @@
 }
 
 .score-animation .circle.animation {
-  -webkit-animation: fadeout 1s;
-  -o-animation: fadeout 1s;
-  animation: fadeout 1s;
+  -webkit-animation: fadeout 0.75s;
+  -o-animation: fadeout 0.75s;
+  animation: fadeout 0.75s;
   opacity: 0;
 }
 

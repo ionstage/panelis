@@ -135,7 +135,7 @@
 
     Array.prototype.push.apply(animations, chainAnimations);
 
-    return true;
+    return false;
   };
 
   app.TileController = TileController;

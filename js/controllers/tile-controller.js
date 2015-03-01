@@ -72,6 +72,24 @@
     return ctrl.tile().releaseColor(row, col);
   };
 
+  var fixJointedPanelAnimation = function(ctrl, row, col) {
+    var isFixed = false;
+    var score = {red: 0, yellow: 0, green: 0};
+
+    // top
+    isFixed = fixJointedPanel(ctrl, row, col, row - 1, col, score) || isFixed;
+    // right
+    isFixed = fixJointedPanel(ctrl, row, col, row, col + 1, score) || isFixed;
+    // bottom
+    isFixed = fixJointedPanel(ctrl, row, col, row + 1, col, score) || isFixed;
+    // left
+    isFixed = fixJointedPanel(ctrl, row, col, row, col - 1, score) || isFixed;
+
+    ctrl.onscorechange(score);
+
+    return isFixed;
+  };
+
   var fixJointedPanel = function(ctrl, row0, col0, row1, col1, score) {
     var tile = ctrl.tile();
     var jointedPanel = tile.panel(row1, col1);
@@ -96,24 +114,6 @@
     }
 
     return true;
-  };
-
-  var fixJointedPanelAnimation = function(ctrl, row, col) {
-    var isFixed = false;
-    var score = {red: 0, yellow: 0, green: 0};
-
-    // top
-    isFixed = fixJointedPanel(ctrl, row, col, row - 1, col, score) || isFixed;
-    // right
-    isFixed = fixJointedPanel(ctrl, row, col, row, col + 1, score) || isFixed;
-    // bottom
-    isFixed = fixJointedPanel(ctrl, row, col, row + 1, col, score) || isFixed;
-    // left
-    isFixed = fixJointedPanel(ctrl, row, col, row, col - 1, score) || isFixed;
-
-    ctrl.onscorechange(score);
-
-    return isFixed;
   };
 
   var chainAnimation = function(ctrl, row, col, animations) {

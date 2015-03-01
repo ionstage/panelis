@@ -102,7 +102,23 @@
   };
 
   var slotView = function(panels, selectedIndex, panelWidth, x, y, onselect) {
-    var panelViews = panels.map(function(panel, index) {
+    var panelViews = slotPanelViews(panels, selectedIndex, panelWidth, x, y);
+    var panelHitAreaViews = slotPanelHitAreaViews(panels, panelWidth, x, y, onselect);
+
+    return m('g.slot', [
+      m('rect.back', {
+        x: x,
+        y: y,
+        width: panelWidth + 24,
+        height: (panelWidth + 12) * panels.length + 12
+      }),
+      m('g', panelViews),
+      m('g', panelHitAreaViews)
+    ]);
+  };
+
+  var slotPanelViews = function(panels, selectedIndex, panelWidth, x, y) {
+    return panels.map(function(panel, index) {
       if (!panels)
         return null;
 
@@ -116,8 +132,10 @@
         })
       ]);
     });
+  };
 
-    var panelHitAreaViews = panels.map(function(panel, index) {
+  var slotPanelHitAreaViews = function(panels, panelWidth, x, y, onselect) {
+    return panels.map(function(panel, index) {
       if (!panels)
         return null;
 
@@ -127,9 +145,9 @@
         width: panelWidth,
         height: panelWidth,
         index: index,
-        selectHandler: (function(selectedIndex) {
+        selectHandler: (function(index) {
           return function() {
-            onselect({selectedIndex: selectedIndex});
+            onselect({selectedIndex: index});
           };
         }(index)),
         config: function(element, isInitialized) {
@@ -142,17 +160,6 @@
 
       return m('rect.hitarea', hitAreaAttr);
     });
-
-    return m('g.slot', [
-      m('rect.back', {
-        x: x,
-        y: y,
-        width: panelWidth + 24,
-        height: (panelWidth + 12) * panels.length + 12
-      }),
-      m('g', panelViews),
-      m('g', panelHitAreaViews)
-    ]);
   };
 
   var scoreView = function(score, x, y) {

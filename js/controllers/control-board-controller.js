@@ -39,6 +39,15 @@
     }
   };
 
+  ControlBoardController.prototype.removeSelectedPanel = function() {
+    this.panels()[this.selectedIndex()] = null;
+    this.selectedPanel(null);
+  };
+
+  ControlBoardController.prototype.resetScore = function() {
+    this.score().reset();
+  };
+
   ControlBoardController.prototype.dispatchEvent = function(event) {
     var active = this.active();
     var panels = this.panels();

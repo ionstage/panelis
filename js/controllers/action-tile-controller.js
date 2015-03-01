@@ -24,6 +24,11 @@
     this.selectedPosition = m.prop(null);
   }, TileController);
 
+  ActionTileController.prototype.clearSelection = function() {
+    this.selectedPanel(null);
+    this.selectedPosition(null);
+  };
+
   ActionTileController.prototype.dispatchEvent = function(event) {
     var tile = this.tile();
     var selectedPanel = this.selectedPanel();

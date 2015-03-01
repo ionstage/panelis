@@ -39,13 +39,11 @@
     return null;
   };
 
-  TurnController.prototype.start = function() {
-    var turnPlayerColor = this.turnPlayerColor();
+  TurnController.prototype.initEvent = function() {
     var actionTileController = this.actionTileController();
     var whiteControlBoardController = this.whiteControlBoardController();
     var blackControlBoardController = this.blackControlBoardController();
 
-    // set controller events
     actionTileController.onscorechange = onScoreChangeActionTileController.bind(this);
     actionTileController.onscoreanimationend = onScoreAnimationEndActionTileController.bind(this);
     whiteControlBoardController.onok = onOkControlBoardController.bind(this);
@@ -54,8 +52,10 @@
     blackControlBoardController.onok = whiteControlBoardController.onok;
     blackControlBoardController.onback = onBackControlBoardController.bind(this);
     blackControlBoardController.onselect = onSelectControlBoardController.bind(this);
+  };
 
-    // initialize
+  TurnController.prototype.start = function() {
+    this.initEvent();
     this.reset();
     this.activate();
   };

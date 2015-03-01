@@ -62,7 +62,7 @@
         oninitialize({element: panelElement});
       }
     }, [
-      app.view.panel({
+      app.createPanelView({
         panel: selectedPanel,
         x: 0,
         y: 0,
@@ -97,14 +97,14 @@
       config: function(element, isInitialized) {
         if (isInitialized)
           return;
-        var eventName = app.view.supportsTouch ? 'touchstart' : 'mousedown';
+        var eventName = app.supportsTouch ? 'touchstart' : 'mousedown';
         element.addEventListener(eventName, this.attrs.startHandler);
       }
     });
   };
 
   var rotatePanel = function(ctrl, panelElement) {
-    if (app.view.supportsTransitionEnd)
+    if (app.supportsTransitionEnd)
       replaceClass(panelElement, 'stop', 'rotate');
     else
       rotationEndPanel(ctrl, panelElement);
@@ -123,7 +123,7 @@
 
     var rowLength = tile.rowLength();
     var colLength = tile.colLength();
-    var loc = app.view.globalToLocal({x: x, y: y});
+    var loc = app.globalToLocal({x: x, y: y});
     var row = parseInt((loc.y + panelWidth * rowLength / 2) / panelWidth, 10);
     var col = parseInt((loc.x + panelWidth * colLength / 2) / panelWidth, 10);
 

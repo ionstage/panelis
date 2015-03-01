@@ -124,7 +124,7 @@
 
       var isSelected = selectedIndex === index;
       return m('g', {className: isSelected ? 'selected' : ''}, [
-        app.view.panel({
+        app.createPanelView({
           panel: panel,
           x: x + 12 + panelWidth / 2,
           y: y + 12 + (panelWidth + 12) * index + panelWidth / 2,
@@ -153,7 +153,7 @@
         config: function(element, isInitialized) {
           if (isInitialized)
             return;
-          var eventName = app.view.supportsTouch ? 'touchstart' : 'mousedown';
+          var eventName = app.supportsTouch ? 'touchstart' : 'mousedown';
           element.addEventListener(eventName, this.attrs.selectHandler);
         }
       };

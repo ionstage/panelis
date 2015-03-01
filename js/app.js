@@ -33,40 +33,29 @@
   };
 
   app.view = function(ctrl) {
-    return m('svg.stage.unselectable', {
-      viewBox: '-360,-360,720,720',
-      config: function(element, isInitialized) {
-        if (isInitialized)
-          return;
-        app.view.stageElement = element;
-      }
-    }, [
+    return m('svg.stage.unselectable', {viewBox: '-360,-360,720,720'}, [
       actionTileView(ctrl.actionTileController),
       controlBoardView(ctrl.whiteControlBoardController),
       controlBoardView(ctrl.blackControlBoardController)
     ]);
   };
 
-  app.view.stageElement = null;
+  app.supportsTouch = 'createTouch' in global.document;
 
-  app.view.supportsTouch = 'createTouch' in global.document;
-
-  app.view.supportsTransitionEnd = (function() {
+  app.supportsTransitionEnd = (function() {
     var div = document.createElement('div');
     return typeof div.style['transition'] !== 'undefined';
   }());
 
-  app.view.globalToLocal = function(gpt) {
-    var stageElement = app.view.stageElement;
-    if (!stageElement)
-      return null;
+  app.globalToLocal = function(gpt) {
+    var stageElement = document.querySelector('.stage');
     var lpt = stageElement.createSVGPoint();
     lpt.x = gpt.x;
     lpt.y = gpt.y;
     return lpt.matrixTransform(stageElement.getScreenCTM().inverse());
   };
 
-  app.view.panel = function(option) {
+  app.createPanelView = function(option) {
     return panelView({
       panel: m.prop(option.panel),
       x: m.prop(option.x),

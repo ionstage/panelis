@@ -103,12 +103,7 @@
 
   TurnController.prototype.gameEnd = function() {
     setTimeout((function() {
-      // show result
-      var whiteControlBoardController = this.whiteControlBoardController();
-      var blackControlBoardController = this.blackControlBoardController();
-      var whitePlayerScore = whiteControlBoardController.score();
-      var blackPlayerScore = blackControlBoardController.score();
-      app.view.showResult(whitePlayerScore, blackPlayerScore);
+      showResult(this);
 
       // next game
       this.toggleTurnPlayerColor();
@@ -203,6 +198,25 @@
   var onSelectControlBoardController = function(event) {
     var actionTileController = this.actionTileController();
     actionTileController.selectedPanel(event.panel);
+  };
+
+  var showResult = function(ctrl) {
+    var whiteControlBoardController = ctrl.whiteControlBoardController();
+    var blackControlBoardController = ctrl.blackControlBoardController();
+
+    var message = '';
+    var whitePlayerScoreTotal = whiteControlBoardController.score().total();
+    var blackPlayerScoreTotal = blackControlBoardController.score().total();
+    if (whitePlayerScoreTotal === blackPlayerScoreTotal) {
+      message += 'Draw';
+    } else {
+      var winnerColor = (whitePlayerScoreTotal > blackPlayerScoreTotal) ?
+                        'white' : 'black';
+      message += 'The ' + winnerColor + ' player wins!';
+    }
+    message += '\n\n[Score]\nwhite: ' + whitePlayerScoreTotal +
+               '\nblack: ' + blackPlayerScoreTotal;
+    alert(message);
   };
 
   app.TurnController = TurnController;

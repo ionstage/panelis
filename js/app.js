@@ -75,22 +75,6 @@
     });
   };
 
-  app.view.showResult = function(whitePlayerScore, blackPlayerScore) {
-    var message = '';
-    var whitePlayerScoreTotal = whitePlayerScore.total();
-    var blackPlayerScoreTotal = blackPlayerScore.total();
-    if (whitePlayerScoreTotal === blackPlayerScoreTotal) {
-      message += 'Draw';
-    } else {
-      var winnerColor = (whitePlayerScoreTotal > blackPlayerScoreTotal) ?
-                        'white' : 'black';
-      message += 'The ' + winnerColor + ' player wins!';
-    }
-    message += '\n\n[Score]\nwhite: ' + whitePlayerScoreTotal +
-               '\nblack: ' + blackPlayerScoreTotal;
-    alert(message);
-  };
-
   m.module(document.getElementById('container'), app);
   global.app = app;
 })(this);

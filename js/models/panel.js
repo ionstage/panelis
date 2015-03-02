@@ -9,11 +9,11 @@
 
   var Panel = function(color, top, right, bottom, left, isFixed) {
     this.color = m.prop(color || Panel.COLOR_BROWN);
-    this.top = m.prop(top || false);
-    this.right = m.prop(right || false);
-    this.bottom = m.prop(bottom || false);
-    this.left = m.prop(left || false);
     this.isFixed = m.prop(isFixed || false);
+    this._topJoint = m.prop(top || false);
+    this._rightJoint = m.prop(right || false);
+    this._bottomJoint = m.prop(bottom || false);
+    this._leftJoint = m.prop(left || false);
   };
 
   Panel.prototype.mixColor = function(color) {
@@ -33,8 +33,8 @@
 
   Panel.prototype.hasJoint = function(position, bool) {
     if (typeof bool === 'undefined')
-      return this[position]();
-    this[position](bool);
+      return this['_' + position + 'Joint']();
+    this['_' + position + 'Joint'](bool);
   };
 
   Panel.prototype.rotate = function() {
@@ -74,14 +74,6 @@
     );
   };
 
-  var basePanelList = [
-    new Panel(null, true, false, false, false),
-    new Panel(null, true, true, false, false),
-    new Panel(null, true, false, true, false),
-    new Panel(null, true, true, true, false),
-    new Panel(null, true, true, true, true)
-  ];
-
   Panel.sample = function(color, joint) {
     var top, right, bottom, left;
     if (joint) {
@@ -109,6 +101,14 @@
   Panel.JOINT_LEFT = 'left';
   Panel.JOINT_BOTTOM = 'bottom';
   Panel.JOINT_RIGHT = 'right';
+
+  var basePanelList = [
+    new Panel(null, true, false, false, false),
+    new Panel(null, true, true, false, false),
+    new Panel(null, true, false, true, false),
+    new Panel(null, true, true, true, false),
+    new Panel(null, true, true, true, true)
+  ];
 
   app.Panel = Panel;
   global.app = app;

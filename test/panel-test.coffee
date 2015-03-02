@@ -14,15 +14,6 @@ assertHasJoint = (panel, top, right, bottom, left) ->
 
 describe 'Panel', ->
 
-  it '#color', ->
-    panel = new Panel(Panel.COLOR_BLACK)
-    assert.equal(panel.color(), Panel.COLOR_BLACK)
-
-  it '#isFixed', ->
-    panel = new Panel()
-    panel.isFixed(true)
-    assert.equal(panel.isFixed(), true)
-
   it '#mixColor', ->
     panel = new Panel(Panel.COLOR_BLACK)
     panel.mixColor(Panel.COLOR_WHITE)

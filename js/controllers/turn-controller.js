@@ -91,7 +91,9 @@
 
   TurnController.prototype.activate = function() {
     var activeControlBoardController = this.activeControlBoardController();
+    var nonActiveControlBoardController = this.nonActiveControlBoardController();
     activeControlBoardController.active(true);
+    nonActiveControlBoardController.active(false);
   };
 
   TurnController.prototype.deactivate = function() {
@@ -162,7 +164,6 @@
 
     // player can't set panel and select panel
     if (!canJointPanels) {
-      this.deactivate();
       actionTileController.clearSelection();
       activeControlBoardController.removeSelectedPanel();
       this.toggleTurnPlayerColor();

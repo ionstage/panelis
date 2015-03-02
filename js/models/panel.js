@@ -37,20 +37,6 @@
     this[position](bool);
   };
 
-  Panel.prototype.setJoint = function(top, right, bottom, left) {
-    if (top !== null)
-      this.hasJoint(Panel.JOINT_TOP, top);
-
-    if (right !== null)
-      this.hasJoint(Panel.JOINT_RIGHT, right);
-
-    if (bottom !== null)
-      this.hasJoint(Panel.JOINT_BOTTOM, bottom);
-
-    if (left !== null)
-      this.hasJoint(Panel.JOINT_LEFT, left);
-  }
-
   Panel.prototype.rotate = function() {
     var tmp = this.hasJoint(Panel.JOINT_TOP);
     this.hasJoint(Panel.JOINT_TOP, this.hasJoint(Panel.JOINT_LEFT));

@@ -39,20 +39,13 @@ describe 'Panel', ->
       panel.hasJoint(position, true)
       assert.equal(panel.hasJoint(position), true)
 
-  it '#setJoint', ->
-    panel = new Panel()
-    panel.setJoint(true, null, true, false)
-    assertHasJoint(panel, true, false, true, false)
-
   it '#rotate', ->
-    panel = new Panel()
-    panel.setJoint(true, false, true, false)
+    panel = new Panel(null, true, false, true, false)
     panel.rotate()
     assertHasJoint(panel, false, true, false, true)
 
   it '#resetRotation', ->
-    panel = new Panel()
-    panel.setJoint(true, false, false, false)
+    panel = new Panel(null, true, false, false, false)
     panel.rotate()
     panel.rotate()
     panel.resetRotation()

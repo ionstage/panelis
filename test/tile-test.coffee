@@ -47,12 +47,14 @@ describe 'Tile', ->
     p1 = new Panel()
     tile.panel(3, 3, p0)
     assert.equal(tile.canJoint(3, 4, p1), false)
-    p1.setJoint(null, null, null, true)
+    p1 = new Panel(null, null, null, null, true)
     assert.equal(tile.canJoint(3, 4, p1), true)
     tile.panel(3, 4, p1)
     assert.equal(tile.canJoint(3, 4), true)
-    p0.setJoint(true, false, false, false)
-    p1.setJoint(true, false, false, false)
+    p0 = new Panel(null, true, false, false, false)
+    p1 = new Panel(null, true, false, false, false)
+    tile.panel(3, 3, p0)
+    tile.panel(3, 4, p1)
     assert.equal(tile.canJoint(3, 4), true)
 
   it '#canJointAnyPosition', ->

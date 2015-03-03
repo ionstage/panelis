@@ -13,192 +13,107 @@
     this.blackControlBoardController = m.prop(option.blackControlBoardController);
   };
 
-  TurnController.prototype.toggleTurnPlayerColor = function() {
-    var turnPlayerColor = this.turnPlayerColor();
-    if (turnPlayerColor === Panel.COLOR_WHITE)
-      this.turnPlayerColor(Panel.COLOR_BLACK);
-    else if (turnPlayerColor === Panel.COLOR_BLACK)
-      this.turnPlayerColor(Panel.COLOR_WHITE);
-  };
-
-  TurnController.prototype.activeControlBoardController = function() {
-    var turnPlayerColor = this.turnPlayerColor();
-    if (turnPlayerColor === Panel.COLOR_WHITE)
-      return this.whiteControlBoardController();
-    else if (turnPlayerColor === Panel.COLOR_BLACK)
-      return this.blackControlBoardController();
-    return null;
-  };
-
-  TurnController.prototype.nonActiveControlBoardController = function() {
-    var turnPlayerColor = this.turnPlayerColor();
-    if (turnPlayerColor === Panel.COLOR_WHITE)
-      return this.blackControlBoardController();
-    else if (turnPlayerColor === Panel.COLOR_BLACK)
-      return this.whiteControlBoardController();
-    return null;
-  };
-
-  TurnController.prototype.initEvent = function() {
-    var actionTileController = this.actionTileController();
-    var whiteControlBoardController = this.whiteControlBoardController();
-    var blackControlBoardController = this.blackControlBoardController();
-
-    actionTileController.onscorechange = onScoreChangeActionTileController.bind(this);
-    actionTileController.onscoreanimationend = onScoreAnimationEndActionTileController.bind(this);
-    whiteControlBoardController.onok = onOkControlBoardController.bind(this);
-    whiteControlBoardController.onback = onBackControlBoardController.bind(this);
-    whiteControlBoardController.onselect = onSelectControlBoardController.bind(this);
-    blackControlBoardController.onok = whiteControlBoardController.onok;
-    blackControlBoardController.onback = onBackControlBoardController.bind(this);
-    blackControlBoardController.onselect = onSelectControlBoardController.bind(this);
-  };
-
   TurnController.prototype.start = function() {
-    this.initEvent();
-    this.reset();
-    this.activate();
+    initEvent(this);
+    reset(this);
+    activate(this);
   };
 
-  TurnController.prototype.reset = function() {
-    var actionTileController = this.actionTileController();
-    var activeControlBoardController = this.activeControlBoardController();
-    var nonActiveControlBoardController = this.nonActiveControlBoardController();
+  var activeControlBoardController = function(ctrl) {
+    var turnPlayerColor = ctrl.turnPlayerColor();
+    if (turnPlayerColor === Panel.COLOR_WHITE)
+      return ctrl.whiteControlBoardController();
+    else if (turnPlayerColor === Panel.COLOR_BLACK)
+      return ctrl.blackControlBoardController();
+    return null;
+  };
+
+  var nonActiveControlBoardController = function(ctrl) {
+    var turnPlayerColor = ctrl.turnPlayerColor();
+    if (turnPlayerColor === Panel.COLOR_WHITE)
+      return ctrl.blackControlBoardController();
+    else if (turnPlayerColor === Panel.COLOR_BLACK)
+      return ctrl.whiteControlBoardController();
+    return null;
+  };
+
+  var toggleTurnPlayerColor = function(ctrl) {
+    var turnPlayerColor = ctrl.turnPlayerColor();
+    if (turnPlayerColor === Panel.COLOR_WHITE)
+      ctrl.turnPlayerColor(Panel.COLOR_BLACK);
+    else if (turnPlayerColor === Panel.COLOR_BLACK)
+      ctrl.turnPlayerColor(Panel.COLOR_WHITE);
+  };
+
+  var initEvent = function(ctrl) {
+    var actionTileController = ctrl.actionTileController();
+    var whiteControlBoardController = ctrl.whiteControlBoardController();
+    var blackControlBoardController = ctrl.blackControlBoardController();
+
+    actionTileController.onscorechange = onScoreChangeActionTileController.bind(ctrl);
+    actionTileController.onscoreanimationend = onScoreAnimationEndActionTileController.bind(ctrl);
+    whiteControlBoardController.onok = onOkControlBoardController.bind(ctrl);
+    whiteControlBoardController.onback = onBackControlBoardController.bind(ctrl);
+    whiteControlBoardController.onselect = onSelectControlBoardController.bind(ctrl);
+    blackControlBoardController.onok = whiteControlBoardController.onok;
+    blackControlBoardController.onback = onBackControlBoardController.bind(ctrl);
+    blackControlBoardController.onselect = onSelectControlBoardController.bind(ctrl);
+  };
+
+  var reset = function(ctrl) {
+    var actionTileController = ctrl.actionTileController();
+    var activeController = activeControlBoardController(ctrl);
+    var nonActiveController = nonActiveControlBoardController(ctrl);
 
     var tile = actionTileController.tile();
-    var activePlayerColor = activeControlBoardController.color();
-    var nonActivePlayerColor = nonActiveControlBoardController.color();
+    var activeControllerColor = activeController.color();
+    var nonActiveControllerColor = nonActiveController.color();
 
     tile.reset();
     tile.randomEdge();
 
-    activeControlBoardController.panels([
-      Panel.sample(activePlayerColor),
-      Panel.sample(activePlayerColor),
-      Panel.sample(activePlayerColor)
+    activeController.panels([
+      Panel.sample(activeControllerColor),
+      Panel.sample(activeControllerColor),
+      Panel.sample(activeControllerColor)
     ]);
 
-    activeControlBoardController.resetScore();
+    activeController.resetScore();
 
-    nonActiveControlBoardController.panels([
-      Panel.sample(nonActivePlayerColor),
-      Panel.sample(nonActivePlayerColor),
+    nonActiveController.panels([
+      Panel.sample(nonActiveControllerColor),
+      Panel.sample(nonActiveControllerColor),
       null
     ]);
 
-    nonActiveControlBoardController.resetScore();
+    nonActiveController.resetScore();
   };
 
-  TurnController.prototype.activate = function() {
-    var activeControlBoardController = this.activeControlBoardController();
-    var nonActiveControlBoardController = this.nonActiveControlBoardController();
-    activeControlBoardController.active(true);
-    nonActiveControlBoardController.active(false);
+  var activate = function(ctrl) {
+    var activeController = activeControlBoardController(ctrl);
+    var nonActiveController = nonActiveControlBoardController(ctrl);
+    activeController.active(true);
+    nonActiveController.active(false);
   };
 
-  TurnController.prototype.deactivate = function() {
-    var activeControlBoardController = this.activeControlBoardController();
-    var nonActiveControlBoardController = this.nonActiveControlBoardController();
-    activeControlBoardController.active(false);
-    nonActiveControlBoardController.active(false);
+  var deactivate = function(ctrl) {
+    var activeController = activeControlBoardController(ctrl);
+    var nonActiveController = nonActiveControlBoardController(ctrl);
+    activeController.active(false);
+    nonActiveController.active(false);
   };
 
-  TurnController.prototype.gameEnd = function() {
-    setTimeout((function() {
-      showResult(this);
+  var gameEnd = function(ctrl) {
+    setTimeout(function() {
+      showResult(ctrl);
 
       // next game
-      this.toggleTurnPlayerColor();
-      this.reset();
-      this.activate();
+      toggleTurnPlayerColor(this);
+      reset(this);
+      activate(this);
 
       m.redraw(true);
-    }).bind(this), 500);
-  };
-
-  var onScoreChangeActionTileController = function(event) {
-    var activeControlBoardController = this.activeControlBoardController();
-    var score = activeControlBoardController.score();
-    score.add(Score.COLOR_RED, event.red);
-    score.add(Score.COLOR_YELLOW, event.yellow);
-    score.add(Score.COLOR_GREEN, event.green);
-  };
-
-  var onScoreAnimationEndActionTileController = function() {
-    var actionTileController = this.actionTileController();
-    var activeControlBoardController = this.activeControlBoardController();
-    var nonActiveControlBoardController = this.nonActiveControlBoardController();
-
-    // supply panel before calculating canJointNonActiveBoardPanels
-    nonActiveControlBoardController.supplyPanel();
-
-    var tile = actionTileController.tile();
-    var canJointNonActiveBoardPanels = tile.canJointAnyPosition(nonActiveControlBoardController.panels());
-    var canJointActiveBoardPanels = tile.canJointAnyPosition(activeControlBoardController.panels());
-
-    if (!canJointNonActiveBoardPanels && !canJointActiveBoardPanels) {
-      this.gameEnd();
-    } else {
-      this.toggleTurnPlayerColor();
-      this.activate();
-    }
-
-    m.redraw(true);
-  };
-
-  var onOkControlBoardController = function() {
-    var actionTileController = this.actionTileController();
-    var activeControlBoardController = this.activeControlBoardController();
-
-    var tile = actionTileController.tile();
-    var selectedPanel = actionTileController.selectedPanel();
-    var canJointPanels = tile.canJointAnyPosition(activeControlBoardController.panels());
-    var position = actionTileController.selectedPosition();
-
-    if (!selectedPanel)
-      return;
-
-    // player can't set panel any position, but set
-    if (!canJointPanels && position)
-      return;
-
-    // player can't set panel and select panel
-    if (!canJointPanels) {
-      actionTileController.clearSelection();
-      activeControlBoardController.removeSelectedPanel();
-      this.toggleTurnPlayerColor();
-      activeControlBoardController = this.activeControlBoardController();
-      activeControlBoardController.supplyPanel();
-      this.activate();
-      return;
-    }
-
-    // player can set panel, but not set
-    if (!position)
-      return;
-
-    var row = position.row;
-    var col = position.col;
-
-    // player can set panel, but can't joint panel
-    if (!tile.canJoint(row, col, selectedPanel))
-      return;
-
-    this.deactivate();
-    tile.panel(row, col, selectedPanel);
-    actionTileController.clearSelection();
-    activeControlBoardController.removeSelectedPanel();
-    actionTileController.startScoreAnimation(row, col);
-  };
-
-  var onBackControlBoardController = function() {
-    var actionTileController = this.actionTileController();
-    actionTileController.clearSelection();
-  };
-
-  var onSelectControlBoardController = function(event) {
-    var actionTileController = this.actionTileController();
-    actionTileController.selectedPanel(event.panel);
+    }, 500);
   };
 
   var showResult = function(ctrl) {
@@ -218,6 +133,91 @@
     message += '\n\n[Score]\nwhite: ' + whitePlayerScoreTotal +
                '\nblack: ' + blackPlayerScoreTotal;
     alert(message);
+  };
+
+  var onScoreChangeActionTileController = function(event) {
+    var activeController = activeControlBoardController(this);
+    var score = activeController.score();
+    score.add(Score.COLOR_RED, event.red);
+    score.add(Score.COLOR_YELLOW, event.yellow);
+    score.add(Score.COLOR_GREEN, event.green);
+  };
+
+  var onScoreAnimationEndActionTileController = function() {
+    var actionTileController = this.actionTileController();
+    var activeController = activeControlBoardController(this);
+    var nonActiveController = nonActiveControlBoardController(this);
+
+    // supply panel before calculating canJointNonActiveBoardPanels
+    nonActiveController.supplyPanel();
+
+    var tile = actionTileController.tile();
+    var canJointNonActiveBoardPanels = tile.canJointAnyPosition(nonActiveController.panels());
+    var canJointActiveBoardPanels = tile.canJointAnyPosition(activeController.panels());
+
+    if (!canJointNonActiveBoardPanels && !canJointActiveBoardPanels) {
+      gameEnd(this);
+    } else {
+      toggleTurnPlayerColor(this);
+      activate(this);
+    }
+
+    m.redraw(true);
+  };
+
+  var onOkControlBoardController = function() {
+    var actionTileController = this.actionTileController();
+    var activeController = activeControlBoardController(this);
+
+    var tile = actionTileController.tile();
+    var selectedPanel = actionTileController.selectedPanel();
+    var canJointPanels = tile.canJointAnyPosition(activeController.panels());
+    var position = actionTileController.selectedPosition();
+
+    if (!selectedPanel)
+      return;
+
+    // player can't set panel any position, but set
+    if (!canJointPanels && position)
+      return;
+
+    // player can't set panel and select panel
+    if (!canJointPanels) {
+      actionTileController.clearSelection();
+      activeController.removeSelectedPanel();
+      toggleTurnPlayerColor(this);
+      activeController = activeControlBoardController(this);
+      activeController.supplyPanel();
+      activate(this);
+      return;
+    }
+
+    // player can set panel, but not set
+    if (!position)
+      return;
+
+    var row = position.row;
+    var col = position.col;
+
+    // player can set panel, but can't joint panel
+    if (!tile.canJoint(row, col, selectedPanel))
+      return;
+
+    deactivate(this);
+    tile.panel(row, col, selectedPanel);
+    actionTileController.clearSelection();
+    activeController.removeSelectedPanel();
+    actionTileController.startScoreAnimation(row, col);
+  };
+
+  var onBackControlBoardController = function() {
+    var actionTileController = this.actionTileController();
+    actionTileController.clearSelection();
+  };
+
+  var onSelectControlBoardController = function(event) {
+    var actionTileController = this.actionTileController();
+    actionTileController.selectedPanel(event.panel);
   };
 
   app.TurnController = TurnController;

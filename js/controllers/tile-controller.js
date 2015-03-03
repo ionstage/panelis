@@ -17,14 +17,6 @@
     this.onscoreanimationend = noop;
   };
 
-  TileController.prototype.pushScoreColor = function(scoreColor) {
-    this.scoreColors().push(scoreColor);
-  };
-
-  TileController.prototype.clearScoreColors = function() {
-    this.scoreColors([]);
-  };
-
   TileController.prototype.startScoreAnimation = function(row, col) {
     var ctrl = this;
     var animations = [
@@ -49,10 +41,18 @@
         setTimeout(function() {
           m.redraw(true);
           animate(index + 1);
-          ctrl.clearScoreColors();
+          clearScoreColors(ctrl);
         }, wait ? 500 : 0);
       }(0));
     }, 250);
+  };
+
+  var pushScoreColor = function(ctrl, scoreColor) {
+    ctrl.scoreColors().push(scoreColor);
+  };
+
+  var clearScoreColors = function(ctrl) {
+    ctrl.scoreColors([]);
   };
 
   var fixStartPanelAnimation = function(ctrl, row, col) {
@@ -62,7 +62,7 @@
       return false;
 
     tile.fix(row, col);
-    ctrl.pushScoreColor({row: row, col: col, color: Score.COLOR_GREEN});
+    pushScoreColor(ctrl, {row: row, col: col, color: Score.COLOR_GREEN});
     ctrl.onscorechange({red: 0, yellow:0, green: 1});
 
     return true;
@@ -105,11 +105,11 @@
 
     if (jointedPanel.color() === Panel.COLOR_GRAY) {
       tile.panel(row1, col1, null);
-      ctrl.pushScoreColor({row: row0, col: col0, color: Score.COLOR_RED});
+      pushScoreColor(ctrl, {row: row0, col: col0, color: Score.COLOR_RED});
       score.red += 1;
     } else {
       tile.fix(row1, col1);
-      ctrl.pushScoreColor({row: row1, col: col1, color: Score.COLOR_GREEN});
+      pushScoreColor(ctrl, {row: row1, col: col1, color: Score.COLOR_GREEN});
       score.green += 1;
     }
 
@@ -126,7 +126,7 @@
     var chainAnimations = chainList.map(function(chains) {
       return function() {
         chains.forEach(function(chain) {
-          ctrl.pushScoreColor({
+          pushScoreColor(ctrl, {
             row: chain.row,
             col: chain.col,
             color: Score.COLOR_YELLOW

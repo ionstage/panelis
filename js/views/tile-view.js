@@ -4,12 +4,10 @@
   var m = global.m || require('mithril');
 
   var tileView = function(ctrl) {
-    var tile = ctrl.tile();
     var panelWidth = ctrl.panelWidth();
     var scoreColors = ctrl.scoreColors();
-
-    var rowLength = tile.rowLength();
-    var colLength = tile.colLength();
+    var rowLength = ctrl.rowLength();
+    var colLength = ctrl.colLength();
 
     return [
       m('g.tile', [
@@ -19,7 +17,7 @@
           width: panelWidth * colLength,
           height: panelWidth * rowLength
         }),
-        m('g', tile.panels().map(function(cols, ri) {
+        m('g', ctrl.panels().map(function(cols, ri) {
           return cols.map(function(panel, ci) {
             return app.createPanelView({
               panel: panel,

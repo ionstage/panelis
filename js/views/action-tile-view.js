@@ -36,13 +36,11 @@
   };
 
   var selectedPanelView = function(ctrl, oninitialize) {
-    var tile = ctrl.tile();
     var selectedPanel = ctrl.selectedPanel();
     var selectedPosition = ctrl.selectedPosition();
     var panelWidth = ctrl.panelWidth();
-
-    var rowLength = tile.rowLength();
-    var colLength = tile.colLength();
+    var rowLength = ctrl.rowLength();
+    var colLength = ctrl.colLength();
 
     var x = (selectedPosition.col - colLength / 2) * panelWidth + panelWidth / 2;
     var y = (selectedPosition.row - rowLength / 2) * panelWidth + panelWidth / 2;
@@ -72,13 +70,11 @@
   };
 
   var hitAreaView = function(ctrl, panelElementProp) {
-    var tile = ctrl.tile();
     var selectedPanel = ctrl.selectedPanel();
     var selectedPosition = ctrl.selectedPosition();
     var panelWidth = ctrl.panelWidth();
-
-    var rowLength = tile.rowLength();
-    var colLength = tile.colLength();
+    var rowLength = ctrl.rowLength();
+    var colLength = ctrl.colLength();
 
     return m('rect.hitarea', {
       x: -(panelWidth * colLength / 2),
@@ -118,11 +114,10 @@
   };
 
   var selectPanel = function(ctrl, x, y) {
-    var tile = ctrl.tile();
     var panelWidth = ctrl.panelWidth();
+    var rowLength = ctrl.rowLength();
+    var colLength = ctrl.colLength();
 
-    var rowLength = tile.rowLength();
-    var colLength = tile.colLength();
     var loc = app.globalToLocal({x: x, y: y});
     var row = parseInt((loc.y + panelWidth * rowLength / 2) / panelWidth, 10);
     var col = parseInt((loc.x + panelWidth * colLength / 2) / panelWidth, 10);

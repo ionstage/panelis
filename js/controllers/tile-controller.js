@@ -17,6 +17,18 @@
     this.onscoreanimationend = noop;
   };
 
+  TileController.prototype.panels = function() {
+    return this.tile().panels();
+  };
+
+  TileController.prototype.rowLength = function() {
+    return this.tile().rowLength();
+  };
+
+  TileController.prototype.colLength = function() {
+    return this.tile().colLength();
+  };
+
   TileController.prototype.panel = function(row, col, panel) {
     this.tile().panel(row, col, panel);
   };

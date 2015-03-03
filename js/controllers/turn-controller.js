@@ -108,9 +108,9 @@
       showResult(ctrl);
 
       // next game
-      toggleTurnPlayerColor(this);
-      reset(this);
-      activate(this);
+      toggleTurnPlayerColor(ctrl);
+      reset(ctrl);
+      activate(ctrl);
 
       m.redraw(true);
     }, 500);

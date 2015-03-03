@@ -65,12 +65,10 @@
     var activeController = activeControlBoardController(ctrl);
     var nonActiveController = nonActiveControlBoardController(ctrl);
 
-    var tile = actionTileController.tile();
     var activeControllerColor = activeController.color();
     var nonActiveControllerColor = nonActiveController.color();
 
-    tile.reset();
-    tile.randomEdge();
+    actionTileController.reset();
 
     activeController.panels([
       Panel.sample(activeControllerColor),
@@ -150,9 +148,8 @@
     // supply panel before calculating canJointNonActiveBoardPanels
     nonActiveController.supplyPanel();
 
-    var tile = actionTileController.tile();
-    var canJointNonActiveBoardPanels = tile.canJointAnyPosition(nonActiveController.panels());
-    var canJointActiveBoardPanels = tile.canJointAnyPosition(activeController.panels());
+    var canJointNonActiveBoardPanels = actionTileController.canJointAnyPosition(nonActiveController.panels());
+    var canJointActiveBoardPanels = actionTileController.canJointAnyPosition(activeController.panels());
 
     if (!canJointNonActiveBoardPanels && !canJointActiveBoardPanels) {
       gameEnd(this);
@@ -168,9 +165,8 @@
     var actionTileController = this.actionTileController();
     var activeController = activeControlBoardController(this);
 
-    var tile = actionTileController.tile();
     var selectedPanel = actionTileController.selectedPanel();
-    var canJointPanels = tile.canJointAnyPosition(activeController.panels());
+    var canJointPanels = actionTileController.canJointAnyPosition(activeController.panels());
     var position = actionTileController.selectedPosition();
 
     if (!selectedPanel)
@@ -199,11 +195,11 @@
     var col = position.col;
 
     // player can set panel, but can't joint panel
-    if (!tile.canJoint(row, col, selectedPanel))
+    if (!actionTileController.canJoint(row, col, selectedPanel))
       return;
 
     deactivate(this);
-    tile.panel(row, col, selectedPanel);
+    actionTileController.panel(row, col, selectedPanel);
     actionTileController.clearSelection();
     activeController.removeSelectedPanel();
     actionTileController.startScoreAnimation(row, col);

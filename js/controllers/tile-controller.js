@@ -17,6 +17,24 @@
     this.onscoreanimationend = noop;
   };
 
+  TileController.prototype.panel = function(row, col, panel) {
+    this.tile().panel(row, col, panel);
+  };
+
+  TileController.prototype.canJoint = function(row, col, panel) {
+    return this.tile().canJoint(row, col, panel);
+  };
+
+  TileController.prototype.canJointAnyPosition = function(panels) {
+    return this.tile().canJointAnyPosition(panels);
+  };
+
+  TileController.prototype.reset = function() {
+    var tile = this.tile();
+    tile.reset();
+    tile.randomEdge();
+  };
+
   TileController.prototype.startScoreAnimation = function(row, col) {
     var ctrl = this;
     var animations = [

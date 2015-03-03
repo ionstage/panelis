@@ -3,43 +3,6 @@
   var app = global.app || {};
   var m = global.m || require('mithril');
 
-  var Panel = app.Panel;
-
-  var ActionTileController = app.ActionTileController;
-  var ControlBoardController = app.ControlBoardController;
-  var TurnController = app.TurnController;
-
-  var panelView = app.panelView;
-  var actionTileView = app.actionTileView;
-  var controlBoardView = app.controlBoardView;
-
-  app.controller = function() {
-    this.actionTileController = new ActionTileController();
-
-    this.whiteControlBoardController = new ControlBoardController({
-      color: Panel.COLOR_WHITE
-    });
-
-    this.blackControlBoardController = new ControlBoardController({
-      color: Panel.COLOR_BLACK
-    });
-
-    new TurnController({
-      turnPlayerColor: Panel.COLOR_WHITE,
-      actionTileController: this.actionTileController,
-      whiteControlBoardController: this.whiteControlBoardController,
-      blackControlBoardController: this.blackControlBoardController
-    }).start();
-  };
-
-  app.view = function(ctrl) {
-    return m('svg.stage.unselectable', {viewBox: '-360,-360,720,720'}, [
-      actionTileView(ctrl.actionTileController),
-      controlBoardView(ctrl.whiteControlBoardController),
-      controlBoardView(ctrl.blackControlBoardController)
-    ]);
-  };
-
   app.supportsTouch = 'createTouch' in global.document;
 
   app.supportsTransitionEnd = (function() {
@@ -56,7 +19,7 @@
   };
 
   app.createPanelView = function(option) {
-    return panelView({
+    return app.panelView({
       panel: m.prop(option.panel),
       x: m.prop(option.x),
       y: m.prop(option.y),
@@ -64,6 +27,38 @@
     });
   };
 
-  m.module(document.getElementById('container'), app);
+  var controller = function() {
+    var Panel = app.Panel;
+
+    this.actionTileController = new app.ActionTileController();
+
+    this.whiteControlBoardController = new app.ControlBoardController({
+      color: Panel.COLOR_WHITE
+    });
+
+    this.blackControlBoardController = new app.ControlBoardController({
+      color: Panel.COLOR_BLACK
+    });
+
+    new app.TurnController({
+      turnPlayerColor: Panel.COLOR_WHITE,
+      actionTileController: this.actionTileController,
+      whiteControlBoardController: this.whiteControlBoardController,
+      blackControlBoardController: this.blackControlBoardController
+    }).start();
+  };
+
+  var view = function(ctrl) {
+    return m('svg.stage.unselectable', {viewBox: '-360,-360,720,720'}, [
+      app.actionTileView(ctrl.actionTileController),
+      app.controlBoardView(ctrl.whiteControlBoardController),
+      app.controlBoardView(ctrl.blackControlBoardController)
+    ]);
+  };
+
+  m.module(document.getElementById('container'), {
+    controller: controller,
+    view: view
+  });
   global.app = app;
 })(this);

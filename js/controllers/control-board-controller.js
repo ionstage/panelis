@@ -20,6 +20,15 @@
     this.onselect = noop;
   };
 
+  ControlBoardController.prototype.supplyPanel = function() {
+    var color = this.color();
+    var panels = this.panels();
+    for (var pi = 0, plen = panels.length; pi < plen; pi++) {
+      if (!panels[pi])
+        panels[pi] = Panel.sample(color);
+    }
+  };
+
   ControlBoardController.prototype.selectedIndex = function() {
     var panels = this.panels();
     var selectedPanel = this.selectedPanel();
@@ -30,22 +39,21 @@
     return -1;
   };
 
-  ControlBoardController.prototype.supplyPanel = function() {
-    var color = this.color();
-    var panels = this.panels();
-    for (var pi = 0, plen = panels.length; pi < plen; pi++) {
-      if (!panels[pi])
-        panels[pi] = Panel.sample(color);
-    }
-  };
-
   ControlBoardController.prototype.removeSelectedPanel = function() {
     this.panels()[this.selectedIndex()] = null;
     this.selectedPanel(null);
   };
 
+  ControlBoardController.prototype.addScore = function(color, value) {
+    this.score().add(color, value);
+  };
+
   ControlBoardController.prototype.resetScore = function() {
     this.score().reset();
+  };
+
+  ControlBoardController.prototype.totalScore = function() {
+    return this.score().total();
   };
 
   ControlBoardController.prototype.dispatchEvent = function(event) {

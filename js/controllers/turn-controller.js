@@ -121,8 +121,8 @@
     var blackControlBoardController = ctrl.blackControlBoardController();
 
     var message = '';
-    var whitePlayerScoreTotal = whiteControlBoardController.score().total();
-    var blackPlayerScoreTotal = blackControlBoardController.score().total();
+    var whitePlayerScoreTotal = whiteControlBoardController.totalScore();
+    var blackPlayerScoreTotal = blackControlBoardController.totalScore();
     if (whitePlayerScoreTotal === blackPlayerScoreTotal) {
       message += 'Draw';
     } else {
@@ -137,10 +137,9 @@
 
   var onScoreChangeActionTileController = function(event) {
     var activeController = activeControlBoardController(this);
-    var score = activeController.score();
-    score.add(Score.COLOR_RED, event.red);
-    score.add(Score.COLOR_YELLOW, event.yellow);
-    score.add(Score.COLOR_GREEN, event.green);
+    activeController.addScore(Score.COLOR_RED, event.red);
+    activeController.addScore(Score.COLOR_YELLOW, event.yellow);
+    activeController.addScore(Score.COLOR_GREEN, event.green);
   };
 
   var onScoreAnimationEndActionTileController = function() {

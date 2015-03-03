@@ -1,6 +1,6 @@
 {
-  "name": "",
-  "version": "",
+  "name": "panelis",
+  "version": "0.1.0",
   "scripts": {
     "browser-sync": "browser-sync start --files='index.html, css/*.css, js/*.js' --server",
     "build": "npm run cleancss;npm run uglify",
@@ -19,5 +19,6 @@
   },
   "dependencies": {
     "mithril": "^0.1.30"
-  }
+  },
+  "private": true
 }

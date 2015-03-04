@@ -3,10 +3,10 @@
   var app = global.app || {};
   var m = global.m || require('mithril');
 
-  var Score = function(red, yellow, green) {
-    this.red = m.prop(red || 0);
-    this.yellow = m.prop(yellow || 0);
-    this.green = m.prop(green || 0);
+  var Score = function(option) {
+    this.red = m.prop(option.red || 0);
+    this.yellow = m.prop(option.yellow || 0);
+    this.green = m.prop(option.green || 0);
   };
 
   Score.prototype.add = function(color, value) {

@@ -13,7 +13,7 @@
     this.active = m.prop(false);
     this.panels = m.prop([null, null, null]);
     this.selectedPanel = m.prop(null);
-    this.score = m.prop(new Score());
+    this.score = m.prop(new Score({red: 0, yellow: 0, green: 0}));
     this.panelWidth = m.prop(72);
     this.onok = noop;
     this.onback = noop;

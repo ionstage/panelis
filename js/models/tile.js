@@ -32,9 +32,9 @@
   };
 
   var Tile = function(option) {
+    this.panels = m.prop([[]]);
     this.rowLength = m.prop(option.rowLength || 8);
     this.colLength = m.prop(option.colLength || 8);
-    this.panels = m.prop([[]]);
     this.reset();
   };
 
@@ -64,23 +64,23 @@
     var panel = this.panel(row, col) || _panel;
 
     var topPanel = this.panel(row - 1, col);
-    if (panel.hasJoint(Panel.JOINT_TOP) &&
-       (!topPanel || !topPanel.hasJoint(Panel.JOINT_BOTTOM)))
+    if (panel.jointTop() &&
+       (!topPanel || !topPanel.jointBottom()))
       return false;
 
     var rightPanel = this.panel(row, col + 1);
-    if (panel.hasJoint(Panel.JOINT_RIGHT) &&
-        (!rightPanel || !rightPanel.hasJoint(Panel.JOINT_LEFT)))
+    if (panel.jointRight() &&
+        (!rightPanel || !rightPanel.jointLeft()))
       return false;
 
     var bottomPanel = this.panel(row + 1, col);
-    if (panel.hasJoint(Panel.JOINT_BOTTOM) &&
-        (!bottomPanel || !bottomPanel.hasJoint(Panel.JOINT_TOP)))
+    if (panel.jointBottom() &&
+        (!bottomPanel || !bottomPanel.jointTop()))
       return false;
 
     var leftPanel = this.panel(row, col - 1);
-    if (panel.hasJoint(Panel.JOINT_LEFT) &&
-        (!leftPanel || !leftPanel.hasJoint(Panel.JOINT_RIGHT)))
+    if (panel.jointLeft() &&
+        (!leftPanel || !leftPanel.jointRight()))
       return false;
 
     return true;
@@ -99,26 +99,26 @@
 
     var topPanel = this.panel(row - 1, col);
     if (topPanel &&
-        ((!topPanel.hasJoint(Panel.JOINT_BOTTOM) && panel.hasJoint(Panel.JOINT_TOP)) ||
-         (topPanel.hasJoint(Panel.JOINT_BOTTOM) && !panel.hasJoint(Panel.JOINT_TOP))))
+        ((!topPanel.jointBottom() && panel.jointTop()) ||
+         (topPanel.jointBottom() && !panel.jointTop())))
       return false;
 
     var rightPanel = this.panel(row, col + 1);
     if (rightPanel &&
-        ((!rightPanel.hasJoint(Panel.JOINT_LEFT) && panel.hasJoint(Panel.JOINT_RIGHT)) ||
-         (rightPanel.hasJoint(Panel.JOINT_LEFT) && !panel.hasJoint(Panel.JOINT_RIGHT))))
+        ((!rightPanel.jointLeft() && panel.jointRight()) ||
+         (rightPanel.jointLeft() && !panel.jointRight())))
       return false;
 
     var bottomPanel = this.panel(row + 1, col);
     if (bottomPanel &&
-        ((!bottomPanel.hasJoint(Panel.JOINT_TOP) && panel.hasJoint(Panel.JOINT_BOTTOM)) ||
-         (bottomPanel.hasJoint(Panel.JOINT_TOP) && !panel.hasJoint(Panel.JOINT_BOTTOM))))
+        ((!bottomPanel.jointTop() && panel.jointBottom()) ||
+         (bottomPanel.jointTop() && !panel.jointBottom())))
       return false;
 
     var leftPanel = this.panel(row, col - 1);
     if (leftPanel &&
-        ((!leftPanel.hasJoint(Panel.JOINT_RIGHT) && panel.hasJoint(Panel.JOINT_LEFT)) ||
-         (leftPanel.hasJoint(Panel.JOINT_RIGHT) && !panel.hasJoint(Panel.JOINT_LEFT))))
+        ((!leftPanel.jointRight() && panel.jointLeft()) ||
+         (leftPanel.jointRight() && !panel.jointLeft())))
       return false;
 
     return true;
@@ -162,24 +162,25 @@
 
     // top
     if (row0 === row1 + 1 && col0 === col1 &&
-        this.panel(row0, col0).hasJoint(Panel.JOINT_TOP) &&
-        this.panel(row1, col1).hasJoint(Panel.JOINT_BOTTOM))
+        this.panel(row0, col0).jointTop() &&
+        this.panel(row1, col1).jointBottom())
       return true;
     // right
     if (row0 === row1 && col0 === col1 - 1 &&
-        this.panel(row0, col0).hasJoint(Panel.JOINT_RIGHT) &&
-        this.panel(row1, col1).hasJoint(Panel.JOINT_LEFT))
+        this.panel(row0, col0).jointRight() &&
+        this.panel(row1, col1).jointLeft())
       return true;
     // bottom
     if (row0 === row1 - 1 && col0 === col1 &&
-        this.panel(row0, col0).hasJoint(Panel.JOINT_BOTTOM) &&
-        this.panel(row1, col1).hasJoint(Panel.JOINT_TOP))
+        this.panel(row0, col0).jointBottom() &&
+        this.panel(row1, col1).jointTop())
       return true;
     // left
     if (row0 === row1 && col0 === col1 + 1 &&
-        this.panel(row0, col0).hasJoint(Panel.JOINT_LEFT) &&
-        this.panel(row1, col1).hasJoint(Panel.JOINT_RIGHT))
+        this.panel(row0, col0).jointLeft() &&
+        this.panel(row1, col1).jointRight())
       return true;
+
     return false;
   };
 
@@ -192,8 +193,8 @@
     if (topPanel && !topPanel.isFixed() &&
         topPanel.color() !== color &&
         topPanel.color() !== Panel.COLOR_BROWN &&
-        topPanel.hasJoint(Panel.JOINT_BOTTOM) &&
-           panel.hasJoint(Panel.JOINT_TOP)) {
+        topPanel.jointBottom() &&
+           panel.jointTop()) {
       topPanel.mixColor(color);
       isReleased = true;
     }
@@ -202,8 +203,8 @@
     if (rightPanel && !rightPanel.isFixed() &&
         rightPanel.color() !== color &&
         rightPanel.color() !== Panel.COLOR_BROWN &&
-        rightPanel.hasJoint(Panel.JOINT_LEFT) &&
-             panel.hasJoint(Panel.JOINT_RIGHT)) {
+        rightPanel.jointLeft() &&
+             panel.jointRight()) {
       rightPanel.mixColor(color);
       isReleased = true;
     }
@@ -212,8 +213,8 @@
     if (bottomPanel && !bottomPanel.isFixed() &&
         bottomPanel.color() !== color &&
         bottomPanel.color() !== Panel.COLOR_BROWN &&
-        bottomPanel.hasJoint(Panel.JOINT_TOP) &&
-              panel.hasJoint(Panel.JOINT_BOTTOM)) {
+        bottomPanel.jointTop() &&
+              panel.jointBottom()) {
       bottomPanel.mixColor(color);
       isReleased = true;
     }
@@ -222,8 +223,8 @@
     if (leftPanel && !leftPanel.isFixed() &&
         leftPanel.color() !== color &&
         leftPanel.color() !== Panel.COLOR_BROWN &&
-        leftPanel.hasJoint(Panel.JOINT_RIGHT) &&
-            panel.hasJoint(Panel.JOINT_LEFT)) {
+        leftPanel.jointRight() &&
+            panel.jointLeft()) {
       leftPanel.mixColor(color);
       isReleased = true;
     }
@@ -301,10 +302,10 @@
     var rowLength = this.rowLength();
     var colLength = this.colLength();
 
-    panels[0][0] = new Panel();
-    panels[0][colLength - 1] = new Panel();
-    panels[rowLength - 1][0] = new Panel();
-    panels[rowLength - 1][colLength - 1] = new Panel();
+    panels[0][0] = new Panel({color: Panel.COLOR_BROWN});
+    panels[0][colLength - 1] = new Panel({color: Panel.COLOR_BROWN});
+    panels[rowLength - 1][0] = new Panel({color: Panel.COLOR_BROWN});
+    panels[rowLength - 1][colLength - 1] = new Panel({color: Panel.COLOR_BROWN});
 
     // top edge
     for (var ci = 1; ci < colLength - 1; ci++) {

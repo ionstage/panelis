@@ -5,13 +5,6 @@
 
   var Panel = app.Panel;
 
-  var panelJointList = [
-    Panel.JOINT_TOP,
-    Panel.JOINT_RIGHT,
-    Panel.JOINT_BOTTOM,
-    Panel.JOINT_LEFT
-  ];
-
   var panelView = function(ctrl) {
     var panel = ctrl.panel();
     var x = ctrl.x();
@@ -53,9 +46,8 @@
       classes.push('black');
 
     if (!isFixed && !isEdge) {
-      panelJointList.forEach(function(joint) {
-        if (panel.hasJoint(joint))
-          view.push(panelJointBackBorderView(width, joint));
+      panel.eachJoint(function(joint) {
+        view.push(panelJointBackBorderView(width, joint));
       });
 
       view.push(m('circle.color.back', {
@@ -64,17 +56,14 @@
         r: width / 3.2 + 3
       }));
 
-      panelJointList.forEach(function(joint) {
-        if (panel.hasJoint(joint))
-          view.push(panelJointBackView(width, joint));
+      panel.eachJoint(function(joint) {
+        view.push(panelJointBackView(width, joint));
       });
     }
 
-    panelJointList.forEach(function(joint) {
-      if (panel.hasJoint(joint)) {
-        view.push(panelJointHandleBorderView(width, joint));
-        view.push(panelJointHandleView(width, joint));
-      }
+    panel.eachJoint(function(joint) {
+      view.push(panelJointHandleBorderView(width, joint));
+      view.push(panelJointHandleView(width, joint));
     });
 
     if (!isEdge) {

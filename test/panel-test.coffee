@@ -1,63 +1,53 @@
 assert = require('assert')
 Panel = require('../js/models/panel.js').app.Panel
 
-assertHasJoint = (panel, top, right, bottom, left) ->
-  if top != null
-    assert.equal(panel.hasJoint(Panel.JOINT_TOP), top)
-  if right != null
-    assert.equal(panel.hasJoint(Panel.JOINT_RIGHT), right)
-  if bottom != null
-    assert.equal(panel.hasJoint(Panel.JOINT_BOTTOM), bottom)
-  if left != null
-    assert.equal(panel.hasJoint(Panel.JOINT_LEFT), left)
+assertJoint = (panel, jointTop, jointRight, jointBottom, jointLeft) ->
+  if jointTop != null
+    assert.equal(panel.jointTop(), jointTop)
+  if jointRight != null
+    assert.equal(panel.jointRight(), jointRight)
+  if jointBottom != null
+    assert.equal(panel.jointBottom(), jointBottom)
+  if jointLeft != null
+    assert.equal(panel.jointLeft(), jointLeft)
 
 
 describe 'Panel', ->
 
   it '#mixColor', ->
-    panel = new Panel(Panel.COLOR_BLACK)
+    panel = new Panel(color: Panel.COLOR_BLACK)
     panel.mixColor(Panel.COLOR_WHITE)
     assert.equal(panel.color(), Panel.COLOR_GRAY)
 
-  it '#hasJoint', ->
-    panel = new Panel()
-    [
-      Panel.JOINT_TOP,
-      Panel.JOINT_RIGHT,
-      Panel.JOINT_LEFT,
-      Panel.JOINT_BOTTOM
-    ].forEach (position) ->
-      panel.hasJoint(position, true)
-      assert.equal(panel.hasJoint(position), true)
+  it '#eachJoint', ->
+    panel = new Panel(jointTop: true, jointBottom: true)
+    joints = []
+    panel.eachJoint (joint) ->
+      joints.push(joint)
+    assert.equal(joints.length, 2)
 
   it '#rotate', ->
-    panel = new Panel(null, true, false, true, false)
+    panel = new Panel(jointTop: true, jointBottom: true)
     panel.rotate()
-    assertHasJoint(panel, false, true, false, true)
+    assertJoint(panel, false, true, false, true)
 
   it '#resetRotation', ->
-    panel = new Panel(null, true, false, false, false)
+    panel = new Panel(jointTop: true)
     panel.rotate()
     panel.rotate()
     panel.resetRotation()
-    assertHasJoint(panel, true, false, false, false)
+    assertJoint(panel, true, false, false, false)
 
   it '#clone', ->
-    orig = new Panel(Panel.COLOR_WHITE, true, false, true, false, true)
+    orig = new Panel(color: Panel.COLOR_WHITE, jointTop: true, jointBottom: true, isFixed: true)
     clone = orig.clone()
     assert(clone != orig)
     assert.equal(clone.color(), orig.color())
+    assertJoint(clone, orig.jointTop(), orig.jointRight(), orig.jointBottom(), orig.jointLeft())
     assert.equal(clone.isFixed(), orig.isFixed())
-    [
-      Panel.JOINT_TOP,
-      Panel.JOINT_RIGHT,
-      Panel.JOINT_LEFT,
-      Panel.JOINT_BOTTOM
-    ].forEach (position) ->
-      assert.equal(clone.hasJoint(position), orig.hasJoint(position))
 
   it '::sample', ->
     p0 = Panel.sample(Panel.COLOR_WHITE)
     assert.equal(p0.color(), Panel.COLOR_WHITE)
     p1 = Panel.sample(Panel.COLOR_BROWN, Panel.JOINT_BOTTOM)
-    assertHasJoint(p1, false, false, null, false)
+    assertJoint(p1, false, false, null, false)

@@ -7,13 +7,13 @@
     return Math.floor(Math.random() * 2) === 0;
   };
 
-  var Panel = function(color, top, right, bottom, left, isFixed) {
-    this.color = m.prop(color || Panel.COLOR_BROWN);
-    this.isFixed = m.prop(isFixed || false);
-    this._topJoint = m.prop(top || false);
-    this._rightJoint = m.prop(right || false);
-    this._bottomJoint = m.prop(bottom || false);
-    this._leftJoint = m.prop(left || false);
+  var Panel = function(option) {
+    this.color = m.prop(option.color || Panel.COLOR_BROWN);
+    this.jointTop = m.prop(option.jointTop || false);
+    this.jointRight = m.prop(option.jointRight || false);
+    this.jointBottom = m.prop(option.jointBottom || false);
+    this.jointLeft = m.prop(option.jointLeft || false);
+    this.isFixed = m.prop(option.isFixed || false);
   };
 
   Panel.prototype.mixColor = function(color) {
@@ -31,32 +31,37 @@
     }
   };
 
-  Panel.prototype.hasJoint = function(position, bool) {
-    if (typeof bool === 'undefined')
-      return this['_' + position + 'Joint']();
-    this['_' + position + 'Joint'](bool);
+  Panel.prototype.eachJoint = function(callback) {
+    if (this.jointTop())
+      callback(Panel.JOINT_TOP);
+    if (this.jointRight())
+      callback(Panel.JOINT_RIGHT);
+    if (this.jointBottom())
+      callback(Panel.JOINT_BOTTOM);
+    if (this.jointLeft())
+      callback(Panel.JOINT_LEFT);
   };
 
   Panel.prototype.rotate = function() {
-    var tmp = this.hasJoint(Panel.JOINT_TOP);
-    this.hasJoint(Panel.JOINT_TOP, this.hasJoint(Panel.JOINT_LEFT));
-    this.hasJoint(Panel.JOINT_LEFT, this.hasJoint(Panel.JOINT_BOTTOM));
-    this.hasJoint(Panel.JOINT_BOTTOM, this.hasJoint(Panel.JOINT_RIGHT));
-    this.hasJoint(Panel.JOINT_RIGHT, tmp);
+    var tmp = this.jointTop();
+    this.jointTop(this.jointLeft());
+    this.jointLeft(this.jointBottom());
+    this.jointBottom(this.jointRight());
+    this.jointRight(tmp);
   };
 
   Panel.prototype.resetRotation = function() {
     for (var i = 0; i < 4; i++) {
-      var top = this.hasJoint(Panel.JOINT_TOP);
-      var right = this.hasJoint(Panel.JOINT_RIGHT);
-      var bottom = this.hasJoint(Panel.JOINT_BOTTOM);
-      var left = this.hasJoint(Panel.JOINT_LEFT);
+      var jointTop = this.jointTop();
+      var jointRight = this.jointRight();
+      var jointBottom = this.jointBottom();
+      var jointLeft = this.jointLeft();
       for (var li = 0, llen = basePanelList.length; li < llen; li++) {
         var basePanel = basePanelList[li];
-        if (basePanel.hasJoint(Panel.JOINT_TOP) === top &&
-            basePanel.hasJoint(Panel.JOINT_RIGHT) === right &&
-            basePanel.hasJoint(Panel.JOINT_BOTTOM) === bottom &&
-            basePanel.hasJoint(Panel.JOINT_LEFT) === left)
+        if (basePanel.jointTop() === jointTop &&
+            basePanel.jointRight() === jointRight &&
+            basePanel.jointBottom() === jointBottom &&
+            basePanel.jointLeft() === jointLeft)
           return;
       }
       this.rotate();
@@ -64,32 +69,38 @@
   };
 
   Panel.prototype.clone = function() {
-    return new Panel(
-      this.color(),
-      this.hasJoint(Panel.JOINT_TOP),
-      this.hasJoint(Panel.JOINT_RIGHT),
-      this.hasJoint(Panel.JOINT_BOTTOM),
-      this.hasJoint(Panel.JOINT_LEFT),
-      this.isFixed()
-    );
+    return new Panel({
+      color: this.color(),
+      jointTop: this.jointTop(),
+      jointRight: this.jointRight(),
+      jointBottom: this.jointBottom(),
+      jointLeft: this.jointLeft(),
+      isFixed: this.isFixed()
+    });
   };
 
   Panel.sample = function(color, joint) {
-    var top, right, bottom, left;
+    var jointTop, jointRight, jointBottom, jointLeft;
     if (joint) {
-      top = (joint === Panel.JOINT_TOP) ? trueOrFalse() : false;
-      right = (joint === Panel.JOINT_RIGHT) ? trueOrFalse() : false;
-      bottom = (joint === Panel.JOINT_BOTTOM) ? trueOrFalse() : false;
-      left = (joint === Panel.JOINT_LEFT) ? trueOrFalse() : false;
+      jointTop = (joint === Panel.JOINT_TOP) ? trueOrFalse() : false;
+      jointRight = (joint === Panel.JOINT_RIGHT) ? trueOrFalse() : false;
+      jointBottom = (joint === Panel.JOINT_BOTTOM) ? trueOrFalse() : false;
+      jointLeft = (joint === Panel.JOINT_LEFT) ? trueOrFalse() : false;
     } else {
-      var basePanel = basePanelList[Math.floor(Math.random() * 5)];
-      top = basePanel.hasJoint(Panel.JOINT_TOP);
-      right = basePanel.hasJoint(Panel.JOINT_RIGHT);
-      bottom = basePanel.hasJoint(Panel.JOINT_BOTTOM);
-      left = basePanel.hasJoint(Panel.JOINT_LEFT);
+      var basePanel = basePanelList[Math.floor(Math.random() * basePanelList.length)];
+      jointTop = basePanel.jointTop();
+      jointRight = basePanel.jointRight();
+      jointBottom = basePanel.jointBottom();
+      jointLeft = basePanel.jointLeft();
     }
 
-    return new Panel(color, top, right, bottom, left);
+    return new Panel({
+      color: color,
+      jointTop: jointTop,
+      jointRight: jointRight,
+      jointBottom: jointBottom,
+      jointLeft: jointLeft
+    });
   };
 
   Panel.COLOR_BROWN = 'brown';
@@ -98,16 +109,16 @@
   Panel.COLOR_GRAY = 'gray';
 
   Panel.JOINT_TOP = 'top';
-  Panel.JOINT_LEFT = 'left';
-  Panel.JOINT_BOTTOM = 'bottom';
   Panel.JOINT_RIGHT = 'right';
+  Panel.JOINT_BOTTOM = 'bottom';
+  Panel.JOINT_LEFT = 'left';
 
   var basePanelList = [
-    new Panel(null, true, false, false, false),
-    new Panel(null, true, true, false, false),
-    new Panel(null, true, false, true, false),
-    new Panel(null, true, true, true, false),
-    new Panel(null, true, true, true, true)
+    new Panel({jointTop: true}),
+    new Panel({jointTop: true, jointRight: true}),
+    new Panel({jointTop: true, jointBottom: true}),
+    new Panel({jointTop: true, jointRight: true, jointBottom: true}),
+    new Panel({jointTop: true, jointRight: true, jointBottom: true, jointLeft: true})
   ];
 
   app.Panel = Panel;

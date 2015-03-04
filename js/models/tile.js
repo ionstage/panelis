@@ -31,10 +31,10 @@
     return result;
   };
 
-  var Tile = function(rowLength, colLength) {
+  var Tile = function(option) {
+    this.rowLength = m.prop(option.rowLength || 8);
+    this.colLength = m.prop(option.colLength || 8);
     this.panels = m.prop([[]]);
-    this.rowLength = m.prop(rowLength || 8);
-    this.colLength = m.prop(colLength || 8);
     this.reset();
   };
 

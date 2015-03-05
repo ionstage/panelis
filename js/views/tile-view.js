@@ -9,25 +9,23 @@
     var rowLength = ctrl.rowLength();
     var colLength = ctrl.colLength();
 
-    return [
-      m('g.tile', [
-        m('rect.back', {
-          x: -(panelWidth * colLength / 2),
-          y: -(panelWidth * rowLength / 2),
-          width: panelWidth * colLength,
-          height: panelWidth * rowLength
-        }),
-        m('g', ctrl.panels().map(function(cols, ri) {
-          return cols.map(function(panel, ci) {
-            return app.createPanelView({
-              panel: panel,
-              x: -(panelWidth * colLength / 2) + ci * panelWidth + panelWidth / 2,
-              y: -(panelWidth * rowLength / 2) + ri * panelWidth + panelWidth / 2,
-              width: panelWidth
-            });
+    return m('g.tile', [
+      m('rect.back', {
+        x: -(panelWidth * colLength / 2),
+        y: -(panelWidth * rowLength / 2),
+        width: panelWidth * colLength,
+        height: panelWidth * rowLength
+      }),
+      m('g', ctrl.panels().map(function(cols, ri) {
+        return cols.map(function(panel, ci) {
+          return app.createPanelView({
+            panel: panel,
+            x: -(panelWidth * colLength / 2) + ci * panelWidth + panelWidth / 2,
+            y: -(panelWidth * rowLength / 2) + ri * panelWidth + panelWidth / 2,
+            width: panelWidth
           });
-        }))
-      ]),
+        });
+      })),
       m('g.score-animation', scoreColors.map(function(scoreColor) {
         return m('circle.circle', {
           className: scoreColor.color + (app.supportsTransitionEnd ? ' animation' : ''),
@@ -36,7 +34,7 @@
           r: panelWidth / 3.2
         });
       }))
-    ];
+    ]);
   };
 
   app.tileView = tileView;

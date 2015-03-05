@@ -4,7 +4,7 @@
   stroke-width: 2;
 }
 
-.score-animation .circle.animation {
+.tile .score-animation .circle.animation {
   -webkit-animation: fadeout 0.75s;
   -o-animation: fadeout 0.75s;
   animation: fadeout 0.75s;
@@ -36,14 +36,14 @@
   to   { opacity: 0; }
 }
 
-.score-animation .red {
+.tile .score-animation .red {
   fill: red;
 }
 
-.score-animation .yellow {
+.tile .score-animation .yellow {
   fill: yellow;
 }
 
-.score-animation .green {
+.tile .score-animation .green {
   fill: lime;
 }

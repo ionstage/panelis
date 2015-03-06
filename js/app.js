@@ -3,30 +3,6 @@
   var app = global.app || {};
   var m = global.m || require('mithril');
 
-  app.supportsTouch = 'createTouch' in global.document;
-
-  app.supportsTransitionEnd = (function() {
-    var div = document.createElement('div');
-    return typeof div.style['transition'] !== 'undefined';
-  }());
-
-  app.globalToLocal = function(gpt) {
-    var stageElement = document.querySelector('.stage');
-    var lpt = stageElement.createSVGPoint();
-    lpt.x = gpt.x;
-    lpt.y = gpt.y;
-    return lpt.matrixTransform(stageElement.getScreenCTM().inverse());
-  };
-
-  app.createPanelView = function(option) {
-    return app.panelView({
-      panel: m.prop(option.panel),
-      x: m.prop(option.x),
-      y: m.prop(option.y),
-      width: m.prop(option.width)
-    });
-  };
-
   var controller = function() {
     var Panel = app.Panel;
 

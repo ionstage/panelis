@@ -2,8 +2,14 @@
   'use strict';
   var app = global.app || {};
   var m = global.m || require('mithril');
+  var util = global.util || require('../util.js');
 
   var tileView = app.tileView;
+
+  var supportsTouch = util.supportsTouch;
+  var supportsTransitionEnd = util.supportsTransitionEnd;
+  var $globalToLocal = util.$globalToLocal;
+  var $createPanelView = util.$createPanelView;
 
   var addClass = function(el, className) {
     el.setAttribute('class', el.getAttribute('class') + ' ' + className);
@@ -60,7 +66,7 @@
         oninitialize({element: panelElement});
       }
     }, [
-      app.createPanelView({
+      $createPanelView({
         panel: selectedPanel,
         x: 0,
         y: 0,
@@ -93,14 +99,14 @@
       config: function(element, isInitialized) {
         if (isInitialized)
           return;
-        var eventName = app.supportsTouch ? 'touchstart' : 'mousedown';
+        var eventName = supportsTouch ? 'touchstart' : 'mousedown';
         element.addEventListener(eventName, this.attrs.startHandler);
       }
     });
   };
 
   var rotatePanel = function(ctrl, panelElement) {
-    if (app.supportsTransitionEnd)
+    if (supportsTransitionEnd)
       replaceClass(panelElement, 'stop', 'rotate');
     else
       rotationEndPanel(ctrl, panelElement);
@@ -118,7 +124,7 @@
     var rowLength = ctrl.rowLength();
     var colLength = ctrl.colLength();
 
-    var loc = app.globalToLocal({x: x, y: y});
+    var loc = $globalToLocal({x: x, y: y});
     var row = parseInt((loc.y + panelWidth * rowLength / 2) / panelWidth, 10);
     var col = parseInt((loc.x + panelWidth * colLength / 2) / panelWidth, 10);
 

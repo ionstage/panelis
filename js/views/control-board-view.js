@@ -2,8 +2,12 @@
   'use strict';
   var app = global.app || {};
   var m = global.m || require('mithril');
+  var util = global.util || require('../util.js');
 
   var Panel = app.Panel;
+
+  var supportsTouch = util.supportsTouch;
+  var $createPanelView = util.$createPanelView;
 
   var controlBoardView = function(ctrl) {
     var color = ctrl.color();
@@ -124,7 +128,7 @@
 
       var isSelected = selectedIndex === index;
       return m('g', {className: isSelected ? 'selected' : ''}, [
-        app.createPanelView({
+        $createPanelView({
           panel: panel,
           x: x + 12 + panelWidth / 2,
           y: y + 12 + (panelWidth + 12) * index + panelWidth / 2,
@@ -153,7 +157,7 @@
         config: function(element, isInitialized) {
           if (isInitialized)
             return;
-          var eventName = app.supportsTouch ? 'touchstart' : 'mousedown';
+          var eventName = supportsTouch ? 'touchstart' : 'mousedown';
           element.addEventListener(eventName, this.attrs.selectHandler);
         }
       };

@@ -8,7 +8,7 @@
     "test": "mocha --compilers coffee:coffee-script/register",
     "test-browser-sync": "browser-sync start --files='test/test.html, css/*.css, js/*.js, test/*.js' --server --startPath='test/test.html'",
     "test-watch": "mocha -w --compilers coffee:coffee-script/register",
-    "uglify": "uglifyjs js/models/panel.js js/models/tile.js js/models/score.js js/controllers/tile-controller.js js/controllers/action-tile-controller.js js/controllers/control-board-controller.js js/controllers/turn-controller.js js/views/panel-view.js js/views/tile-view.js js/views/action-tile-view.js js/views/control-board-view.js js/app.js -o build/app.min.js -c -m"
+    "uglify": "uglifyjs js/util.js js/models/panel.js js/models/tile.js js/models/score.js js/controllers/tile-controller.js js/controllers/action-tile-controller.js js/controllers/control-board-controller.js js/controllers/turn-controller.js js/views/panel-view.js js/views/tile-view.js js/views/action-tile-view.js js/views/control-board-view.js js/app.js -o build/app.min.js -c -m"
   },
   "devDependencies": {
     "browser-sync": "*",

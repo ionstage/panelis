@@ -2,34 +2,12 @@
   'use strict';
   var app = global.app || {};
   var m = global.m || require('mithril');
+  var util = global.util || require('../util.js');
 
   var Panel = app.Panel || require('./panel.js').app.Panel;
 
-  var isEqual = function(a, b) {
-    if (Object.keys(a).length !== Object.keys(b).length)
-      return false;
-    for (var key in a) {
-      if (a[key] !== b[key])
-        return false;
-    }
-    return true;
-  };
-
-  var uniq = function(array) {
-    var result = [];
-    for (var ai = 0, alen = array.length; ai < alen; ai++) {
-      var canPush = true;
-      var aitem = array[ai];
-      for (var ri = 0, rlen = result.length; ri < rlen; ri++) {
-        var ritem = result[ri];
-        if (isEqual(aitem, ritem))
-          canPush = false;
-      }
-      if (canPush)
-        result.push(aitem);
-    }
-    return result;
-  };
+  var isEqual = util.isEqual;
+  var uniq = util.uniq;
 
   var Tile = function(option) {
     this.panels = m.prop([[]]);

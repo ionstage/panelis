@@ -2,21 +2,11 @@
   'use strict';
   var app = global.app || {};
   var m = global.m || require('mithril');
-
-  var inherits = function(ctor, superCtor) {
-    ctor.super_ = superCtor;
-    ctor.prototype = Object.create(superCtor.prototype, {
-      constructor: {
-        value: ctor,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    return ctor;
-  };
+  var util = global.util || require('../util.js');
 
   var TileController = app.TileController;
+
+  var inherits = util.inherits;
 
   var ActionTileController = inherits(function() {
     ActionTileController.super_.call(this);

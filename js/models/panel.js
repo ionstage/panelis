@@ -2,10 +2,9 @@
   'use strict';
   var app = global.app || {};
   var m = global.m || require('mithril');
+  var util = global.util || require('../util.js');
 
-  var trueOrFalse = function() {
-    return Math.floor(Math.random() * 2) === 0;
-  };
+  var randomBoolean = util.randomBoolean;
 
   var Panel = function(option) {
     this.color = m.prop(option.color || Panel.COLOR_BROWN);
@@ -82,10 +81,10 @@
   Panel.sample = function(color, joint) {
     var jointTop, jointRight, jointBottom, jointLeft;
     if (joint) {
-      jointTop = (joint === Panel.JOINT_TOP) ? trueOrFalse() : false;
-      jointRight = (joint === Panel.JOINT_RIGHT) ? trueOrFalse() : false;
-      jointBottom = (joint === Panel.JOINT_BOTTOM) ? trueOrFalse() : false;
-      jointLeft = (joint === Panel.JOINT_LEFT) ? trueOrFalse() : false;
+      jointTop = (joint === Panel.JOINT_TOP) ? randomBoolean() : false;
+      jointRight = (joint === Panel.JOINT_RIGHT) ? randomBoolean() : false;
+      jointBottom = (joint === Panel.JOINT_BOTTOM) ? randomBoolean() : false;
+      jointLeft = (joint === Panel.JOINT_LEFT) ? randomBoolean() : false;
     } else {
       var basePanel = basePanelList[Math.floor(Math.random() * basePanelList.length)];
       jointTop = basePanel.jointTop();

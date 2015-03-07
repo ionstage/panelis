@@ -8,17 +8,10 @@
 
   var supportsTouch = util.supportsTouch;
   var supportsTransitionEnd = util.supportsTransitionEnd;
+  var addClass = util.addClass;
+  var replaceClass = util.replaceClass;
   var $globalToLocal = util.$globalToLocal;
   var $createPanelView = util.$createPanelView;
-
-  var addClass = function(el, className) {
-    el.setAttribute('class', el.getAttribute('class') + ' ' + className);
-  };
-
-  var replaceClass = function(el, c0, c1) {
-    var className = el.getAttribute('class').replace(c0, c1);
-    el.setAttribute('class',  className);
-  };
 
   var actionTileView = function(ctrl) {
     var selectedPanel = ctrl.selectedPanel();

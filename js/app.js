@@ -1,7 +1,7 @@
 (function(global) {
   'use strict';
   var app = global.app || {};
-  var m = global.m || require('mithril');
+  var m = global.m;
 
   var document = global.document;
 

@@ -1,8 +1,8 @@
 (function(global) {
   'use strict';
   var app = global.app || {};
-  var m = global.m || require('mithril');
-  var util = global.util || require('../util.js');
+  var m = global.m;
+  var util = global.util;
 
   var supportsTransitionEnd = util.supportsTransitionEnd;
   var $createPanelView = util.$createPanelView;

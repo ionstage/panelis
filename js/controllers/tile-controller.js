@@ -7,9 +7,8 @@
   var Tile = app.Tile;
   var Score = app.Score;
 
-  var noop = function() {};
-
   var TileController = function() {
+    var noop = function() {};
     this.tile = m.prop(new Tile({rowLength: 8, colLength: 8}));
     this.panelWidth = m.prop(72);
     this.scoreColors = m.prop([]);

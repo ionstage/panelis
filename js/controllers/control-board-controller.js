@@ -6,9 +6,8 @@
   var Panel = app.Panel;
   var Score = app.Score;
 
-  var noop = function() {};
-
   var ControlBoardController = function(option) {
+    var noop = function() {};
     this.color = m.prop(option.color);
     this.active = m.prop(false);
     this.panels = m.prop([null, null, null]);

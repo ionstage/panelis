@@ -14,7 +14,9 @@
   }());
 
   util.$globalToLocal = function(gpt) {
-    var stageElement = document.querySelector('.stage');
+    var $viewClassName = app.view.className;
+
+    var stageElement = document.querySelector('.' + $viewClassName);
     var lpt = stageElement.createSVGPoint();
     lpt.x = gpt.x;
     lpt.y = gpt.y;
@@ -22,7 +24,9 @@
   };
 
   util.$createPanelView = function(option) {
-    return app.panelView({
+    var $panelView = app.panelView;
+
+    return $panelView({
       panel: m.prop(option.panel),
       x: m.prop(option.x),
       y: m.prop(option.y),

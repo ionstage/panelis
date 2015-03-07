@@ -3,20 +3,25 @@
   var app = global.app || {};
   var m = global.m || require('mithril');
 
-  var controller = function() {
+  var document = global.document;
+
+  app.controller = function() {
     var Panel = app.Panel;
+    var ActionTileController = app.ActionTileController;
+    var ControlBoardController = app.ControlBoardController;
+    var TurnController = app.TurnController;
 
-    this.actionTileController = new app.ActionTileController();
+    this.actionTileController = new ActionTileController();
 
-    this.whiteControlBoardController = new app.ControlBoardController({
+    this.whiteControlBoardController = new ControlBoardController({
       color: Panel.COLOR_WHITE
     });
 
-    this.blackControlBoardController = new app.ControlBoardController({
+    this.blackControlBoardController = new ControlBoardController({
       color: Panel.COLOR_BLACK
     });
 
-    new app.TurnController({
+    new TurnController({
       turnPlayerColor: Panel.COLOR_WHITE,
       actionTileController: this.actionTileController,
       whiteControlBoardController: this.whiteControlBoardController,
@@ -24,17 +29,24 @@
     }).start();
   };
 
-  var view = function(ctrl) {
-    return m('svg.stage.unselectable', {viewBox: '-360,-360,720,720'}, [
-      app.actionTileView(ctrl.actionTileController),
-      app.controlBoardView(ctrl.whiteControlBoardController),
-      app.controlBoardView(ctrl.blackControlBoardController)
-    ]);
+  app.view = function(ctrl) {
+    var actionTileView = app.actionTileView;
+    var controlBoardView = app.controlBoardView;
+
+    var className = app.view.className;
+
+    var selector = 'svg.' + className + '.unselectable';
+    var attr = {viewBox: '-360,-360,720,720'};
+    var views = [
+      actionTileView(ctrl.actionTileController),
+      controlBoardView(ctrl.whiteControlBoardController),
+      controlBoardView(ctrl.blackControlBoardController)
+    ];
+    return m(selector, attr, views);
   };
 
-  m.module(document.getElementById('container'), {
-    controller: controller,
-    view: view
-  });
+  app.view.className = 'stage';
+
+  m.module(document.getElementById('container'), app);
   global.app = app;
 })(this);

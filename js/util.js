@@ -2,6 +2,7 @@
   'use strict';
   var util = {};
 
+  var window = global.window;
   var document = global.document;
 
   util.randomBoolean = function() {
@@ -57,6 +58,10 @@
     var div = document.createElement('div');
     return typeof div.style['transition'] !== 'undefined';
   }());
+
+  util.windowAspectRatio = function() {
+    return window.innerWidth / window.innerHeight;
+  };
 
   util.addClass = function(el, className) {
     el.setAttribute('class', el.getAttribute('class') + ' ' + className);

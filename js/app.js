@@ -51,7 +51,7 @@
           return function() {
             var isLandscape = windowAspectRatio() >= 1.0;
             if (isLandscape !== cache) {
-              m.redraw(true);
+              m.redraw();
               cache = isLandscape;
             }
           };

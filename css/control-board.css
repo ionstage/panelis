@@ -94,3 +94,29 @@
 .control-board .score .green .circle {
   fill: lime;
 }
+
+.control-board .inverse .button {
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+
+  -webkit-transform-origin: 210px -378px;
+  -moz-transform-origin: 210px -378px;
+  -ms-transform-origin: 210px -378px;
+  -o-transform-origin: 210px -378px;
+  transform-origin: 210px -378px;
+}
+
+.control-board .inverse .score {
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+
+  -webkit-transform-origin: 0px -378px;
+  -moz-transform-origin: 0px -378px;
+  -ms-transform-origin: 0px -378px;
+  -o-transform-origin: 0px -378px;
+  transform-origin: 0px -378px;
+}

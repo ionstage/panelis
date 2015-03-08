@@ -2,29 +2,38 @@
   'use strict';
   var app = global.app || {};
   var m = global.m;
+  var util = global.util;
 
   var Panel = app.Panel;
   var Score = app.Score;
+
+  var supportsTouch = util.supportsTouch;
+  var windowAspectRatio = util.windowAspectRatio;
 
   var ControlBoardController = function(option) {
     var noop = function() {};
     this.color = m.prop(option.color);
     this.active = m.prop(false);
-    this.panels = m.prop([null, null, null]);
+    this.panels = panelsProp();
     this.selectedPanel = m.prop(null);
     this.score = m.prop(new Score({red: 0, yellow: 0, green: 0}));
     this.panelWidth = m.prop(72);
     this.onok = noop;
     this.onback = noop;
     this.onselect = noop;
+    this.onlayoutchange = noop;
   };
 
   ControlBoardController.prototype.supplyPanel = function() {
     var color = this.color();
     var panels = this.panels();
+    var layout = this.layout();
     for (var pi = 0, plen = panels.length; pi < plen; pi++) {
-      if (!panels[pi])
-        panels[pi] = Panel.sample(color);
+      if (!panels[pi]) {
+        var panel = Panel.sample(color);
+        this.resetRotation(panel);
+        panels[pi] = panel;
+      }
     }
   };
 
@@ -43,6 +52,14 @@
     this.selectedPanel(null);
   };
 
+  ControlBoardController.prototype.resetRotation = function(panel) {
+    panel.resetRotation();
+    if (this.layout() === ControlBoardController.LAYOUT_HORIZONTAL_INVERSE) {
+      panel.rotate();
+      panel.rotate();
+    }
+  };
+
   ControlBoardController.prototype.addScore = function(color, value) {
     this.score().add(color, value);
   };
@@ -55,38 +72,74 @@
     return this.score().total();
   };
 
+  ControlBoardController.prototype.layout = function() {
+    if (windowAspectRatio() >= 1.0) {
+      return ControlBoardController.LAYOUT_VERTICAL;
+    } else if (supportsTouch && this.color() === Panel.COLOR_BLACK) {
+      return ControlBoardController.LAYOUT_HORIZONTAL_INVERSE;
+    } else {
+      return ControlBoardController.LAYOUT_HORIZONTAL;
+    }
+  };
+
   ControlBoardController.prototype.dispatchEvent = function(event) {
     var active = this.active();
     var panels = this.panels();
     var selectedPanel = this.selectedPanel();
-
-    if (!active)
-      return;
+    var layout = this.layout();
 
     switch (event.type) {
     case 'ok':
-      if (!selectedPanel)
+      if (!active || !selectedPanel)
         break;
       this.onok();
       break;
     case 'back':
-      if (!selectedPanel)
+      if (!active || !selectedPanel)
         break;
-      selectedPanel.resetRotation();
+      this.resetRotation(selectedPanel);
       this.selectedPanel(null);
       this.onback();
       break;
     case 'select':
-      if (selectedPanel)
+      if (!active || selectedPanel)
         break;
       var panel = panels[event.selectedIndex];
       this.selectedPanel(panel);
       m.redraw(true);
       this.onselect({panel: panel});
       break;
+    case 'layoutchange':
+      for (var pi = 0, plen = panels.length; pi < plen; pi++) {
+        var panel = panels[pi];
+        if (panel && panel !== selectedPanel)
+          this.resetRotation(panel);
+      }
+      this.onlayoutchange();
+      setTimeout(m.redraw, 0);
+      break;
     default:
       break;
     }
+  };
+
+  ControlBoardController.LAYOUT_VERTICAL = 'vertical';
+  ControlBoardController.LAYOUT_HORIZONTAL = 'horizontal';
+  ControlBoardController.LAYOUT_HORIZONTAL_INVERSE = 'horizontal_inverse';
+
+  var panelsProp = function() {
+    var panels = m.prop([null, null, null]);
+    return function(value) {
+      if (typeof value === 'undefined')
+        return panels();
+      var layout = this.layout();
+      for (var vi = 0, vlen = value.length; vi < vlen; vi++) {
+        var panel = value[vi];
+        if (panel)
+          this.resetRotation(panel);
+      }
+      panels(value);
+    };
   };
 
   app.ControlBoardController = ControlBoardController;

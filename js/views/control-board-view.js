@@ -5,6 +5,7 @@
   var util = global.util;
 
   var Panel = app.Panel;
+  var ControlBoardController = app.ControlBoardController;
 
   var supportsTouch = util.supportsTouch;
   var windowAspectRatio = util.windowAspectRatio;
@@ -17,22 +18,22 @@
     var selectedIndex = ctrl.selectedIndex();
     var score = ctrl.score();
     var panelWidth = ctrl.panelWidth();
+    var layout = ctrl.layout();
 
     var view = [];
 
-    var isLandscape = windowAspectRatio() >= 1.0;
     var className = '';
     var dx = 0;
     var dy = 0;
 
     if (color === Panel.COLOR_WHITE) {
-      if (isLandscape)
+      if (layout === ControlBoardController.LAYOUT_VERTICAL)
         dx = -384;
       else
         dy = 378;
       className = 'white';
     } else if (color === Panel.COLOR_BLACK) {
-      if (isLandscape)
+      if (layout === ControlBoardController.LAYOUT_VERTICAL)
         dx = 384;
       else
         dy = -378;
@@ -54,25 +55,44 @@
       });
     };
 
-    if (isLandscape) {
+    if (layout === ControlBoardController.LAYOUT_VERTICAL) {
       if (active)
         view.push(activeView(-84 + dx, -312 + dy, 168, 24));
       view.push(backView(-84 + dx, -288 + dy, 168, 576));
-      view.push(okButtonView(-60 + dx, -264 + dy, 120, 42, onClickOkButton));
-      view.push(backButtonView(-60 + dx, -198 + dy, 120, 42, onClickBackButton));
-      view.push(slotView(panels, selectedIndex, panelWidth, -48 + dx, -132 + dy, isLandscape, onSelectSlot));
-      view.push(scoreView(score, -36 + dx, 180 + dy));
+      view.push(m('g', okButtonView(-60 + dx, -264 + dy, 120, 42, onClickOkButton)));
+      view.push(m('g', backButtonView(-60 + dx, -198 + dy, 120, 42, onClickBackButton)));
+      view.push(slotView(panels, selectedIndex, panelWidth, -48 + dx, -132 + dy, layout, onSelectSlot));
+      view.push(m('g', scoreView(score, -36 + dx, 180 + dy)));
+    } else if (layout === ControlBoardController.LAYOUT_HORIZONTAL_INVERSE) {
+      if (active)
+        view.push(activeView(288 + dx, -78 + dy, 24, 156));
+      view.push(backView(-288 + dx, -78 + dy, 576, 156));
+      view.push(m('g.inverse', okButtonView(150 + dx, -54 + dy, 120, 42, onClickOkButton)));
+      view.push(m('g.inverse', backButtonView(150 + dx, 12 + dy, 120, 42, onClickBackButton)));
+      view.push(slotView(panels, selectedIndex, panelWidth, -132 + dx, -48 + dy, layout, onSelectSlot));
+      view.push(m('g.inverse', scoreView(score, 180 + dx, -36 + dy)));
     } else {
       if (active)
         view.push(activeView(-312 + dx, -78 + dy, 24, 156));
       view.push(backView(-288 + dx, -78 + dy, 576, 156));
-      view.push(okButtonView(-270 + dx, -54 + dy, 120, 42, onClickOkButton));
-      view.push(backButtonView(-270 + dx, 12 + dy, 120, 42, onClickBackButton));
-      view.push(slotView(panels, selectedIndex, panelWidth, -132 + dx, -48 + dy, isLandscape, onSelectSlot));
-      view.push(scoreView(score, 180 + dx, -36 + dy));
+      view.push(m('g', okButtonView(-270 + dx, -54 + dy, 120, 42, onClickOkButton)));
+      view.push(m('g', backButtonView(-270 + dx, 12 + dy, 120, 42, onClickBackButton)));
+      view.push(slotView(panels, selectedIndex, panelWidth, -132 + dx, -48 + dy, layout, onSelectSlot));
+      view.push(m('g', scoreView(score, 180 + dx, -36 + dy)));
     }
 
-    return m('g.control-board', {className: className}, view);
+    return m('g.control-board', {
+      className: className,
+      config: function(element, isInitialized, context) {
+        var currentLayout = ctrl.layout();
+        if (currentLayout !== context.layout) {
+          ctrl.dispatchEvent({
+            type: 'layoutchange'
+          });
+          context.layout = currentLayout;
+        }
+      }
+    }, view);
   };
 
   var activeView = function(x, y, width, height) {
@@ -125,12 +145,19 @@
     ]);
   };
 
-  var slotView = function(panels, selectedIndex, panelWidth, x, y, isLandscape, onselect) {
-    var panelViews = slotPanelViews(panels, selectedIndex, panelWidth, x, y, isLandscape);
-    var panelHitAreaViews = slotPanelHitAreaViews(panels, panelWidth, x, y, isLandscape, onselect);
+  var slotView = function(panels, selectedIndex, panelWidth, x, y, layout, onselect) {
+    var panelViews = slotPanelViews(panels, selectedIndex, panelWidth, x, y, layout);
+    var panelHitAreaViews = slotPanelHitAreaViews(panels, panelWidth, x, y, layout, onselect);
 
-    var width = isLandscape ? panelWidth + 24 : (panelWidth + 12) * panels.length + 12;
-    var height = isLandscape ? (panelWidth + 12) * panels.length + 12 : panelWidth + 24;
+    var width, height;
+
+    if (layout === ControlBoardController.LAYOUT_VERTICAL) {
+      width = panelWidth + 24;
+      height = (panelWidth + 12) * panels.length + 12;
+    } else {
+      width = (panelWidth + 12) * panels.length + 12;
+      height = panelWidth + 24;
+    }
 
     return m('g.slot', [
       m('rect.back', {
@@ -144,16 +171,24 @@
     ]);
   };
 
-  var slotPanelViews = function(panels, selectedIndex, panelWidth, x, y, isLandscape) {
+  var slotPanelViews = function(panels, selectedIndex, panelWidth, x, y, layout) {
     return panels.map(function(panel, index) {
       if (!panels)
         return null;
 
+      var point = {};
       var isSelected = selectedIndex === index;
-      var point = {
-        x: isLandscape ? (x + 12 + panelWidth / 2) : (x + 12 + (panelWidth + 12) * index + panelWidth / 2),
-        y: isLandscape ? (y + 12 + (panelWidth + 12) * index + panelWidth / 2) : (y + 12 + panelWidth / 2)
-      };
+
+      if (layout === ControlBoardController.LAYOUT_VERTICAL) {
+        point.x = x + 12 + panelWidth / 2;
+        point.y = y + 12 + (panelWidth + 12) * index + panelWidth / 2;
+      } else if (layout === ControlBoardController.LAYOUT_HORIZONTAL) {
+        point.x = x + 12 + (panelWidth + 12) * index + panelWidth / 2;
+        point.y = y + 12 + panelWidth / 2;
+      } else if (layout === ControlBoardController.LAYOUT_HORIZONTAL_INVERSE) {
+        point.x = x + 12 + (panelWidth + 12) * (panels.length - index - 1) + panelWidth / 2;
+        point.y = y + 12 + panelWidth / 2;
+      }
 
       return m('g', {className: isSelected ? 'selected' : ''}, [
         $createPanelView({
@@ -166,15 +201,23 @@
     });
   };
 
-  var slotPanelHitAreaViews = function(panels, panelWidth, x, y, isLandscape, onselect) {
+  var slotPanelHitAreaViews = function(panels, panelWidth, x, y, layout, onselect) {
     return panels.map(function(panel, index) {
       if (!panels)
         return null;
 
-      var point = {
-        x: isLandscape ? (x + 12) : (x + 12 + (panelWidth + 12) * index),
-        y: isLandscape ? (y + 12 + (panelWidth + 12) * index) : (y + 12)
-      };
+      var point = {};
+
+      if (layout === ControlBoardController.LAYOUT_VERTICAL) {
+        point.x = x + 12;
+        point.y = y + 12 + (panelWidth + 12) * index;
+      } else if (layout === ControlBoardController.LAYOUT_HORIZONTAL) {
+        point.x = x + 12 + (panelWidth + 12) * index;
+        point.y = y + 12;
+      } else if (layout === ControlBoardController.LAYOUT_HORIZONTAL_INVERSE) {
+        point.x = x + 12 + (panelWidth + 12) * (panels.length - index - 1);
+        point.y = y + 12;
+      }
 
       var hitAreaAttr = {
         x: point.x,

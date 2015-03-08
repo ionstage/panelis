@@ -55,9 +55,11 @@
     whiteControlBoardController.onok = onOkControlBoardController.bind(ctrl);
     whiteControlBoardController.onback = onBackControlBoardController.bind(ctrl);
     whiteControlBoardController.onselect = onSelectControlBoardController.bind(ctrl);
+    whiteControlBoardController.onlayoutchange = onLayoutChangeControlBoardController.bind(ctrl);
     blackControlBoardController.onok = whiteControlBoardController.onok;
     blackControlBoardController.onback = onBackControlBoardController.bind(ctrl);
     blackControlBoardController.onselect = onSelectControlBoardController.bind(ctrl);
+    blackControlBoardController.onlayoutchange = onLayoutChangeControlBoardController.bind(ctrl);
   };
 
   var reset = function(ctrl) {
@@ -213,6 +215,16 @@
   var onSelectControlBoardController = function(event) {
     var actionTileController = this.actionTileController();
     actionTileController.selectedPanel(event.panel);
+  };
+
+  var onLayoutChangeControlBoardController = function() {
+    var actionTileController = this.actionTileController();
+    var activeController = activeControlBoardController(this);
+
+    var selectedPanel = actionTileController.selectedPanel();
+    var selectedPosition = actionTileController.selectedPosition();
+    if (selectedPanel && !selectedPosition)
+      activeController.resetRotation(selectedPanel);
   };
 
   app.TurnController = TurnController;

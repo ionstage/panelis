@@ -1,6 +1,6 @@
 {
   "name": "panelis",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "browser-sync": "browser-sync start --files='index.html, css/*.css, js/*.js' --server",
     "build": "npm run cleancss;npm run uglify",

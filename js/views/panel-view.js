@@ -177,7 +177,7 @@
     }
 
     return m('rect.joint.handle.border', attr);
-  }; 
+  };
 
   var panelJointHandleView = function(width, joint) {
     var attr = {};

@@ -12,7 +12,6 @@ assertJoint = (panel, jointTop, jointRight, jointBottom, jointLeft) ->
   if jointLeft != null
     assert.equal(panel.jointLeft(), jointLeft)
 
-
 describe 'Tile', ->
   it '#panel', ->
     tile = new Tile(rowLength: 8, colLength: 8)

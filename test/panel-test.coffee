@@ -11,9 +11,7 @@ assertJoint = (panel, jointTop, jointRight, jointBottom, jointLeft) ->
   if jointLeft != null
     assert.equal(panel.jointLeft(), jointLeft)
 
-
 describe 'Panel', ->
-
   it '#mixColor', ->
     panel = new Panel(color: Panel.COLOR_BLACK)
     panel.mixColor(Panel.COLOR_WHITE)

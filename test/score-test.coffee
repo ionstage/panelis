@@ -1,9 +1,7 @@
 assert = require('assert')
 Score = require('../js/models/score.js').app.Score
 
-
 describe 'Score', ->
-
   it '#add', ->
     score = new Score(red: 1, yellow: 2, green: 3)
     score.add(Score.COLOR_RED, 3)

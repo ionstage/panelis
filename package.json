@@ -9,10 +9,10 @@
     "uglify": "uglifyjs js/util.js js/models/panel.js js/models/tile.js js/models/score.js js/controllers/tile-controller.js js/controllers/action-tile-controller.js js/controllers/control-board-controller.js js/controllers/turn-controller.js js/views/panel-view.js js/views/tile-view.js js/views/action-tile-view.js js/views/control-board-view.js js/app.js -o build/app.min.js -c -m"
   },
   "devDependencies": {
-    "browser-sync": "*",
-    "clean-css": "*",
-    "mocha": "*",
-    "uglify-js": "*"
+    "browser-sync": "^2.7.6",
+    "clean-css": "^3.3.1",
+    "mocha": "^2.2.5",
+    "uglify-js": "^2.4.23"
   },
   "dependencies": {
     "mithril": "^0.1.30"

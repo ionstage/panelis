@@ -1,17 +1,8 @@
-(function(global) {
+(function(app) {
   'use strict';
-  var app = global.app || {};
-  var m = global.m;
-  var util = global.util;
-
-  var tileView = app.tileView;
-
-  var supportsTouch = util.supportsTouch;
-  var supportsTransitionEnd = util.supportsTransitionEnd;
-  var addClass = util.addClass;
-  var replaceClass = util.replaceClass;
-  var $globalToLocal = util.$globalToLocal;
-  var $createPanelView = util.$createPanelView;
+  var m = require('mithril');
+  var util = app.util || require('../util.js');
+  var tileView = app.tileView || require('./tile-view.js');
 
   var actionTileView = function(ctrl) {
     var selectedPanel = ctrl.selectedPanel();
@@ -51,7 +42,7 @@
           return;
 
         var panelElement = element.childNodes[0];
-        addClass(panelElement, 'stop');
+        util.addClass(panelElement, 'stop');
         panelElement.addEventListener('transitionend', function() {
           rotationEndPanel(ctrl, panelElement);
         });
@@ -59,7 +50,7 @@
         oninitialize({element: panelElement});
       }
     }, [
-      $createPanelView({
+      app.createPanelView({
         panel: selectedPanel,
         x: 0,
         y: 0,
@@ -92,15 +83,15 @@
       config: function(element, isInitialized) {
         if (isInitialized)
           return;
-        var eventName = supportsTouch ? 'touchstart' : 'mousedown';
+        var eventName = util.supportsTouch() ? 'touchstart' : 'mousedown';
         element.addEventListener(eventName, this.attrs.startHandler);
       }
     });
   };
 
   var rotatePanel = function(ctrl, panelElement) {
-    if (supportsTransitionEnd)
-      replaceClass(panelElement, 'stop', 'rotate');
+    if (util.supportsTransitionEnd())
+      util.replaceClass(panelElement, 'stop', 'rotate');
     else
       rotationEndPanel(ctrl, panelElement);
   };
@@ -109,7 +100,7 @@
     ctrl.dispatchEvent({
       type: 'rotationend'
     });
-    replaceClass(panelElement, 'rotate', 'stop');
+    util.replaceClass(panelElement, 'rotate', 'stop');
   };
 
   var selectPanel = function(ctrl, x, y) {
@@ -117,7 +108,7 @@
     var rowLength = ctrl.rowLength();
     var colLength = ctrl.colLength();
 
-    var loc = $globalToLocal({x: x, y: y});
+    var loc = app.globalToLocal({x: x, y: y});
     var row = parseInt((loc.y + panelWidth * rowLength / 2) / panelWidth, 10);
     var col = parseInt((loc.x + panelWidth * colLength / 2) / panelWidth, 10);
 
@@ -128,6 +119,8 @@
     });
   };
 
-  app.actionTileView = actionTileView;
-  global.app = app;
-}(this));
+  if (typeof module !== 'undefined' && module.exports)
+    module.exports = actionTileView;
+  else
+    app.actionTileView = actionTileView;
+})(this.app || (this.app = {}));

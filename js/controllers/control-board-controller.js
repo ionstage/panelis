@@ -1,14 +1,9 @@
-(function(global) {
+(function(app) {
   'use strict';
-  var app = global.app || {};
-  var m = global.m;
-  var util = global.util;
-
-  var Panel = app.Panel;
-  var Score = app.Score;
-
-  var supportsTouch = util.supportsTouch;
-  var windowAspectRatio = util.windowAspectRatio;
+  var m = require('mithril');
+  var util = app.util || require('../util.js');
+  var Panel = app.Panel || require('../models/panel.js');
+  var Score = app.Score || require('../models/score.js');
 
   var ControlBoardController = function(option) {
     var noop = function() {};
@@ -27,7 +22,6 @@
   ControlBoardController.prototype.supplyPanel = function() {
     var color = this.color();
     var panels = this.panels();
-    var layout = this.layout();
     for (var pi = 0, plen = panels.length; pi < plen; pi++) {
       if (!panels[pi]) {
         var panel = Panel.sample(color);
@@ -73,9 +67,9 @@
   };
 
   ControlBoardController.prototype.layout = function() {
-    if (windowAspectRatio() >= 1.0) {
+    if (util.windowAspectRatio() >= 1.0) {
       return ControlBoardController.LAYOUT_VERTICAL;
-    } else if (supportsTouch && this.color() === Panel.COLOR_BLACK) {
+    } else if (util.supportsTouch() && this.color() === Panel.COLOR_BLACK) {
       return ControlBoardController.LAYOUT_HORIZONTAL_INVERSE;
     } else {
       return ControlBoardController.LAYOUT_HORIZONTAL;
@@ -86,7 +80,6 @@
     var active = this.active();
     var panels = this.panels();
     var selectedPanel = this.selectedPanel();
-    var layout = this.layout();
 
     switch (event.type) {
     case 'ok':
@@ -132,7 +125,6 @@
     return function(value) {
       if (typeof value === 'undefined')
         return panels();
-      var layout = this.layout();
       for (var vi = 0, vlen = value.length; vi < vlen; vi++) {
         var panel = value[vi];
         if (panel)
@@ -142,6 +134,8 @@
     };
   };
 
-  app.ControlBoardController = ControlBoardController;
-  global.app = app;
-}(this));
+  if (typeof module !== 'undefined' && module.exports)
+    module.exports = ControlBoardController;
+  else
+    app.ControlBoardController = ControlBoardController;
+})(this.app || (this.app = {}));

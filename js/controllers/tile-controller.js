@@ -1,11 +1,9 @@
-(function(global) {
+(function(app) {
   'use strict';
-  var app = global.app || {};
-  var m = global.m;
-
-  var Panel = app.Panel;
-  var Tile = app.Tile;
-  var Score = app.Score;
+  var m = require('mithril');
+  var Panel = app.Panel || require('../models/panel.js');
+  var Tile = app.Tile || require('../models/tile.js');
+  var Score = app.Score || require('../models/score.js');
 
   var TileController = function() {
     var noop = function() {};
@@ -171,6 +169,8 @@
     return false;
   };
 
-  app.TileController = TileController;
-  global.app = app;
-}(this));
+  if (typeof module !== 'undefined' && module.exports)
+    module.exports = TileController;
+  else
+    app.TileController = TileController;
+})(this.app || (this.app = {}));

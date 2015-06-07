@@ -1,5 +1,5 @@
 var assert = require('assert');
-var Score = require('../js/models/score.js').app.Score;
+var Score = require('../js/models/score.js');
 
 describe('Score', function() {
   it('#add', function() {

@@ -1,9 +1,7 @@
-(function(global) {
+(function(app) {
   'use strict';
-  var app = global.app || {};
-  var m = global.m;
-
-  var Panel = app.Panel;
+  var m = require('mithril');
+  var Panel = app.Panel || require('../models/panel.js');
 
   var panelView = function(ctrl) {
     var panel = ctrl.panel();
@@ -214,6 +212,8 @@
     return m('rect.joint.handle', attr);
   };
 
-  app.panelView = panelView;
-  global.app = app;
-}(this));
+  if (typeof module !== 'undefined' && module.exports)
+    module.exports = panelView;
+  else
+    app.panelView = panelView;
+})(this.app || (this.app = {}));

@@ -1,15 +1,9 @@
-(function(global) {
+(function(app) {
   'use strict';
-  var app = global.app || {};
-  var m = global.m;
-  var util = global.util;
-
-  var Panel = app.Panel;
-  var ControlBoardController = app.ControlBoardController;
-
-  var supportsTouch = util.supportsTouch;
-  var windowAspectRatio = util.windowAspectRatio;
-  var $createPanelView = util.$createPanelView;
+  var m = require('mithril');
+  var util = app.util || require('../util.js');
+  var Panel = app.Panel || require('../models/panel.js');
+  var ControlBoardController = app.ControlBoardController || require('../controllers/control-board-controller.js');
 
   var controlBoardView = function(ctrl) {
     var color = ctrl.color();
@@ -191,7 +185,7 @@
       }
 
       return m('g', {className: isSelected ? 'selected' : ''}, [
-        $createPanelView({
+        app.createPanelView({
           panel: panel,
           x: point.x,
           y: point.y,
@@ -233,7 +227,7 @@
         config: function(element, isInitialized) {
           if (isInitialized)
             return;
-          var eventName = supportsTouch ? 'touchstart' : 'mousedown';
+          var eventName = util.supportsTouch() ? 'touchstart' : 'mousedown';
           element.addEventListener(eventName, this.attrs.selectHandler);
         }
       };
@@ -292,6 +286,8 @@
     ]);
   };
 
-  app.controlBoardView = controlBoardView;
-  global.app = app;
-}(this));
+  if (typeof module !== 'undefined' && module.exports)
+    module.exports = controlBoardView;
+  else
+    app.controlBoardView = controlBoardView;
+})(this.app || (this.app = {}));

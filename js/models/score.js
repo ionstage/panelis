@@ -1,7 +1,6 @@
-(function(global) {
+(function(app) {
   'use strict';
-  var app = global.app || {};
-  var m = global.m || require('mithril');
+  var m = require('mithril');
 
   var Score = function(option) {
     this.red = m.prop(option.red || 0);
@@ -27,6 +26,8 @@
   Score.COLOR_YELLOW = 'yellow';
   Score.COLOR_GREEN = 'green';
 
-  app.Score = Score;
-  global.app = app;
-}(this));
+  if (typeof module !== 'undefined' && module.exports)
+    module.exports = Score;
+  else
+    app.Score = Score;
+})(this.app || (this.app = {}));

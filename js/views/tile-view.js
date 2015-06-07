@@ -1,11 +1,7 @@
-(function(global) {
+(function(app) {
   'use strict';
-  var app = global.app || {};
-  var m = global.m;
-  var util = global.util;
-
-  var supportsTransitionEnd = util.supportsTransitionEnd;
-  var $createPanelView = util.$createPanelView;
+  var m = require('mithril');
+  var util = app.util || require('../util.js');
 
   var tileView = function(ctrl) {
     var panelWidth = ctrl.panelWidth();
@@ -22,7 +18,7 @@
       }),
       m('g', ctrl.panels().map(function(cols, ri) {
         return cols.map(function(panel, ci) {
-          return $createPanelView({
+          return app.createPanelView({
             panel: panel,
             x: -(panelWidth * colLength / 2) + ci * panelWidth + panelWidth / 2,
             y: -(panelWidth * rowLength / 2) + ri * panelWidth + panelWidth / 2,
@@ -32,7 +28,7 @@
       })),
       m('g.score-animation', scoreColors.map(function(scoreColor) {
         return m('circle.circle', {
-          className: scoreColor.color + (supportsTransitionEnd ? ' animation' : ''),
+          className: scoreColor.color + (util.supportsTransitionEnd() ? ' animation' : ''),
           cx: (scoreColor.col - colLength / 2) * panelWidth + panelWidth / 2,
           cy: (scoreColor.row - rowLength / 2) * panelWidth + panelWidth / 2,
           r: panelWidth / 3.2
@@ -41,6 +37,8 @@
     ]);
   };
 
-  app.tileView = tileView;
-  global.app = app;
-}(this));
+  if (typeof module !== 'undefined' && module.exports)
+    module.exports = tileView;
+  else
+    app.tileView = tileView;
+})(this.app || (this.app = {}));

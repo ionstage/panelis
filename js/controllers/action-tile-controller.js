@@ -1,14 +1,10 @@
-(function(global) {
+(function(app) {
   'use strict';
-  var app = global.app || {};
-  var m = global.m;
-  var util = global.util;
+  var m = require('mithril');
+  var util = app.util || require('../util.js');
+  var TileController = app.TileController || require('./tile-controller.js');
 
-  var TileController = app.TileController;
-
-  var inherits = util.inherits;
-
-  var ActionTileController = inherits(function() {
+  var ActionTileController = util.inherits(function() {
     ActionTileController.super_.call(this);
     this.selectedPanel = m.prop(null);
     this.selectedPosition = m.prop(null);
@@ -49,6 +45,8 @@
     }
   };
 
-  app.ActionTileController = ActionTileController;
-  global.app = app;
-}(this));
+  if (typeof module !== 'undefined' && module.exports)
+    module.exports = ActionTileController;
+  else
+    app.ActionTileController = ActionTileController;
+})(this.app || (this.app = {}));

@@ -1,10 +1,8 @@
-(function(global) {
+(function(app) {
   'use strict';
-  var app = global.app || {};
-  var m = global.m;
-
-  var Panel = app.Panel;
-  var Score = app.Score;
+  var m = require('mithril');
+  var Panel = app.Panel || require('../models/panel.js');
+  var Score = app.Score || require('../models/score.js');
 
   var TurnController = function(option) {
     this.turnPlayerColor = m.prop(option.turnPlayerColor);
@@ -227,6 +225,8 @@
       activeController.resetRotation(selectedPanel);
   };
 
-  app.TurnController = TurnController;
-  global.app = app;
-}(this));
+  if (typeof module !== 'undefined' && module.exports)
+    module.exports = TurnController;
+  else
+    app.TurnController = TurnController;
+})(this.app || (this.app = {}));

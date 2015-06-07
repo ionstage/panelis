@@ -1,6 +1,6 @@
 var assert = require('assert');
-var Tile = require('../js/models/tile.js').app.Tile;
-var Panel = require('../js/models/panel.js').app.Panel;
+var Tile = require('../js/models/tile.js');
+var Panel = require('../js/models/panel.js');
 
 var assertJoint = function(panel, jointTop, jointRight, jointBottom, jointLeft) {
   if (jointTop !== null)

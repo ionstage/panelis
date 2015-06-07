@@ -1,9 +1,6 @@
-(function(global) {
+(function(app) {
   'use strict';
   var util = {};
-
-  var window = global.window;
-  var document = global.document;
 
   util.randomBoolean = function() {
     return Math.random() < 0.5;
@@ -50,17 +47,25 @@
     return result;
   };
 
-  util.supportsTouch = (document && 'createTouch' in document) || false;
+  util.supportsTouch = function() {
+    return 'createTouch' in document;
+  };
 
-  util.supportsTransitionEnd = (function() {
-    if (!document)
-      return false;
+  util.supportsTransitionEnd = function() {
     var div = document.createElement('div');
     return typeof div.style['transition'] !== 'undefined';
-  }());
+  };
 
   util.windowAspectRatio = function() {
     return window.innerWidth / window.innerHeight;
+  };
+
+  util.addResizeEvent = function(listener) {
+    window.addEventListener('resize', listener);
+  };
+
+  util.el = function(selector) {
+    return document.querySelector(selector);
   };
 
   util.addClass = function(el, className) {
@@ -72,29 +77,8 @@
     el.setAttribute('class',  className);
   };
 
-  util.$globalToLocal = function(gpt) {
-    var $viewClassName = app.view.className;
-
-    var stageElement = document.querySelector('.' + $viewClassName);
-    var lpt = stageElement.createSVGPoint();
-    lpt.x = gpt.x;
-    lpt.y = gpt.y;
-    return lpt.matrixTransform(stageElement.getScreenCTM().inverse());
-  };
-
-  util.$createPanelView = function(option) {
-    var $panelView = app.panelView;
-
-    return $panelView({
-      panel: m.prop(option.panel),
-      x: m.prop(option.x),
-      y: m.prop(option.y),
-      width: m.prop(option.width)
-    });
-  };
-
   if (typeof module !== 'undefined' && module.exports)
     module.exports = util;
   else
-    global.util = util;
-}(this));
+    app.util = util;
+})(this.app || (this.app = {}));

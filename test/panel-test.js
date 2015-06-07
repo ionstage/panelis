@@ -1,5 +1,5 @@
 var assert = require('assert');
-var Panel = require('../js/models/panel.js').app.Panel;
+var Panel = require('../js/models/panel.js');
 
 var assertJoint = function(panel, jointTop, jointRight, jointBottom, jointLeft) {
   if (jointTop !== null)

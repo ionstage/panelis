@@ -1,13 +1,8 @@
-(function(global) {
+(function(app) {
   'use strict';
-  var app = global.app || {};
-  var m = global.m || require('mithril');
-  var util = global.util || require('../util.js');
-
-  var Panel = app.Panel || require('./panel.js').app.Panel;
-
-  var isEqual = util.isEqual;
-  var uniq = util.uniq;
+  var m = require('mithril');
+  var util = app.util || require('../util.js');
+  var Panel = app.Panel || require('./panel.js');
 
   var Tile = function(option) {
     this.panels = m.prop([[]]);
@@ -243,10 +238,10 @@
           nextList.push({row: p.row, col: p.col - 1});
       }
 
-      nextList = uniq(nextList).filter(function(nitem) {
+      nextList = util.uniq(nextList).filter(function(nitem) {
         for (var si = 0, slen = searched.length; si < slen; si++) {
           var sitem = searched[si];
-          if (isEqual(nitem, sitem))
+          if (util.isEqual(nitem, sitem))
             return false;
         }
         return true;
@@ -303,6 +298,8 @@
     }
   };
 
-  app.Tile = Tile;
-  global.app = app;
-})(this);
+  if (typeof module !== 'undefined' && module.exports)
+    module.exports = Tile;
+  else
+    app.Tile = Tile;
+})(this.app || (this.app = {}));

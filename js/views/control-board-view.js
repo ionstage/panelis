@@ -185,7 +185,7 @@
       }
 
       return m('g', {className: isSelected ? 'selected' : ''}, [
-        app.createPanelView({
+        util.$createPanelView({
           panel: panel,
           x: point.x,
           y: point.y,

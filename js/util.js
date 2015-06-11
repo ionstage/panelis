@@ -1,5 +1,7 @@
 (function(app) {
   'use strict';
+  var m = require('mithril');
+
   var util = {};
 
   util.randomBoolean = function() {
@@ -75,6 +77,26 @@
   util.replaceClass = function(el, c0, c1) {
     var className = el.getAttribute('class').replace(c0, c1);
     el.setAttribute('class',  className);
+  };
+
+  util.$stageElement = m.prop(null);
+
+  util.$globalToLocal = function(gpt) {
+    var stageElement = util.$stageElement();
+    var lpt = stageElement.createSVGPoint();
+    lpt.x = gpt.x;
+    lpt.y = gpt.y;
+    return lpt.matrixTransform(stageElement.getScreenCTM().inverse());
+  };
+
+  util.$createPanelView = function(option) {
+    var panelView = app.panelView || require('./views/panel-view.js');
+    return panelView({
+      panel: m.prop(option.panel),
+      x: m.prop(option.x),
+      y: m.prop(option.y),
+      width: m.prop(option.width)
+    });
   };
 
   if (typeof module !== 'undefined' && module.exports)

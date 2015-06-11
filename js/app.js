@@ -6,28 +6,8 @@
   var ActionTileController = app.ActionTileController || require('./controllers/action-tile-controller.js');
   var ControlBoardController = app.ControlBoardController || require('./controllers/control-board-controller.js');
   var TurnController = app.TurnController || require('./controllers/turn-controller.js');
-  var panelView = app.panelView || require('./views/panel-view.js');
   var actionTileView = app.actionTileView || require('./views/action-tile-view.js');
   var controlBoardView = app.controlBoardView || require('./views/control-board-view.js');
-
-  app.stageElement = m.prop(null);
-
-  app.globalToLocal = function(gpt) {
-    var stageElement = app.stageElement();
-    var lpt = stageElement.createSVGPoint();
-    lpt.x = gpt.x;
-    lpt.y = gpt.y;
-    return lpt.matrixTransform(stageElement.getScreenCTM().inverse());
-  };
-
-  app.createPanelView = function(option) {
-    return panelView({
-      panel: m.prop(option.panel),
-      x: m.prop(option.x),
-      y: m.prop(option.y),
-      width: m.prop(option.width)
-    });
-  };
 
   var controller = function() {
     this.actionTileController = new ActionTileController();
@@ -53,7 +33,7 @@
         if (isInitialized)
           return;
 
-        app.stageElement(element);
+        util.$stageElement(element);
         util.addResizeEvent((function() {
           var cache = util.windowAspectRatio() >= 1.0;
           return function() {

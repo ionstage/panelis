@@ -50,7 +50,7 @@
         oninitialize({element: panelElement});
       }
     }, [
-      app.createPanelView({
+      util.$createPanelView({
         panel: selectedPanel,
         x: 0,
         y: 0,
@@ -108,7 +108,7 @@
     var rowLength = ctrl.rowLength();
     var colLength = ctrl.colLength();
 
-    var loc = app.globalToLocal({x: x, y: y});
+    var loc = util.$globalToLocal({x: x, y: y});
     var row = parseInt((loc.y + panelWidth * rowLength / 2) / panelWidth, 10);
     var col = parseInt((loc.x + panelWidth * colLength / 2) / panelWidth, 10);
 

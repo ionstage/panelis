@@ -22,6 +22,22 @@
     // add element
     if (parentElement && !element) {
       element = dom.el('<div>');
+
+      dom.addClass(element, 'panel');
+
+      dom.html(element, [
+        '<div class="panel-back-circle"></div>',
+        '<div class="panel-back-joint-top"></div>',
+        '<div class="panel-back-joint-right"></div>',
+        '<div class="panel-back-joint-bottom"></div>',
+        '<div class="panel-back-joint-left"></div>',
+        '<div class="panel-front-joint-top"></div>',
+        '<div class="panel-front-joint-right"></div>',
+        '<div class="panel-front-joint-bottom"></div>',
+        '<div class="panel-front-joint-left"></div>',
+        '<div class="panel-front-circle"></div>'
+      ].join(''));
+
       this.element(element);
       dom.append(parentElement, element);
       return;

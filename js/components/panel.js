@@ -5,9 +5,11 @@
   var dom = app.dom || require('../dom.js');
   var Component = app.Component || require('./component.js');
 
-  var Panel = helper.inherits(function() {
+  var Panel = helper.inherits(function(props) {
     Panel.super_.call(this);
 
+    this.x = this.prop(props.x);
+    this.y = this.prop(props.y);
     this.element = this.prop(null);
     this.parentElement = this.prop(null);
   }, Component);
@@ -39,6 +41,7 @@
       ].join(''));
 
       this.element(element);
+      this.redraw();
       dom.append(parentElement, element);
       return;
     }
@@ -49,6 +52,14 @@
       this.element(null);
       return;
     }
+
+    // update element
+    var translate = 'translate(' + this.x() + 'rem, ' + this.y() + 'rem)';
+
+    dom.css(element, {
+      transform: translate,
+      webkitTransform: translate
+    });
   };
 
   if (typeof module !== 'undefined' && module.exports)

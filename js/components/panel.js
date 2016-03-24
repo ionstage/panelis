@@ -10,6 +10,7 @@
 
     this.x = this.prop(props.x);
     this.y = this.prop(props.y);
+    this.width = this.prop(props.width);
     this.element = this.prop(null);
     this.parentElement = this.prop(null);
   }, Component);
@@ -57,8 +58,10 @@
     var translate = 'translate(' + this.x() + 'rem, ' + this.y() + 'rem)';
 
     dom.css(element, {
+      height: this.width() + 'rem',
       transform: translate,
-      webkitTransform: translate
+      webkitTransform: translate,
+      width: this.width() + 'rem'
     });
   };
 

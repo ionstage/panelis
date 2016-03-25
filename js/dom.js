@@ -34,6 +34,18 @@
     el.classList.add(className);
   };
 
+  dom.data = function(el, key, value) {
+    if (typeof value === 'undefined')
+      return el.dataset[key];
+
+    if (value === null) {
+      delete el.dataset[key];
+      return;
+    }
+
+    el.dataset[key] = value;
+  };
+
   dom.html = function(el, s) {
     el.innerHTML = s;
   };

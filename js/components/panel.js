@@ -11,6 +11,7 @@
     this.x = this.prop(props.x);
     this.y = this.prop(props.y);
     this.width = this.prop(props.width);
+    this.color = this.prop(props.color);
     this.element = this.prop(null);
     this.parentElement = this.prop(null);
   }, Component);
@@ -63,7 +64,14 @@
       webkitTransform: translate,
       width: this.width() + 'rem'
     });
+
+    dom.data(element, 'color', this.color());
   };
+
+  Panel.COLOR_NONE = 'none';
+  Panel.COLOR_WHITE = 'white';
+  Panel.COLOR_BLACK = 'black';
+  Panel.COLOR_GRAY = 'gray';
 
   if (typeof module !== 'undefined' && module.exports)
     module.exports = Panel;

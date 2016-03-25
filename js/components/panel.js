@@ -13,6 +13,7 @@
     this.width = this.prop(props.width);
     this.color = this.prop(props.color);
     this.joints = this.prop(props.joints);
+    this.isFixed = this.prop(props.isFixed);
     this.element = this.prop(null);
     this.parentElement = this.prop(null);
   }, Component);
@@ -74,6 +75,11 @@
       else
         dom.removeClass(element, 'panel-joint-' + name);
     }.bind(this));
+
+    if (this.isFixed())
+      dom.addClass(element, 'panel-fixed');
+    else
+      dom.removeClass(element, 'panel-fixed');
   };
 
   Panel.COLOR_NONE = 'none';

@@ -34,6 +34,10 @@
     el.classList.add(className);
   };
 
+  dom.removeClass = function(el, className) {
+    el.classList.remove(className);
+  };
+
   dom.data = function(el, key, value) {
     if (typeof value === 'undefined')
       return el.dataset[key];

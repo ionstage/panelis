@@ -12,6 +12,7 @@
     this.y = this.prop(props.y);
     this.width = this.prop(props.width);
     this.color = this.prop(props.color);
+    this.joints = this.prop(props.joints);
     this.element = this.prop(null);
     this.parentElement = this.prop(null);
   }, Component);
@@ -66,6 +67,13 @@
     });
 
     dom.data(element, 'color', this.color());
+
+    ['top', 'right', 'bottom', 'left'].forEach(function(name, index) {
+      if (this.joints()[index])
+        dom.addClass(element, 'panel-joint-' + name);
+      else
+        dom.removeClass(element, 'panel-joint-' + name);
+    }.bind(this));
   };
 
   Panel.COLOR_NONE = 'none';

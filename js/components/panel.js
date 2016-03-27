@@ -18,6 +18,12 @@
     this.parentElement = this.prop(null);
   }, Component);
 
+  Panel.prototype.rotate = function() {
+    var joints = this.joints();
+    joints.unshift(joints.pop());
+    this.markDirty();
+  };
+
   Panel.prototype.redraw = function() {
     var element = this.element();
     var parentElement = this.parentElement();

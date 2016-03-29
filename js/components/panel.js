@@ -18,6 +18,10 @@
     this.parentElement = this.prop(null);
   }, Component);
 
+  Panel.prototype.hasJoint = function(joint) {
+    return this.joints()[joint];
+  };
+
   Panel.prototype.rotate = function() {
     var joints = this.joints();
     joints.unshift(joints.pop());
@@ -92,6 +96,11 @@
   Panel.COLOR_WHITE = 'white';
   Panel.COLOR_BLACK = 'black';
   Panel.COLOR_GRAY = 'gray';
+
+  Panel.JOINT_TOP = 0;
+  Panel.JOINT_RIGHT = 1;
+  Panel.JOINT_BOTTOM = 2;
+  Panel.JOINT_LEFT = 3;
 
   if (typeof module !== 'undefined' && module.exports)
     module.exports = Panel;

@@ -12,14 +12,22 @@
     this.element = this.prop(props.element);
   }, Component);
 
-  Board.prototype.reset = function() {
+  Board.prototype.panel = function(row, col, panel) {
     var panels = this.panels();
+    var index = row * 8 + col;
+
+    if (typeof panel === 'undefined')
+      return panels[index];
+
+    panels[index] = panel;
+  };
+
+  Board.prototype.reset = function() {
     var element = this.element();
 
     for (var row = 0; row < 8; row++) {
       for (var col = 0; col < 8; col++) {
-        var index = row * 8 + col;
-        var panel = panels[index];
+        var panel = this.panel(row, col);
 
         // remove current panel
         if (panel)
@@ -61,7 +69,7 @@
           panel = null;
         }
 
-        panels[index] = panel;
+        this.panel(row, col, panel);
       }
     }
   };

@@ -28,6 +28,36 @@
     this.markDirty();
   };
 
+  Panel.prototype.rotateWithAnimation = function() {
+    return new Promise(function(resolve, reject) {
+      var element = this.element();
+
+      if (dom.hasClass(element, 'rotate')) {
+        // the panel is now rotating
+        reject();
+        return;
+      }
+
+      dom.addClass(element, 'rotate');
+
+      var ontransitionend = function() {
+        dom.off(element, 'transitionend', ontransitionend);
+        dom.removeClass(element, 'rotate');
+        this.rotate();
+        resolve();
+      }.bind(this);
+
+      dom.on(element, 'transitionend', ontransitionend);
+
+      var transform = 'translate(' + this.x() + 'rem, ' + this.y() + 'rem) rotate(90deg)';
+
+      dom.css(element, {
+        transform: transform,
+        webkitTransform: transform
+      });
+    }.bind(this));
+  };
+
   Panel.prototype.redraw = function() {
     var element = this.element();
     var parentElement = this.parentElement();

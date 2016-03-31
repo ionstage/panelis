@@ -38,6 +38,10 @@
     el.classList.remove(className);
   };
 
+  dom.hasClass = function(el, className) {
+    return el.classList.contains(className);
+  };
+
   dom.data = function(el, key, value) {
     if (typeof value === 'undefined')
       return el.dataset[key];

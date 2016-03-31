@@ -54,6 +54,14 @@
     el.innerHTML = s;
   };
 
+  dom.on = function(el, type, listener) {
+    el.addEventListener(type, listener);
+  };
+
+  dom.off = function(el, type, listener) {
+    el.removeEventListener(type, listener);
+  };
+
   dom.animate = function(callback) {
     return window.requestAnimationFrame(callback);
   };

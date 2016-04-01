@@ -4,8 +4,10 @@
   var helper = app.helper || require('../helper.js');
   var Component = app.Component || require('./component.js');
 
-  var ControllerComponent = helper.inherits(function() {
+  var ControllerComponent = helper.inherits(function(props) {
     ControllerComponent.super_.call(this);
+
+    this.element = this.prop(props.element);
   }, Component);
 
   if (typeof module !== 'undefined' && module.exports)

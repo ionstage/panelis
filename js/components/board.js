@@ -39,8 +39,9 @@
         var atLeft = (col === 0);
 
         if (atTop || atRight || atBottom || atLeft) {
-          var x = col * 8;
-          var y = row * 8;
+          var width = 8;
+          var x = col * width;
+          var y = row * width;
 
           var atCorner = (atTop && atLeft) ||
                          (atTop && atRight) ||
@@ -53,7 +54,7 @@
           panel = new Panel({
             x: x,
             y: y,
-            width: 8,
+            width: width,
             color: Panel.COLOR_NONE,
             joints: [
               !atCorner && atBottom && trueOrFalse, // joint-top

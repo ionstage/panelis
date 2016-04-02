@@ -19,32 +19,35 @@
     if (typeof panel === 'undefined')
       return panels[index];
 
+    var currentPanel = panels[index];
+
+    // remove current panel
+    if (currentPanel)
+      currentPanel.parentElement(null);
+
     if (panel) {
       var width = panel.width();
 
       // set the position of the panel on the board
       panel.x(col * width);
       panel.y(row * width);
+
+      // add new panel
+      panel.parentElement(this.element());
     }
 
     panels[index] = panel;
   };
 
   Board.prototype.reset = function() {
-    var element = this.element();
-
     for (var row = 0; row < 8; row++) {
       for (var col = 0; col < 8; col++) {
-        var panel = this.panel(row, col);
-
-        // remove current panel
-        if (panel)
-          panel.parentElement(null);
-
         var atTop = (row === 0);
         var atRight = (col === 7);
         var atBottom = (row === 7);
         var atLeft = (col === 0);
+
+        var panel;
 
         if (atTop || atRight || atBottom || atLeft) {
           var atCorner = (atTop && atLeft) ||
@@ -66,8 +69,6 @@
             ],
             isFixed: true
           });
-
-          panel.parentElement(element);
         } else {
           panel = null;
         }

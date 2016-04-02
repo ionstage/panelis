@@ -19,6 +19,14 @@
     if (typeof panel === 'undefined')
       return panels[index];
 
+    if (panel) {
+      var width = panel.width();
+
+      // set the position of the panel on the board
+      panel.x(col * width);
+      panel.y(row * width);
+    }
+
     panels[index] = panel;
   };
 
@@ -39,10 +47,6 @@
         var atLeft = (col === 0);
 
         if (atTop || atRight || atBottom || atLeft) {
-          var width = 8;
-          var x = col * width;
-          var y = row * width;
-
           var atCorner = (atTop && atLeft) ||
                          (atTop && atRight) ||
                          (atBottom && atLeft) ||
@@ -52,9 +56,7 @@
 
           // the panel at the eage of the board
           panel = new Panel({
-            x: x,
-            y: y,
-            width: width,
+            width: 8,
             color: Panel.COLOR_NONE,
             joints: [
               !atCorner && atBottom && trueOrFalse, // joint-top

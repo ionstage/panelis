@@ -8,8 +8,8 @@
   var Panel = helper.inherits(function(props) {
     Panel.super_.call(this);
 
-    this.x = this.prop(props.x);
-    this.y = this.prop(props.y);
+    this.x = this.prop(0);
+    this.y = this.prop(0);
     this.width = this.prop(props.width);
     this.color = this.prop(props.color);
     this.joints = this.prop(props.joints);

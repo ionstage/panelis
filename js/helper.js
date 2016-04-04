@@ -21,6 +21,10 @@
     return value;
   };
 
+  helper.sample = function(list) {
+    return list[Math.floor(Math.random() * list.length)];
+  };
+
   if (typeof module !== 'undefined' && module.exports)
     module.exports = helper;
   else

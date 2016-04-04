@@ -138,6 +138,14 @@
   Panel.JOINT_BOTTOM = 2;
   Panel.JOINT_LEFT = 3;
 
+  Panel.JOINTS_PATTERN_LIST = [
+    [true, false, false, false],
+    [true, true, false, false],
+    [true, false, true, false],
+    [true, true, true, false],
+    [true, true, true, true]
+  ];
+
   if (typeof module !== 'undefined' && module.exports)
     module.exports = Panel;
   else

@@ -33,17 +33,17 @@
     return new Promise(function(resolve, reject) {
       var element = this.element();
 
-      if (dom.hasClass(element, 'rotate')) {
+      if (dom.hasClass(element, 'panel-rotate')) {
         // the panel is now rotating
         reject();
         return;
       }
 
-      dom.addClass(element, 'rotate');
+      dom.addClass(element, 'panel-rotate');
 
       var ontransitionend = function() {
         dom.off(element, 'transitionend', ontransitionend);
-        dom.removeClass(element, 'rotate');
+        dom.removeClass(element, 'panel-rotate');
         this.rotate();
         resolve();
       }.bind(this);

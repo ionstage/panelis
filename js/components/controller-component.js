@@ -8,6 +8,7 @@
   var ControllerComponent = helper.inherits(function(props) {
     ControllerComponent.super_.call(this);
 
+    this.color = this.prop(props.color);
     this.panels = this.prop(new Array(3));
     this.element = this.prop(props.element);
   }, Component);
@@ -35,6 +36,9 @@
 
     panels[index] = panel;
   };
+
+  ControllerComponent.COLOR_WHITE = 'white';
+  ControllerComponent.COLOR_BLACK = 'black';
 
   if (typeof module !== 'undefined' && module.exports)
     module.exports = ControllerComponent;

@@ -14,6 +14,7 @@
     this.color = this.prop(props.color);
     this.joints = this.prop(props.joints);
     this.isFixed = this.prop(props.isFixed);
+    this.isFocused = this.prop(false);
     this.element = this.prop(null);
     this.parentElement = this.prop(null);
   }, Component);
@@ -120,6 +121,11 @@
       dom.addClass(element, 'panel-fixed');
     else
       dom.removeClass(element, 'panel-fixed');
+
+    if (this.isFocused())
+      dom.addClass(element, 'panel-focused');
+    else
+      dom.removeClass(element, 'panel-focused');
   };
 
   Panel.COLOR_NONE = 'none';

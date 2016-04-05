@@ -86,6 +86,17 @@
     return window.requestAnimationFrame(callback);
   };
 
+  dom.supportsTouch = function() {
+    return 'createTouch' in document;
+  };
+
+  dom.target = function(event) {
+    if (dom.supportsTouch() && 'changedTouches' in event)
+      event = event.changedTouches[0];
+
+    return event.target;
+  };
+
   if (typeof module !== 'undefined' && module.exports)
     module.exports = dom;
   else

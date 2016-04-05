@@ -66,6 +66,20 @@
     }
   };
 
+  ControllerComponent.prototype.reset = function() {
+    var panels = this.panels();
+
+    // remove all panels
+    for (var i = 0, len = panels.length; i < len; i++) {
+      if (panels[i])
+        this.panel(i, null);
+    }
+
+    // add two panels
+    this.fillEmptySlot();
+    this.fillEmptySlot();
+  };
+
   ControllerComponent.COLOR_WHITE = 'white';
   ControllerComponent.COLOR_BLACK = 'black';
 

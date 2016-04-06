@@ -16,6 +16,10 @@
     return document.querySelector(selector);
   };
 
+  dom.doc = function() {
+    return document;
+  };
+
   dom.append = function(parent, el) {
     parent.appendChild(el);
   };
@@ -95,6 +99,10 @@
       event = event.changedTouches[0];
 
     return event.target;
+  };
+
+  dom.stop = function(event) {
+    event.stopPropagation();
   };
 
   dom.eventType = function(name) {

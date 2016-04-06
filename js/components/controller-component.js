@@ -11,7 +11,47 @@
 
     this.color = this.prop(props.color);
     this.panels = this.prop(new Array(3));
+    this.selectedPanelIndex = this.prop(-1);
     this.element = this.prop(props.element);
+
+    dom.on(this.slotWrapperElement(), dom.eventType('start'), function(event) {
+      var index = +dom.data(dom.target(event), 'index');
+
+      if (isNaN(index))
+        return;
+
+      var panels = this.panels();
+      var panel = panels[index];
+
+      if (!panel)
+        return;
+
+      dom.stop(event);
+
+      var selectedPanelIndex = this.selectedPanelIndex();
+
+      if (selectedPanelIndex === index)
+        return;
+
+      var selectedPanel = panels[selectedPanelIndex];
+
+      if (selectedPanel)
+        selectedPanel.isFocused(false);
+
+      panel.isFocused(true);
+
+      this.selectedPanelIndex(index);
+    }.bind(this));
+
+    dom.on(dom.doc(), dom.eventType('start'), function() {
+      var selectedPanel = this.panels()[this.selectedPanelIndex()];
+
+      if (!selectedPanel)
+        return;
+
+      selectedPanel.isFocused(false);
+      this.selectedPanelIndex(-1);
+    }.bind(this));
   }, Component);
 
   ControllerComponent.prototype.panelColor = function() {
@@ -21,6 +61,10 @@
     case ControllerComponent.COLOR_BLACK:
       return Panel.COLOR_BLACK;
     }
+  };
+
+  ControllerComponent.prototype.slotWrapperElement = function() {
+    return dom.child(this.element(), 2, 0);
   };
 
   ControllerComponent.prototype.slotElement = function(index) {

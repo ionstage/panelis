@@ -15,12 +15,18 @@
     this.element = this.prop(props.element);
 
     dom.on(this.slotWrapperElement(), dom.eventType('start'), function(event) {
+      var panels = this.panels();
+
+      var hasEmptySlot = !panels[0] || !panels[1] || !panels[2];
+
+      if (hasEmptySlot)
+        return;
+
       var index = +dom.data(dom.target(event), 'index');
 
       if (isNaN(index))
         return;
 
-      var panels = this.panels();
       var panel = panels[index];
 
       if (!panel)

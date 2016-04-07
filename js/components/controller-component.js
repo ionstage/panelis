@@ -27,36 +27,12 @@
       if (isNaN(index))
         return;
 
-      var panel = panels[index];
-
-      if (!panel)
-        return;
-
       dom.stop(event);
-
-      var selectedPanelIndex = this.selectedPanelIndex();
-
-      if (selectedPanelIndex === index)
-        return;
-
-      var selectedPanel = panels[selectedPanelIndex];
-
-      if (selectedPanel)
-        selectedPanel.isFocused(false);
-
-      panel.isFocused(true);
-
-      this.selectedPanelIndex(index);
+      this.selectedPanel(panels[index]);
     }.bind(this));
 
     dom.on(dom.doc(), dom.eventType('start'), function() {
-      var selectedPanel = this.panels()[this.selectedPanelIndex()];
-
-      if (!selectedPanel)
-        return;
-
-      selectedPanel.isFocused(false);
-      this.selectedPanelIndex(-1);
+      this.selectedPanel(null);
     }.bind(this));
   }, Component);
 
@@ -67,6 +43,40 @@
     case ControllerComponent.COLOR_BLACK:
       return Panel.COLOR_BLACK;
     }
+  };
+
+  ControllerComponent.prototype.selectedPanel = function(panel) {
+    var panels = this.panels();
+    var selectedPanel = panels[this.selectedPanelIndex()] || null;
+
+    if (typeof panel === 'undefined')
+      return selectedPanel;
+
+    if (panel === selectedPanel) {
+      // selection is not changed
+      return;
+    }
+
+    if (panel === null) {
+      // clear selection
+      if (selectedPanel) {
+        selectedPanel.isFocused(false);
+        this.selectedPanelIndex(-1);
+      }
+
+      return;
+    }
+
+    var index = panels.indexOf(panel);
+
+    if (index === -1)
+      return;
+
+    if (selectedPanel)
+      selectedPanel.isFocused(false);
+
+    panel.isFocused(true);
+    this.selectedPanelIndex(index);
   };
 
   ControllerComponent.prototype.slotWrapperElement = function() {

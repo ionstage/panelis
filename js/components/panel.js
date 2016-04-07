@@ -12,7 +12,7 @@
     this.y = this.prop(0);
     this.width = this.prop(props.width);
     this.color = this.prop(props.color);
-    this.joints = this.prop(props.joints);
+    this.joints = this.prop(props.joints.slice());
     this.isFixed = this.prop(props.isFixed);
     this.isFocused = this.prop(false);
     this.element = this.prop(null);

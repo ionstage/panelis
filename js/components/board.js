@@ -2,6 +2,7 @@
   'use strict';
 
   var helper = app.helper || require('../helper.js');
+  var dom = app.dom || require('../dom.js');
   var Component = app.Component || require('./component.js');
   var Panel = app.Panel || require('./panel.js');
 
@@ -10,6 +11,11 @@
 
     this.panels = this.prop(new Array(64));
     this.element = this.prop(props.element);
+    this.pointer = props.pointer;
+
+    var onpoint = Board.prototype.onpoint.bind(this);
+
+    dom.on(this.element(), dom.eventType('start'), onpoint);
   }, Component);
 
   Board.prototype.panel = function(row, col, panel) {
@@ -76,6 +82,26 @@
         this.panel(row, col, panel);
       }
     }
+  };
+
+  Board.prototype.onpoint = function(event) {
+    var rect = dom.rect(this.element());
+
+    var point = dom.clientPoint(event, {
+      x: rect.left,
+      y: rect.top
+    });
+
+    var width = rect.width / 8;
+
+    var row = Math.floor(point.y / width);
+    var col = Math.floor(point.x / width);
+
+    if (row < 0 || row > 7 || col < 0 || col > 7)
+      return;
+
+    dom.stop(event);
+    this.pointer(row, col);
   };
 
   if (typeof module !== 'undefined' && module.exports)

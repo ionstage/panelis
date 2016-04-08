@@ -78,6 +78,10 @@
     el.innerHTML = s;
   };
 
+  dom.rect = function(el) {
+    return el.getBoundingClientRect();
+  };
+
   dom.on = function(el, type, listener) {
     el.addEventListener(type, listener);
   };
@@ -99,6 +103,16 @@
       event = event.changedTouches[0];
 
     return event.target;
+  };
+
+  dom.clientPoint = function(event, offset) {
+    if (dom.supportsTouch())
+      event = event.changedTouches[0];
+
+    return {
+      x: event.clientX - (offset ? offset.x : 0),
+      y: event.clientY - (offset ? offset.y : 0)
+    };
   };
 
   dom.stop = function(event) {

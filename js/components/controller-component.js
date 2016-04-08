@@ -12,6 +12,7 @@
     this.color = this.prop(props.color);
     this.panels = this.prop(new Array(3));
     this.selectedPanelIndex = this.prop(-1);
+    this.disabled = this.prop(true);
     this.element = this.prop(props.element);
 
     dom.on(this.slotWrapperElement(), dom.eventType('start'), function(event) {
@@ -138,6 +139,13 @@
     // add two panels
     this.fillEmptySlot();
     this.fillEmptySlot();
+  };
+
+  ControllerComponent.prototype.redraw = function() {
+    if (this.disabled())
+      dom.addClass(this.element(), 'disabled');
+    else
+      dom.removeClass(this.element(), 'disabled');
   };
 
   ControllerComponent.COLOR_WHITE = 'white';

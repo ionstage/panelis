@@ -3,6 +3,11 @@
 
   var Game = function(props) {
     this.currentTurnColor = props.currentTurnColor;
+    this.reseter = props.reseter;
+  };
+
+  Game.prototype.reset = function() {
+    this.reseter();
   };
 
   Game.COLOR_WHITE = 'white';

@@ -20,6 +20,10 @@
     return document;
   };
 
+  dom.root = function() {
+    return document.documentElement;
+  };
+
   dom.append = function(parent, el) {
     parent.appendChild(el);
   };

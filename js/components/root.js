@@ -13,6 +13,10 @@
     this.visible = this.prop(false);
     this.element = this.prop(props.element);
 
+    dom.on(dom.win(), 'resize', function() {
+      this.markDirty();
+    }.bind(this));
+
     dom.on(dom.win(), 'orientationchange', function() {
       this.markDirty();
     }.bind(this));

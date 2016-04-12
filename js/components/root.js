@@ -8,7 +8,8 @@
   var Root = helper.inherits(function(props) {
     Root.super_.call(this);
 
-    this.fontSize = this.prop(props.fontSize);
+    this.widthPerFontSize = this.prop(props.widthPerFontSize);
+    this.heightPerFontSize = this.prop(props.heightPerFontSize);
     this.visible = this.prop(false);
     this.element = this.prop(props.element);
 
@@ -17,9 +18,25 @@
 
   Root.prototype.redraw = function() {
     var element = this.element();
+    var widthPerFontSize = this.widthPerFontSize();
+    var heightPerFontSize = this.heightPerFontSize();
+
+    var rect = dom.rect(element);
+    var width = rect.width;
+    var height = rect.height;
+
+    var elementAspectRatio = width / height;
+    var contentAspectRatio = widthPerFontSize / heightPerFontSize;
+
+    var fontSize;
+
+    if (elementAspectRatio < contentAspectRatio)
+      fontSize = width / widthPerFontSize;
+    else
+      fontSize = height / heightPerFontSize;
 
     dom.css(element, {
-      fontSize: this.fontSize() + 'px'
+      fontSize: fontSize + 'px'
     });
 
     if (!this.visible()) {

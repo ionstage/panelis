@@ -16,6 +16,10 @@
     return document.querySelector(selector);
   };
 
+  dom.win = function() {
+    return window;
+  };
+
   dom.doc = function() {
     return document;
   };

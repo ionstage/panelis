@@ -19,6 +19,15 @@
     this.parentElement = this.prop(null);
   }, Component);
 
+  Panel.prototype.props = function() {
+    return {
+      width: this.width(),
+      color: this.color(),
+      joints: this.joints().slice(),
+      isFixed: this.isFixed()
+    };
+  };
+
   Panel.prototype.hasJoint = function(joint) {
     return this.joints()[joint];
   };

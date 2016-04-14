@@ -97,8 +97,12 @@
     var currentPanel = panels[index];
 
     // remove current panel
-    if (currentPanel)
+    if (currentPanel) {
+      if (currentPanel === this.selectedPanel())
+        this.selectedPanel(null);
+
       currentPanel.parentElement(null);
+    }
 
     if (panel) {
       // add new panel

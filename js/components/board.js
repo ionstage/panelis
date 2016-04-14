@@ -10,6 +10,7 @@
     Board.super_.call(this);
 
     this.panels = this.prop(new Array(64));
+    this.selectedPanelIndex = this.prop(-1);
     this.element = this.prop(props.element);
     this.pointer = props.pointer;
 
@@ -17,6 +18,40 @@
 
     dom.on(this.element(), dom.eventType('start'), onpoint);
   }, Component);
+
+  Board.prototype.selectedPanel = function(panel) {
+    var panels = this.panels();
+    var selectedPanel = panels[this.selectedPanelIndex()] || null;
+
+    if (typeof panel === 'undefined')
+      return selectedPanel;
+
+    if (panel === selectedPanel) {
+      // selection is not changed
+      return;
+    }
+
+    if (panel === null) {
+      // clear selection
+      if (selectedPanel) {
+        selectedPanel.isFocused(false);
+        this.selectedPanelIndex(-1);
+      }
+
+      return;
+    }
+
+    var index = panels.indexOf(panel);
+
+    if (index === -1)
+      return;
+
+    if (selectedPanel)
+      selectedPanel.isFocused(false);
+
+    panel.isFocused(true);
+    this.selectedPanelIndex(index);
+  };
 
   Board.prototype.panel = function(row, col, panel) {
     var panels = this.panels();

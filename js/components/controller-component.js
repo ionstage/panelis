@@ -37,6 +37,14 @@
     }.bind(this));
   }, Component);
 
+  ControllerComponent.prototype.okButtonElement = function() {
+    return dom.child(this.element(), 1, 0);
+  };
+
+  ControllerComponent.prototype.backButtonElement = function() {
+    return dom.child(this.element(), 1, 1);
+  };
+
   ControllerComponent.prototype.panelColor = function() {
     switch (this.color()) {
     case ControllerComponent.COLOR_WHITE:

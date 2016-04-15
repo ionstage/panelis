@@ -13,6 +13,8 @@
     this.panels = this.prop(new Array(3));
     this.selectedPanelIndex = this.prop(-1);
     this.disabled = this.prop(true);
+    this.okDisabled = this.prop(true);
+    this.backDisabled = this.prop(true);
     this.element = this.prop(props.element);
 
     dom.on(this.slotWrapperElement(), dom.eventType('start'), function(event) {
@@ -158,6 +160,9 @@
       dom.addClass(this.element(), 'disabled');
     else
       dom.removeClass(this.element(), 'disabled');
+
+    dom.disabled(this.okButtonElement(), this.okDisabled());
+    dom.disabled(this.backButtonElement(), this.backDisabled());
   };
 
   ControllerComponent.COLOR_WHITE = 'white';

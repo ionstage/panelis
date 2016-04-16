@@ -68,6 +68,23 @@
     }.bind(this));
   };
 
+  Panel.prototype.resetRotation = function() {
+    var list = Panel.JOINTS_PATTERN_LIST;
+
+    for (var i = 0; i < 4; i++) {
+      var joints = this.joints();
+
+      for (var j = 0, len = list.length; j < len; j++) {
+        var pattern = list[j];
+
+        if (helper.deepEqual(joints, pattern))
+          return;
+      }
+
+      this.rotate();
+    }
+  };
+
   Panel.prototype.redraw = function() {
     var element = this.element();
     var parentElement = this.parentElement();

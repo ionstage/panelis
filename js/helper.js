@@ -25,6 +25,21 @@
     return list[Math.floor(Math.random() * list.length)];
   };
 
+  helper.deepEqual = function(a, b) {
+    if (a === b)
+      return true;
+
+    if (a.length !== b.length)
+      return false;
+
+    for (var i = 0, len = a.length; i < len; i++) {
+      if (a[i] !== b[i])
+        return false;
+    }
+
+    return true;
+  };
+
   helper.bindAll = function(obj) {
     var proto = Object.getPrototypeOf(obj);
 

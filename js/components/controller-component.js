@@ -122,23 +122,30 @@
     panels[index] = panel;
   };
 
-  ControllerComponent.prototype.fillEmptySlot = function() {
+  ControllerComponent.prototype.emptySlotIndex = function() {
     var panels = this.panels();
 
     for (var i = 0, len = panels.length; i < len; i++) {
-      if (panels[i])
-        continue;
-
-      this.panel(i, new Panel({
-        width: 8,
-        color: this.panelColor(),
-        joints: helper.sample(Panel.JOINTS_PATTERN_LIST),
-        isFixed: false
-      }));
-
-      // add only one panel at most
-      break;
+      if (!panels[i])
+        return i;
     }
+
+    return -1;
+  };
+
+  ControllerComponent.prototype.fillEmptySlot = function() {
+    var index = this.emptySlotIndex();
+
+    if (index === -1)
+      return;
+
+    // add only one panel at most
+    this.panel(index, new Panel({
+      width: 8,
+      color: this.panelColor(),
+      joints: helper.sample(Panel.JOINTS_PATTERN_LIST),
+      isFixed: false
+    }));
   };
 
   ControllerComponent.prototype.reset = function() {

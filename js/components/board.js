@@ -19,6 +19,13 @@
     dom.on(this.element(), dom.eventType('start'), onpoint);
   }, Component);
 
+  Board.prototype.selectedPanelPosition = function() {
+    var index = this.selectedPanelIndex();
+    var row = (index !== -1) ? Math.floor(index / 8) : -1;
+    var col = (index !== -1) ? index % 8 : -1;
+    return { row: row, col: col };
+  };
+
   Board.prototype.selectedPanel = function(panel) {
     var panels = this.panels();
     var selectedPanel = panels[this.selectedPanelIndex()] || null;

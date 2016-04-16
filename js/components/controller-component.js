@@ -17,6 +17,12 @@
     this.backDisabled = this.prop(true);
     this.element = this.prop(props.element);
 
+    this.backExecutor = props.backExecutor;
+
+    dom.on(this.backButtonElement(), 'click', function() {
+      this.backExecutor();
+    }.bind(this));
+
     dom.on(this.slotWrapperElement(), dom.eventType('start'), function(event) {
       var panels = this.panels();
 

@@ -17,7 +17,12 @@
     this.backDisabled = this.prop(true);
     this.element = this.prop(props.element);
 
+    this.okExecutor = props.okExecutor;
     this.backExecutor = props.backExecutor;
+
+    dom.on(this.okButtonElement(), 'click', function() {
+      this.okExecutor();
+    }.bind(this));
 
     dom.on(this.backButtonElement(), 'click', function() {
       this.backExecutor();

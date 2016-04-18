@@ -130,6 +130,22 @@
     }
   };
 
+  Board.prototype.isValidFormation = function(center, top, right, bottom, left) {
+    if (top && center.hasJoint(Panel.JOINT_TOP) !== top.hasJoint(Panel.JOINT_BOTTOM))
+      return false;
+
+    if (right && center.hasJoint(Panel.JOINT_RIGHT) !== right.hasJoint(Panel.JOINT_LEFT))
+      return false;
+
+    if (bottom && center.hasJoint(Panel.JOINT_BOTTOM) !== bottom.hasJoint(Panel.JOINT_TOP))
+      return false;
+
+    if (left && center.hasJoint(Panel.JOINT_LEFT) !== left.hasJoint(Panel.JOINT_RIGHT))
+      return false;
+
+    return true;
+  };
+
   Board.prototype.onpoint = function(event) {
     var rect = dom.rect(this.element());
 

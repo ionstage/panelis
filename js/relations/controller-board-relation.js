@@ -13,7 +13,26 @@
     var controller = this.controller();
     var board = this.board();
 
-    controller.backDisabled(controller.disabled() || !board.selectedPanel());
+    var selectedPanel = board.selectedPanel();
+
+    if (selectedPanel) {
+      var pos = board.selectedPanelPosition();
+      var row = pos.row;
+      var col = pos.col;
+
+      var top = board.panel(row - 1, col);
+      var right = board.panel(row, col + 1);
+      var bottom = board.panel(row + 1, col);
+      var left = board.panel(row, col - 1);
+
+      var isValid = board.isValidFormation(selectedPanel, top, right, bottom, left);
+
+      controller.okDisabled(!isValid);
+    } else {
+      controller.okDisabled(true);
+    }
+
+    controller.backDisabled(controller.disabled() || !selectedPanel);
   };
 
   if (typeof module !== 'undefined' && module.exports)

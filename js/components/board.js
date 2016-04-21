@@ -146,6 +146,30 @@
     return true;
   };
 
+  Board.prototype.connectedPanels = function(row, col) {
+    var center = this.panel(row, col);
+    var top = this.panel(row - 1, col);
+    var right = this.panel(row, col + 1);
+    var bottom = this.panel(row + 1, col);
+    var left = this.panel(row, col - 1);
+
+    var panels = [];
+
+    if (top && center.hasJoint(Panel.JOINT_TOP) && top.hasJoint(Panel.JOINT_BOTTOM))
+      panels.push(top);
+
+    if (right && center.hasJoint(Panel.JOINT_RIGHT) && right.hasJoint(Panel.JOINT_LEFT))
+      panels.push(right);
+
+    if (bottom && center.hasJoint(Panel.JOINT_BOTTOM) && bottom.hasJoint(Panel.JOINT_TOP))
+      panels.push(bottom);
+
+    if (left && center.hasJoint(Panel.JOINT_LEFT) && left.hasJoint(Panel.JOINT_RIGHT))
+      panels.push(left);
+
+    return panels;
+  };
+
   Board.prototype.onpoint = function(event) {
     var rect = dom.rect(this.element());
 

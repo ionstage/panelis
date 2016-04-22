@@ -11,6 +11,7 @@
     this.widthPerFontSize = this.prop(props.widthPerFontSize);
     this.heightPerFontSize = this.prop(props.heightPerFontSize);
     this.visible = this.prop(false);
+    this.disabled = this.prop(false);
     this.element = this.prop(props.element);
 
     dom.on(dom.win(), 'resize', function() {
@@ -51,6 +52,11 @@
       dom.removeClass(element, 'hide');
       this.visible(true);
     }
+
+    if (this.disabled())
+      dom.addClass(element, 'disabled');
+    else
+      dom.removeClass(element, 'disabled');
   };
 
   if (typeof module !== 'undefined' && module.exports)

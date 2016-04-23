@@ -85,6 +85,30 @@
     }
   };
 
+  Panel.prototype.flash = function(color) {
+    return new Promise(function(resolve, reject) {
+      var element = this.element();
+
+      if (dom.data(element, 'flashColor')) {
+        // the panel is now flashing
+        dom.data(element, 'flashColor', null);
+      }
+
+      var ontransitionend = function() {
+        dom.off(element, 'transitionend', ontransitionend);
+        resolve();
+      };
+
+      dom.on(element, 'transitionend', ontransitionend);
+
+      dom.data(element, 'flashColor', color);
+
+      setTimeout(function() {
+        dom.data(element, 'flashColor', null);
+      }, 1000 / 60);
+    }.bind(this));
+  };
+
   Panel.prototype.redraw = function() {
     var element = this.element();
     var parentElement = this.parentElement();
@@ -171,6 +195,10 @@
     [true, true, true, false],
     [true, true, true, true]
   ];
+
+  Panel.FLASH_COLOR_RED = 'red';
+  Panel.FLASH_COLOR_YELLOW = 'yellow';
+  Panel.FLASH_COLOR_GREEN = 'green';
 
   if (typeof module !== 'undefined' && module.exports)
     module.exports = Panel;

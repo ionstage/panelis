@@ -21,6 +21,18 @@
       return blackController;
   };
 
+  ControllerRelation.prototype.disabledController = function() {
+    var whiteController = this.whiteController();
+
+    if (whiteController.disabled())
+      return whiteController;
+
+    var blackController = this.blackController();
+
+    if (blackController.disabled())
+      return blackController;
+  };
+
   ControllerRelation.prototype.update = function(changedComponent) {
     var whiteController = this.whiteController();
     var blackController = this.blackController();

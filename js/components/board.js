@@ -9,7 +9,12 @@
   var Board = helper.inherits(function(props) {
     Board.super_.call(this);
 
-    this.panels = this.prop(new Array(64));
+    var rowLength = props.rowLength;
+    var colLength = props.colLength;
+
+    this.rowLength = this.prop(rowLength);
+    this.colLength = this.prop(colLength);
+    this.panels = this.prop(new Array(rowLength * colLength));
     this.selectedPanelIndex = this.prop(-1);
     this.element = this.prop(props.element);
     this.pointer = props.pointer;
@@ -21,8 +26,9 @@
 
   Board.prototype.selectedPanelPosition = function() {
     var index = this.selectedPanelIndex();
-    var row = (index !== -1) ? Math.floor(index / 8) : -1;
-    var col = (index !== -1) ? index % 8 : -1;
+    var colLength = this.colLength();
+    var row = (index !== -1) ? Math.floor(index / colLength) : -1;
+    var col = (index !== -1) ? index % colLength : -1;
     return { row: row, col: col };
   };
 
@@ -62,7 +68,7 @@
 
   Board.prototype.panel = function(row, col, panel) {
     var panels = this.panels();
-    var index = row * 8 + col;
+    var index = row * this.colLength() + col;
 
     if (typeof panel === 'undefined')
       return panels[index];
@@ -92,11 +98,14 @@
   };
 
   Board.prototype.reset = function() {
-    for (var row = 0; row < 8; row++) {
-      for (var col = 0; col < 8; col++) {
+    var rowLength = this.rowLength();
+    var colLength = this.colLength();
+
+    for (var row = 0; row < rowLength; row++) {
+      for (var col = 0; col < colLength; col++) {
         var atTop = (row === 0);
-        var atRight = (col === 7);
-        var atBottom = (row === 7);
+        var atRight = (col === colLength - 1);
+        var atBottom = (row === rowLength - 1);
         var atLeft = (col === 0);
 
         var panel;
@@ -183,7 +192,7 @@
     var row = Math.floor(point.y / width);
     var col = Math.floor(point.x / width);
 
-    if (row < 0 || row > 7 || col < 0 || col > 7)
+    if (row < 0 || row > this.rowLength() - 1 || col < 0 || col > this.colLength() - 1)
       return;
 
     dom.stop(event);

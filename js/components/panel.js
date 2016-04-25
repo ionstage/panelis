@@ -85,7 +85,7 @@
     }
   };
 
-  Panel.prototype.flash = function(color) {
+  Panel.prototype.flash = function(flashColor) {
     return new Promise(function(resolve, reject) {
       var element = this.element();
 
@@ -101,7 +101,7 @@
 
       dom.on(element, 'transitionend', ontransitionend);
 
-      dom.data(element, 'flashColor', color);
+      dom.data(element, 'flashColor', flashColor);
 
       setTimeout(function() {
         dom.data(element, 'flashColor', null);

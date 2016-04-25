@@ -179,6 +179,12 @@
     return panels;
   };
 
+  Board.prototype.isAllJointsConnected = function(row, col) {
+    var panel = this.panel(row, col);
+    var connectedPanels = this.connectedPanels(row, col);
+    return (panel.joints().filter(helper.identity).length === connectedPanels.length);
+  };
+
   Board.prototype.onpoint = function(event) {
     var rect = dom.rect(this.element());
 

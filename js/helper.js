@@ -48,6 +48,12 @@
     }
   };
 
+  helper.timeout = function(msecs) {
+    return new Promise(function(resolve) {
+      setTimeout(resolve, msecs);
+    });
+  };
+
   if (typeof module !== 'undefined' && module.exports)
     module.exports = helper;
   else

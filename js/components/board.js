@@ -24,6 +24,14 @@
     dom.on(this.element(), dom.eventType('start'), onpoint);
   }, Component);
 
+  Board.prototype.panelPosition = function(panel) {
+    var index = this.panels().indexOf(panel);
+    var colLength = this.colLength();
+    var row = (index !== -1) ? Math.floor(index / colLength) : -1;
+    var col = (index !== -1) ? index % colLength : -1;
+    return { row: row, col: col };
+  };
+
   Board.prototype.selectedPanelPosition = function() {
     var index = this.selectedPanelIndex();
     var colLength = this.colLength();

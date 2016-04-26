@@ -16,7 +16,7 @@
     var selectedPanel = board.selectedPanel();
 
     if (selectedPanel) {
-      var pos = board.selectedPanelPosition();
+      var pos = board.panelPosition(selectedPanel);
       var row = pos.row;
       var col = pos.col;
 

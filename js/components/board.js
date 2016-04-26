@@ -32,14 +32,6 @@
     return { row: row, col: col };
   };
 
-  Board.prototype.selectedPanelPosition = function() {
-    var index = this.selectedPanelIndex();
-    var colLength = this.colLength();
-    var row = (index !== -1) ? Math.floor(index / colLength) : -1;
-    var col = (index !== -1) ? index % colLength : -1;
-    return { row: row, col: col };
-  };
-
   Board.prototype.selectedPanel = function(panel) {
     var panels = this.panels();
     var selectedPanel = panels[this.selectedPanelIndex()] || null;

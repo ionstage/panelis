@@ -155,8 +155,11 @@
     return true;
   };
 
-  Board.prototype.connectedPanels = function(row, col) {
-    var center = this.panel(row, col);
+  Board.prototype.connectedPanels = function(panel) {
+    var pos = this.panelPosition(panel);
+    var row = pos.row;
+    var col = pos.col;
+
     var top = this.panel(row - 1, col);
     var right = this.panel(row, col + 1);
     var bottom = this.panel(row + 1, col);
@@ -164,24 +167,23 @@
 
     var panels = [];
 
-    if (top && center.hasJoint(Panel.JOINT_TOP) && top.hasJoint(Panel.JOINT_BOTTOM))
+    if (top && panel.hasJoint(Panel.JOINT_TOP) && top.hasJoint(Panel.JOINT_BOTTOM))
       panels.push(top);
 
-    if (right && center.hasJoint(Panel.JOINT_RIGHT) && right.hasJoint(Panel.JOINT_LEFT))
+    if (right && panel.hasJoint(Panel.JOINT_RIGHT) && right.hasJoint(Panel.JOINT_LEFT))
       panels.push(right);
 
-    if (bottom && center.hasJoint(Panel.JOINT_BOTTOM) && bottom.hasJoint(Panel.JOINT_TOP))
+    if (bottom && panel.hasJoint(Panel.JOINT_BOTTOM) && bottom.hasJoint(Panel.JOINT_TOP))
       panels.push(bottom);
 
-    if (left && center.hasJoint(Panel.JOINT_LEFT) && left.hasJoint(Panel.JOINT_RIGHT))
+    if (left && panel.hasJoint(Panel.JOINT_LEFT) && left.hasJoint(Panel.JOINT_RIGHT))
       panels.push(left);
 
     return panels;
   };
 
-  Board.prototype.isAllJointsConnected = function(row, col) {
-    var panel = this.panel(row, col);
-    var connectedPanels = this.connectedPanels(row, col);
+  Board.prototype.isAllJointsConnected = function(panel) {
+    var connectedPanels = this.connectedPanels(panel);
     return (panel.joints().filter(helper.identity).length === connectedPanels.length);
   };
 

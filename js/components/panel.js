@@ -109,6 +109,84 @@
     }.bind(this));
   };
 
+  Panel.prototype.whiten = function() {
+    return new Promise(function(resolve, reject) {
+      var color = this.color();
+
+      if (color === Panel.COLOR_NONE) {
+        reject();
+        return;
+      }
+
+      if (color === Panel.COLOR_WHITE) {
+        resolve();
+        return;
+      }
+
+      var element = this.element();
+
+      if (dom.hasClass(element, 'panel-change-color')) {
+        // the panel is now whitening
+        reject();
+        return;
+      }
+
+      dom.addClass(element, 'panel-change-color');
+
+      var ontransitionend = function() {
+        dom.off(element, 'transitionend', ontransitionend);
+        dom.removeClass(element, 'panel-change-color');
+        resolve();
+      }.bind(this);
+
+      dom.on(element, 'transitionend', ontransitionend);
+
+      if (color === Panel.COLOR_BLACK)
+        this.color(Panel.COLOR_GRAY);
+      else if (color === Panel.COLOR_GRAY)
+        this.color(Panel.COLOR_WHITE);
+    }.bind(this));
+  };
+
+  Panel.prototype.blacken = function() {
+    return new Promise(function(resolve, reject) {
+      var color = this.color();
+
+      if (color === Panel.COLOR_NONE) {
+        reject();
+        return;
+      }
+
+      if (color === Panel.COLOR_BLACK) {
+        resolve();
+        return;
+      }
+
+      var element = this.element();
+
+      if (dom.hasClass(element, 'panel-change-color')) {
+        // the panel is now blackening
+        reject();
+        return;
+      }
+
+      dom.addClass(element, 'panel-change-color');
+
+      var ontransitionend = function() {
+        dom.off(element, 'transitionend', ontransitionend);
+        dom.removeClass(element, 'panel-change-color');
+        resolve();
+      }.bind(this);
+
+      dom.on(element, 'transitionend', ontransitionend);
+
+      if (color === Panel.COLOR_WHITE)
+        this.color(Panel.COLOR_GRAY);
+      else if (color === Panel.COLOR_GRAY)
+        this.color(Panel.COLOR_BLACK);
+    }.bind(this));
+  };
+
   Panel.prototype.redraw = function() {
     var element = this.element();
     var parentElement = this.parentElement();

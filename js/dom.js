@@ -75,7 +75,8 @@
       return el.dataset[key];
 
     if (value === null) {
-      delete el.dataset[key];
+      if (key in el.dataset)
+        delete el.dataset[key];
       return;
     }
 

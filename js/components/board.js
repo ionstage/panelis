@@ -97,6 +97,11 @@
     panels[index] = panel;
   };
 
+  Board.prototype.removePanel = function(panel) {
+    var pos = this.panelPosition(panel);
+    this.panel(pos.row, pos.col, null);
+  };
+
   Board.prototype.reset = function() {
     var rowLength = this.rowLength();
     var colLength = this.colLength();

@@ -109,16 +109,16 @@
     }.bind(this));
   };
 
-  Panel.prototype.whiten = function() {
+  Panel.prototype.gradateColor = function(color) {
     return new Promise(function(resolve, reject) {
-      var color = this.color();
+      var currentColor = this.color();
 
-      if (color === Panel.COLOR_NONE) {
+      if (currentColor === Panel.COLOR_NONE) {
         reject();
         return;
       }
 
-      if (color === Panel.COLOR_WHITE) {
+      if (currentColor === color) {
         resolve();
         return;
       }
@@ -126,7 +126,7 @@
       var element = this.element();
 
       if (dom.hasClass(element, 'panel-change-color')) {
-        // the panel is now whitening
+        // the panel is now changing color
         reject();
         return;
       }
@@ -141,49 +141,10 @@
 
       dom.on(element, 'transitionend', ontransitionend);
 
-      if (color === Panel.COLOR_BLACK)
+      if (currentColor === Panel.COLOR_WHITE || currentColor === Panel.COLOR_BLACK)
         this.color(Panel.COLOR_GRAY);
-      else if (color === Panel.COLOR_GRAY)
-        this.color(Panel.COLOR_WHITE);
-    }.bind(this));
-  };
-
-  Panel.prototype.blacken = function() {
-    return new Promise(function(resolve, reject) {
-      var color = this.color();
-
-      if (color === Panel.COLOR_NONE) {
-        reject();
-        return;
-      }
-
-      if (color === Panel.COLOR_BLACK) {
-        resolve();
-        return;
-      }
-
-      var element = this.element();
-
-      if (dom.hasClass(element, 'panel-change-color')) {
-        // the panel is now blackening
-        reject();
-        return;
-      }
-
-      dom.addClass(element, 'panel-change-color');
-
-      var ontransitionend = function() {
-        dom.off(element, 'transitionend', ontransitionend);
-        dom.removeClass(element, 'panel-change-color');
-        resolve();
-      }.bind(this);
-
-      dom.on(element, 'transitionend', ontransitionend);
-
-      if (color === Panel.COLOR_WHITE)
-        this.color(Panel.COLOR_GRAY);
-      else if (color === Panel.COLOR_GRAY)
-        this.color(Panel.COLOR_BLACK);
+      else if (currentColor === Panel.COLOR_GRAY)
+        this.color(color);
     }.bind(this));
   };
 

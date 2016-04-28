@@ -28,6 +28,12 @@
       var isValid = board.isValidFormation(selectedPanel, top, right, bottom, left);
 
       controller.okDisabled(!isValid);
+    } else if (controller.selectedPanel()) {
+      var canSetAnyPosition = controller.panels().map(function(panel) {
+        return board.canSetAnyPosition(panel);
+      }).some(helper.identity);
+
+      controller.okDisabled(canSetAnyPosition);
     } else {
       controller.okDisabled(true);
     }

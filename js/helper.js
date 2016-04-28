@@ -25,6 +25,16 @@
     return list[Math.floor(Math.random() * list.length)];
   };
 
+  helper.flatten = function(array) {
+    return Array.prototype.concat.apply([], array);
+  };
+
+  helper.unique = function(array) {
+    return array.filter(function(el, i, array) {
+      return array.lastIndexOf(el) === i;
+    });
+  };
+
   helper.deepEqual = function(a, b) {
     if (a === b)
       return true;

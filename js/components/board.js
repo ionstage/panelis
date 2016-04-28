@@ -192,6 +192,29 @@
     return (panel.joints().filter(helper.identity).length === connectedPanels.length);
   };
 
+  Board.prototype.chainList = function(panel) {
+    var list = [];
+    var searched = [];
+    var next = [panel];
+
+    while (next.length !== 0) {
+      list.push(next);
+
+      searched = searched.concat(next);
+
+      next = helper.unique(helper.flatten(next.map(function(panel) {
+        return this.connectedPanels(panel).filter(function(connectedPanel) {
+          return (connectedPanel.color() === panel.color() && searched.indexOf(connectedPanel) === -1);
+        });
+      }.bind(this))));
+    }
+
+    if (list.length === 1)
+      return [];
+
+    return list;
+  };
+
   Board.prototype.onpoint = function(event) {
     var rect = dom.rect(this.element());
 

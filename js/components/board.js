@@ -6,6 +6,18 @@
   var Component = app.Component || require('./component.js');
   var Panel = app.Panel || require('./panel.js');
 
+  var PanelJointModel = function(props) {
+    this.joints = props.joints;
+  };
+
+  PanelJointModel.prototype.hasJoint = function(joint) {
+    return this.joints[joint];
+  };
+
+  PanelJointModel.prototype.rotate = function() {
+    this.joints.unshift(this.joints.pop());
+  };
+
   var Board = helper.inherits(function(props) {
     Board.super_.call(this);
 
@@ -213,6 +225,34 @@
       return [];
 
     return list;
+  };
+
+  Board.prototype.canSetAnyPosition = function(panel) {
+    var rowLength = this.rowLength();
+    var colLength = this.colLength();
+
+    var center = new PanelJointModel(panel.props());
+
+    for (var row = 1; row < rowLength - 1; row++) {
+      for (var col = 1; col < colLength - 1; col++) {
+        if (this.panel(row, col))
+          continue;
+
+        var top = this.panel(row - 1, col);
+        var right = this.panel(row, col + 1);
+        var bottom = this.panel(row + 1, col);
+        var left = this.panel(row, col - 1);
+
+        for (var i = 0; i < 4; i++) {
+          if (this.isValidFormation(center, top, right, bottom, left))
+            return true;
+
+          center.rotate();
+        }
+      }
+    }
+
+    return false;
   };
 
   Board.prototype.onpoint = function(event) {

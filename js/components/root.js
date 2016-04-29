@@ -10,8 +10,8 @@
 
     this.widthPerFontSize = this.prop(props.widthPerFontSize);
     this.heightPerFontSize = this.prop(props.heightPerFontSize);
-    this.visible = this.prop(false);
     this.disabled = this.prop(false);
+    this.initialized = this.prop(false);
     this.element = this.prop(props.element);
 
     dom.on(dom.win(), 'resize', function() {
@@ -48,15 +48,15 @@
       fontSize: fontSize + 'px'
     });
 
-    if (!this.visible()) {
-      dom.removeClass(element, 'hide');
-      this.visible(true);
-    }
-
     if (this.disabled())
       dom.addClass(element, 'disabled');
     else
       dom.removeClass(element, 'disabled');
+
+    if (!this.initialized()) {
+      dom.removeClass(element, 'hide');
+      this.initialized(true);
+    }
   };
 
   if (typeof module !== 'undefined' && module.exports)

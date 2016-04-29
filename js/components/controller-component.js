@@ -133,6 +133,10 @@
     panels[index] = panel;
   };
 
+  ControllerComponent.prototype.removePanel = function(panel) {
+    this.panel(this.panels().indexOf(panel), null);
+  };
+
   ControllerComponent.prototype.emptySlotIndex = function() {
     var panels = this.panels();
 

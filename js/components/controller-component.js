@@ -45,7 +45,12 @@
       this.selectedPanel(panels[index]);
     }.bind(this));
 
-    dom.on(dom.doc(), dom.eventType('start'), function() {
+    dom.on(dom.doc(), dom.eventType('start'), function(event) {
+      if (dom.target(event) === this.okButtonElement()) {
+        // keep the selected panel
+        return;
+      }
+
       this.selectedPanel(null);
     }.bind(this));
   }, Component);

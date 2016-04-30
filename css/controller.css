@@ -1,0 +1,162 @@
+.controller {
+  border: 2px solid #333;
+  box-sizing: border-box;
+  display: -webkit-flex;
+  display: flex;
+  height: 18rem;
+  margin: 1rem auto;
+}
+
+.controller.reverse {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.controller[data-color='white'] {
+  background-color: white;
+}
+
+.controller[data-color='black'] {
+  background-color: #333;
+}
+
+.controller-indicator {
+  background-color: orange;
+  border-right: 1px solid #333;
+  box-sizing: border-box;
+  margin-right: 3%;
+  width: 4%;
+}
+
+.controller.disabled {
+  pointer-events: none;
+}
+
+.controller.disabled > .controller-indicator {
+  background-color: white;
+}
+
+.controller-button-container {
+  position: relative;
+  width: 21%;
+}
+
+.controller-button-container > button {
+  background-color: white;
+  border: 1px solid #333;
+  color: inherit;
+  font-family: inherit;
+  height: 4.5rem;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  width: 88%;
+}
+
+.controller-button-container > button:active {
+  background-color: orange;
+}
+
+.controller-button-container > button[disabled] {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.controller-button-ok {
+  font-size: 2.5rem;
+  top: 3rem;
+}
+
+.controller-button-back {
+  bottom: 3rem;
+  font-size: 2.3rem;
+}
+
+.controller-slot-container {
+  position: relative;
+  width: 50%;
+}
+
+.controller-slot-wrapper {
+  background-color: khaki;
+  border: 1px solid #333;
+  bottom: 0;
+  display: -webkit-flex;
+  display: flex;
+  height: 9rem;
+  left: 0;
+  margin: auto;
+  padding: 0.5rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 27rem;
+}
+
+.controller-slot-wrapper > div {
+  height: 8rem;
+  margin: 0.5rem;
+  width: 8rem;
+}
+
+.controller-slot-wrapper .panel {
+  pointer-events: none;
+}
+
+.controller-score-container {
+  position: relative;
+  width: 22%;
+}
+
+.controller-score-container > div {
+  font-size: 2.5rem;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  white-space: nowrap;
+  width: 88%;
+}
+
+.controller-score-erase {
+  top: 3.5rem;
+}
+
+.controller-score-chain {
+  top: 7rem;
+}
+
+.controller-score-fix {
+  top: 10.5rem;
+}
+
+.controller-score-circle {
+  border: 1px solid #333;
+  border-radius: 50%;
+  display: inline-block;
+  height: 2.5rem;
+  margin: 0 0.5rem;
+  vertical-align: middle;
+  width: 2.5rem;
+}
+
+.controller-score-erase > .controller-score-circle {
+  background-color: red;
+}
+
+.controller-score-chain > .controller-score-circle {
+  background-color: yellow;
+}
+
+.controller-score-fix > .controller-score-circle {
+  background-color: lime;
+}
+
+.controller-score-container span {
+  margin: 0 0.7rem;
+}
+
+.controller[data-color='black'] .controller-score-container span {
+  color: white;
+}

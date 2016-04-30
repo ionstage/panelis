@@ -1,50 +1,185 @@
-.panel > .base {
-  fill: khaki;
-  stroke: #333;
-  stroke-width: 1;
+.panel {
+  border: 1px solid #333;
+  box-sizing: border-box;
+  position: absolute;
 }
 
-.panel.edge > .base {
-  fill: saddlebrown;
+.panel.panel-rotate {
+  -webkit-transition: -webkit-transform 0.1s linear;
+  transition: transform 0.1s linear;
 }
 
-.panel.unfixed > .base {
-  fill: lightgray;
+.panel.panel-focused {
+  box-shadow: 0 0 2px 2px #38c;
+  opacity: 0.8;
 }
 
-.panel.fixed > .base {
-  fill: khaki;
+.panel > div {
+  pointer-events: none;
+  position: absolute;
 }
 
-.panel .joint.back {
-  fill: khaki;
+.panel[data-color='none'] {
+  background-color: #8b4513;
 }
 
-.panel .joint.handle {
-  fill: white;
+.panel:not([data-color='none']).panel-fixed {
+  background-color: khaki;
 }
 
-.panel .joint.back.border, .panel .joint.handle.border {
-  fill: #333;
+.panel:not([data-color='none']):not(.panel-fixed) {
+  background-color: lightgray;
 }
 
-.panel .color {
-  stroke: #333;
-  stroke-width: 1;
+.panel[data-color='none'] > [class$='-circle'] {
+  display: none;
 }
 
-.panel .color.back {
-  fill: khaki;
+.panel[data-color='none'] > [class^='panel-back-'],
+.panel.panel-fixed [class^='panel-back-'] {
+  display: none;
 }
 
-.panel.gray .color.circle {
-  fill: lightgray;
+.panel:not(.panel-joint-top) > [class$='-joint-top'],
+.panel:not(.panel-joint-right) > [class$='-joint-right'],
+.panel:not(.panel-joint-bottom) > [class$='-joint-bottom'],
+.panel:not(.panel-joint-left) > [class$='-joint-left'] {
+  display: none;
 }
 
-.panel.white .color.circle {
-  fill: white;
+.panel-back-circle {
+  background-color: khaki;
+  border: 1px solid #333;
+  border-radius: 50%;
+  height: 72%;
+  left: calc(14% - 1px);
+  top: calc(14% - 1px);
+  width: 72%;
 }
 
-.panel.black .color.circle {
-  fill: #333;
+.panel-back-joint-top {
+  background-color: khaki;
+  border-bottom: 1px solid khaki;
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+  left: calc(38.55% - 1px);
+  height: 15.7%;
+  width: 22.9%;
+}
+
+.panel-back-joint-right {
+  background-color: khaki;
+  border-bottom: 1px solid #333;
+  border-left: 1px solid khaki;
+  border-top: 1px solid #333;
+  height: 22.9%;
+  right: 0;
+  top: calc(38.55% - 1px);
+  width: 15.7%;
+}
+
+.panel-back-joint-bottom {
+  background-color: khaki;
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+  border-top: 1px solid khaki;
+  bottom: 0;
+  left: calc(38.55% - 1px);
+  height: 15.7%;
+  width: 22.9%;
+}
+
+.panel-back-joint-left {
+  background-color: khaki;
+  border-bottom: 1px solid #333;
+  border-right: 1px solid khaki;
+  border-top: 1px solid #333;
+  height: 22.9%;
+  top: calc(38.55% - 1px);
+  width: 15.7%;
+}
+
+.panel-front-joint-top {
+  background-color: white;
+  border-bottom: 1px solid #333;
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+  left: calc(42.85% - 1px);
+  height: 25.7%;
+  top: -1px;
+  width: 14.3%;
+}
+
+.panel-front-joint-right {
+  background-color: white;
+  border-bottom: 1px solid #333;
+  border-left: 1px solid #333;
+  border-top: 1px solid #333;
+  height: 14.3%;
+  right: -1px;
+  top: calc(42.85% - 1px);
+  width: 25.7%;
+}
+
+.panel-front-joint-bottom {
+  background-color: white;
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+  border-top: 1px solid #333;
+  bottom: -1px;
+  left: calc(42.85% - 1px);
+  height: 25.7%;
+  width: 14.3%;
+}
+
+.panel-front-joint-left {
+  background-color: white;
+  border-bottom: 1px solid #333;
+  border-right: 1px solid #333;
+  border-top: 1px solid #333;
+  left: -1px;
+  height: 14.3%;
+  top: calc(42.85% - 1px);
+  width: 25.7%;
+}
+
+.panel-front-circle {
+  border: 1px solid #333;
+  border-radius: 50%;
+  height: 62.9%;
+  left: calc(18.55% - 1px);
+  top: calc(18.55% - 1px);
+  width: 62.9%;
+}
+
+.panel[data-color='white'] > .panel-front-circle {
+  background-color: white;
+}
+
+.panel[data-color='black'] > .panel-front-circle {
+  background-color: #333;
+}
+
+.panel[data-color='gray'] > .panel-front-circle {
+  background-color: lightgray;
+}
+
+.panel:not([data-color='none'])[data-flash-color='red'] > .panel-front-circle {
+  background-color: red;
+}
+
+.panel:not([data-color='none'])[data-flash-color='yellow'] > .panel-front-circle {
+  background-color: yellow;
+}
+
+.panel:not([data-color='none'])[data-flash-color='green'] > .panel-front-circle {
+  background-color: lime;
+}
+
+.panel:not([data-color='none']):not([data-flash-color]) > .panel-front-circle {
+  transition: background-color 0.5s linear;
+}
+
+.panel:not([data-color='none']).panel-change-color > .panel-front-circle {
+  transition: background-color 0.25s linear;
 }

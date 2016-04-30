@@ -1,23 +1,68 @@
 body {
-  background-color: #f9f9f9;
-  margin: 0;
-  overflow: hidden;
-}
-
-.unselectable {
-  -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none;
+  -webkit-user-select: none;
+  color: #333;
+  cursor: default;
+  font-family: Helvetica, Arial, sans-serif;
+  margin: 0;
 }
 
-.stage {
-  cursor: default;
+button {
+  cursor: pointer;
+  outline: 0;
+  padding: 0;
+}
+
+button::-moz-focus-inner {
+  border: 0;
+}
+
+.root {
   height: 100%;
-  left: 0;
   overflow: hidden;
+}
+
+.root.hide {
+  -webkit-transition: visibility 0s linear .3s, opacity .3s linear;
+  opacity: 0;
+  pointer-events: none;
+  transition: visibility 0s linear .3s, opacity .3s linear;
+  visibility: hidden;
+}
+
+.root:not(.hide) {
+  -webkit-transition: opacity .3s linear;
+  opacity: 1;
+  transition: opacity .3s linear;
+  visibility: visible;
+}
+
+.root.disabled {
+  pointer-events: none;
+}
+
+.content {
+  bottom: 0;
+  height: calc(104rem + 2px);
+  left: 0;
+  margin: auto;
   position: fixed;
+  right: 0;
   top: 0;
-  width: 100%;
+  width: calc(64rem + 2px);
+}
+
+.board {
+  border: 1px solid #333;
+  box-sizing: border-box;
+  height: calc(64rem + 2px);
+  position: relative;
+}
+
+.board-tile {
+  background-color: khaki;
+  height: 64rem;
+  position: absolute;
+  width: 64rem;
 }

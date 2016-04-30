@@ -12,6 +12,10 @@
     this.fix = 0;
   };
 
+  Score.prototype.total = function() {
+    return this.erase * 100 + this.chain * 50 + this.fix * 300;
+  };
+
   var ControllerComponent = helper.inherits(function(props) {
     ControllerComponent.super_.call(this);
 
@@ -111,6 +115,10 @@
 
     panel.isFocused(true);
     this.selectedPanelIndex(index);
+  };
+
+  ControllerComponent.prototype.totalScore = function() {
+    return this.score().total();
   };
 
   ControllerComponent.prototype.slotWrapperElement = function() {

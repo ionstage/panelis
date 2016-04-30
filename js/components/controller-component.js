@@ -187,6 +187,11 @@
     }));
   };
 
+  ControllerComponent.prototype.incrementScore = function(scoreType) {
+    this.score()[scoreType]++;
+    this.markDirty();
+  };
+
   ControllerComponent.prototype.reset = function() {
     var panels = this.panels();
 
@@ -219,6 +224,10 @@
 
   ControllerComponent.COLOR_WHITE = 'white';
   ControllerComponent.COLOR_BLACK = 'black';
+
+  ControllerComponent.SCORE_TYPE_ERASE = 'erase';
+  ControllerComponent.SCORE_TYPE_CHAIN = 'chain';
+  ControllerComponent.SCORE_TYPE_FIX = 'fix';
 
   if (typeof module !== 'undefined' && module.exports)
     module.exports = ControllerComponent;

@@ -204,6 +204,9 @@
     // add two panels
     this.fillEmptySlot();
     this.fillEmptySlot();
+
+    // reset score
+    this.score(new Score());
   };
 
   ControllerComponent.prototype.redraw = function() {

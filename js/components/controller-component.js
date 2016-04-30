@@ -6,12 +6,19 @@
   var Component = app.Component || require('./component.js');
   var Panel = app.Panel || require('./panel.js');
 
+  var Score = function() {
+    this.erase = 0;
+    this.chain = 0;
+    this.fix = 0;
+  };
+
   var ControllerComponent = helper.inherits(function(props) {
     ControllerComponent.super_.call(this);
 
     this.color = this.prop(props.color);
     this.panels = this.prop(new Array(3));
     this.selectedPanelIndex = this.prop(-1);
+    this.score = this.prop(new Score());
     this.disabled = this.prop(true);
     this.okDisabled = this.prop(true);
     this.backDisabled = this.prop(true);
@@ -114,6 +121,18 @@
     return dom.child(this.element(), 2, 0, index);
   };
 
+  ControllerComponent.prototype.scoreEraseElement = function() {
+    return dom.child(this.element(), 3, 0, 2);
+  };
+
+  ControllerComponent.prototype.scoreChainElement = function() {
+    return dom.child(this.element(), 3, 1, 2);
+  };
+
+  ControllerComponent.prototype.scoreFixElement = function() {
+    return dom.child(this.element(), 3, 2, 2);
+  };
+
   ControllerComponent.prototype.panel = function(index, panel) {
     var panels = this.panels();
 
@@ -190,6 +209,12 @@
 
     dom.disabled(this.okButtonElement(), this.okDisabled());
     dom.disabled(this.backButtonElement(), this.backDisabled());
+
+    var score = this.score();
+
+    dom.text(this.scoreEraseElement(), score.erase);
+    dom.text(this.scoreChainElement(), score.chain);
+    dom.text(this.scoreFixElement(), score.fix);
   };
 
   ControllerComponent.COLOR_WHITE = 'white';

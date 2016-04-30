@@ -227,6 +227,35 @@
     return list;
   };
 
+  Board.prototype.hasEmptyPosition = function() {
+    var rowLength = this.rowLength();
+    var colLength = this.colLength();
+
+    for (var row = 1; row < rowLength - 1; row++) {
+      for (var col = 1; col < colLength - 1; col++) {
+        if (this.panel(row, col))
+          continue;
+
+        var top = this.panel(row - 1, col);
+        var right = this.panel(row, col + 1);
+        var bottom = this.panel(row + 1, col);
+        var left = this.panel(row, col - 1);
+
+        if (!top.hasJoint(Panel.JOINT_BOTTOM) &&
+            !right.hasJoint(Panel.JOINT_LEFT) &&
+            !bottom.hasJoint(Panel.JOINT_TOP) &&
+            !left.hasJoint(Panel.JOINT_RIGHT)) {
+          // any panel can't be set
+          continue;
+        }
+
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   Board.prototype.canSetAnyPosition = function(panel) {
     var rowLength = this.rowLength();
     var colLength = this.colLength();

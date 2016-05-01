@@ -3,12 +3,10 @@
   "version": "0.1.2",
   "scripts": {
     "build": "uglifyjs js/bundle.js -o build/bundle.min.js --comments '/^\\!|^@preserve|^@cc_on|\\bMIT\\b|\\bMPL\\b|\\bGPL\\b|\\(c\\)|License|Copyright/' -c -m; browserify js/app.js --no-bundle-external | uglifyjs -o build/app.min.js -c -m; cat css/*.css | cleancss -o build/app.min.css",
-    "bundle": "browserify -r mithril -o js/bundle.js",
+    "bundle": "browserify -o js/bundle.js",
     "start": "browser-sync start --files='index.html, css/**/*.css, js/**/*.js' --server"
   },
-  "dependencies": {
-    "mithril": "^0.1.30"
-  },
+  "dependencies": {},
   "devDependencies": {
     "browser-sync": "^2.7.6",
     "browserify": "^10.2.4",

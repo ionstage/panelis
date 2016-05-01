@@ -3,10 +3,6 @@
 
   var dom = {};
 
-  dom.unsupported = function() {
-    return (typeof document === 'undefined');
-  };
-
   dom.el = function(selector) {
     if (selector.charAt(0) === '<') {
       selector = selector.match(/<(.+)>/)[1];
@@ -105,10 +101,6 @@
 
   dom.off = function(el, type, listener) {
     el.removeEventListener(type, listener);
-  };
-
-  dom.animate = function(callback) {
-    return window.requestAnimationFrame(callback);
   };
 
   dom.supportsTouch = function() {

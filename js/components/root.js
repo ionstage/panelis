@@ -1,9 +1,9 @@
 (function(app) {
   'use strict';
 
+  var jCore = require('jcore');
   var helper = app.helper || require('../helper.js');
   var dom = app.dom || require('../dom.js');
-  var Component = app.Component || require('./component.js');
 
   var Root = helper.inherits(function(props) {
     Root.super_.call(this);
@@ -23,7 +23,7 @@
     }.bind(this));
 
     this.markDirty();
-  }, Component);
+  }, jCore.Component);
 
   Root.prototype.redraw = function() {
     var element = this.element();

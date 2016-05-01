@@ -1,9 +1,9 @@
 (function(app) {
   'use strict';
 
+  var jCore = require('jcore');
   var helper = app.helper || require('../helper.js');
   var dom = app.dom || require('../dom.js');
-  var Component = app.Component || require('./component.js');
 
   var Panel = helper.inherits(function(props) {
     Panel.super_.call(this);
@@ -17,7 +17,7 @@
     this.isFocused = this.prop(false);
     this.element = this.prop(null);
     this.parentElement = this.prop(null);
-  }, Component);
+  }, jCore.Component);
 
   Panel.prototype.props = function() {
     return {

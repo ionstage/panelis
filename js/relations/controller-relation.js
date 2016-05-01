@@ -1,13 +1,13 @@
 (function(app) {
   'use strict';
 
+  var jCore = require('jcore');
   var helper = app.helper || require('../helper.js');
-  var Relation = app.Relation || require('./relation.js');
 
   var ControllerRelation = helper.inherits(function(props) {
     this.whiteController = this.prop(props.whiteController);
     this.blackController = this.prop(props.blackController);
-  }, Relation);
+  }, jCore.Relation);
 
   ControllerRelation.prototype.enabledController = function() {
     var whiteController = this.whiteController();

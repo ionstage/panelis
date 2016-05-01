@@ -1,9 +1,9 @@
 (function(app) {
   'use strict';
 
+  var jCore = require('jcore');
   var helper = app.helper || require('../helper.js');
   var dom = app.dom || require('../dom.js');
-  var Component = app.Component || require('./component.js');
   var Panel = app.Panel || require('./panel.js');
 
   var Score = function() {
@@ -64,7 +64,7 @@
 
       this.selectedPanel(null);
     }.bind(this));
-  }, Component);
+  }, jCore.Component);
 
   ControllerComponent.prototype.okButtonElement = function() {
     return dom.child(this.element(), 1, 0);

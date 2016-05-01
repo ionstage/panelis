@@ -1,9 +1,9 @@
 (function(app) {
   'use strict';
 
+  var jCore = require('jcore');
   var helper = app.helper || require('../helper.js');
   var dom = app.dom || require('../dom.js');
-  var Component = app.Component || require('./component.js');
   var Panel = app.Panel || require('./panel.js');
 
   var PanelJointModel = function(props) {
@@ -34,7 +34,7 @@
     var onpoint = Board.prototype.onpoint.bind(this);
 
     dom.on(this.element(), dom.eventType('start'), onpoint);
-  }, Component);
+  }, jCore.Component);
 
   Board.prototype.panelPosition = function(panel) {
     var index = this.panels().indexOf(panel);

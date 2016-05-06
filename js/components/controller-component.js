@@ -188,7 +188,7 @@
 
     // add only one panel at most
     this.panel(index, new Panel({
-      width: 8,
+      width: 1,
       color: this.panelColor(),
       joints: helper.sample(Panel.JOINTS_PATTERN_LIST),
       isFixed: false

@@ -33,25 +33,25 @@ button::-moz-focus-inner {
 
 .content {
   bottom: 0;
-  height: calc(104rem + 2px);
+  height: calc(13rem + 2px);
   left: 0;
   margin: auto;
   position: fixed;
   right: 0;
   top: 0;
-  width: calc(64rem + 2px);
+  width: calc(8rem + 2px);
 }
 
 .board {
   border: 1px solid #333;
   box-sizing: border-box;
-  height: calc(64rem + 2px);
+  height: calc(8rem + 2px);
   position: relative;
 }
 
 .board-tile {
   background-color: khaki;
-  height: 64rem;
+  height: 8rem;
   position: absolute;
-  width: 64rem;
+  width: 8rem;
 }

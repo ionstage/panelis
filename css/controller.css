@@ -3,8 +3,8 @@
   box-sizing: border-box;
   display: -webkit-flex;
   display: flex;
-  height: 18rem;
-  margin: 1rem auto;
+  height: 2.25rem;
+  margin: 0.125rem auto;
 }
 
 .controller.reverse {
@@ -46,7 +46,7 @@
   border: 1px solid #333;
   color: inherit;
   font-family: inherit;
-  height: 4.5rem;
+  height: 0.5625rem;
   left: 0;
   margin: auto;
   position: absolute;
@@ -64,13 +64,13 @@
 }
 
 .controller-button-ok {
-  font-size: 2.5rem;
-  top: 3rem;
+  font-size: 0.3125rem;
+  top: 0.375rem;
 }
 
 .controller-button-back {
-  bottom: 3rem;
-  font-size: 2.3rem;
+  bottom: 0.375rem;
+  font-size: 0.2875rem;
 }
 
 .controller-slot-container {
@@ -84,20 +84,20 @@
   bottom: 0;
   display: -webkit-flex;
   display: flex;
-  height: 9rem;
+  height: 1.125rem;
   left: 0;
   margin: auto;
-  padding: 0.5rem;
+  padding: 0.0625rem;
   position: absolute;
   right: 0;
   top: 0;
-  width: 27rem;
+  width: 3.375rem;
 }
 
 .controller-slot-wrapper > div {
-  height: 8rem;
-  margin: 0.5rem;
-  width: 8rem;
+  height: 1rem;
+  margin: 0.0625rem;
+  width: 1rem;
 }
 
 .controller-slot-wrapper .panel {
@@ -110,7 +110,7 @@
 }
 
 .controller-score-container > div {
-  font-size: 2.5rem;
+  font-size: 0.3125rem;
   left: 0;
   margin: auto;
   position: absolute;
@@ -120,25 +120,25 @@
 }
 
 .controller-score-erase {
-  top: 3.5rem;
+  top: 0.4375rem;
 }
 
 .controller-score-chain {
-  top: 7rem;
+  top: 0.875rem;
 }
 
 .controller-score-fix {
-  top: 10.5rem;
+  top: 1.3125rem;
 }
 
 .controller-score-circle {
   border: 1px solid #333;
   border-radius: 50%;
   display: inline-block;
-  height: 2.5rem;
-  margin: 0 0.5rem;
+  height: 0.3125rem;
+  margin: 0 0.0625rem;
   vertical-align: middle;
-  width: 2.5rem;
+  width: 0.3125rem;
 }
 
 .controller-score-erase > .controller-score-circle {
@@ -154,7 +154,7 @@
 }
 
 .controller-score-container span {
-  margin: 0 0.7rem;
+  margin: 0 0.0875rem;
 }
 
 .controller[data-color='black'] .controller-score-container span {

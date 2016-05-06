@@ -137,7 +137,7 @@
 
           // the panel at the eage of the board
           panel = new Panel({
-            width: 8,
+            width: 1,
             color: Panel.COLOR_NONE,
             joints: [
               !atCorner && atBottom && trueOrFalse, // joint-top

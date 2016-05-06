@@ -35,8 +35,8 @@
     });
 
     this.root = new Root({
-      widthPerFontSize: 66,
-      heightPerFontSize: 106,
+      widthPerFontSize: 8.25,
+      heightPerFontSize: 13.25,
       element: dom.root()
     });
 

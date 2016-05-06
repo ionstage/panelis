@@ -51,7 +51,7 @@
       fontSize = height / heightPerFontSize;
 
     dom.css(element, {
-      fontSize: fontSize + 'px'
+      fontSize: Math.floor(fontSize) + 'px'
     });
 
     if (this.disabled())

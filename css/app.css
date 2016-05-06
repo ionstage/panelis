@@ -24,18 +24,7 @@ button::-moz-focus-inner {
 }
 
 .root.hide {
-  -webkit-transition: visibility 0s linear .3s, opacity .3s linear;
-  opacity: 0;
-  pointer-events: none;
-  transition: visibility 0s linear .3s, opacity .3s linear;
-  visibility: hidden;
-}
-
-.root:not(.hide) {
-  -webkit-transition: opacity .3s linear;
-  opacity: 1;
-  transition: opacity .3s linear;
-  visibility: visible;
+  display: none;
 }
 
 .root.disabled {

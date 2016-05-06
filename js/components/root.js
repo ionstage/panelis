@@ -27,6 +27,12 @@
 
   Root.prototype.redraw = function() {
     var element = this.element();
+
+    if (!this.initialized()) {
+      dom.removeClass(element, 'hide');
+      this.initialized(true);
+    }
+
     var widthPerFontSize = this.widthPerFontSize();
     var heightPerFontSize = this.heightPerFontSize();
 
@@ -52,11 +58,6 @@
       dom.addClass(element, 'disabled');
     else
       dom.removeClass(element, 'disabled');
-
-    if (!this.initialized()) {
-      dom.removeClass(element, 'hide');
-      this.initialized(true);
-    }
   };
 
   if (typeof module !== 'undefined' && module.exports)

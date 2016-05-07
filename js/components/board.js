@@ -241,7 +241,8 @@
         var bottom = this.panel(row + 1, col);
         var left = this.panel(row, col - 1);
 
-        if (!top.hasJoint(Panel.JOINT_BOTTOM) &&
+        if (top && right && bottom && left &&
+            !top.hasJoint(Panel.JOINT_BOTTOM) &&
             !right.hasJoint(Panel.JOINT_LEFT) &&
             !bottom.hasJoint(Panel.JOINT_TOP) &&
             !left.hasJoint(Panel.JOINT_RIGHT)) {

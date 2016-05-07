@@ -282,6 +282,9 @@
 
     enabledController.fillEmptySlot();
     enabledController.disabled(false);
+
+    var disabledController = (enabledController === whiteController) ? blackController : whiteController;
+    disabledController.disabled(true);
   };
 
   app.main = new App();

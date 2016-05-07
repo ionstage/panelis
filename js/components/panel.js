@@ -94,8 +94,15 @@
         dom.data(element, 'flashColor', null);
       }
 
+      var timer = setTimeout(function() {
+        // transitionend event has not been dispatched (timeout)
+        dom.off(element, 'transitionend', ontransitionend);
+        resolve();
+      }, 1000);
+
       var ontransitionend = function() {
         dom.off(element, 'transitionend', ontransitionend);
+        clearTimeout(timer);
         resolve();
       };
 

@@ -50,8 +50,17 @@
 
       dom.addClass(element, 'panel-rotate');
 
+      var timer = setTimeout(function() {
+        // transitionend event has not been dispatched (timeout)
+        dom.off(element, 'transitionend', ontransitionend);
+        dom.removeClass(element, 'panel-rotate');
+        this.markDirty();
+        resolve();
+      }.bind(this), 200);
+
       var ontransitionend = function() {
         dom.off(element, 'transitionend', ontransitionend);
+        clearTimeout(timer);
         dom.removeClass(element, 'panel-rotate');
         this.rotate();
         resolve();

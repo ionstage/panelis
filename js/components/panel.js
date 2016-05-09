@@ -118,10 +118,12 @@
       dom.on(element, 'transitionend', ontransitionend);
 
       dom.data(element, 'flashColor', flashColor);
+      this.markDirty();
 
       setTimeout(function() {
         dom.data(element, 'flashColor', null);
-      }, 1000 / 60);
+        this.markDirty();
+      }.bind(this), 1000 / 30);
     }.bind(this));
   };
 

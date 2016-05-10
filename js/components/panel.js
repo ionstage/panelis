@@ -56,7 +56,7 @@
         dom.removeClass(element, 'panel-rotate');
         this.markDirty();
         resolve();
-      }.bind(this), 200);
+      }.bind(this), 1000);
 
       var ontransitionend = function() {
         dom.off(element, 'transitionend', ontransitionend);

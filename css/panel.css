@@ -176,10 +176,6 @@
   background-color: lime;
 }
 
-.panel:not([data-color='none']):not([data-flash-color]) > .panel-front-circle {
-  transition: background-color 0.5s linear;
-}
-
 .panel:not([data-color='none']).panel-change-color > .panel-front-circle {
   transition: background-color 0.25s linear;
 }

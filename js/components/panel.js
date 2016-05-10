@@ -98,30 +98,18 @@
     return new Promise(function(resolve, reject) {
       var element = this.element();
 
-      if (dom.data(element, 'flashColor')) {
-        // the panel is now flashing
-        dom.data(element, 'flashColor', null);
-      }
-
-      var timer = setTimeout(function() {
-        // transitionend event has not been dispatched (timeout)
-        dom.off(element, 'transitionend', ontransitionend);
-        resolve();
-      }, 1000);
-
-      var ontransitionend = function() {
-        dom.off(element, 'transitionend', ontransitionend);
-        clearTimeout(timer);
-        resolve();
-      };
-
-      dom.on(element, 'transitionend', ontransitionend);
-
       dom.data(element, 'flashColor', flashColor);
+      this.redraw();
 
-      setTimeout(function() {
+      helper.timeout(250).then(function() {
+        dom.addClass(element, 'panel-change-color');
         dom.data(element, 'flashColor', null);
-      }, 1000 / 60);
+        this.redraw();
+        return helper.timeout(250);
+      }.bind(this)).then(function() {
+        dom.removeClass(element, 'panel-change-color');
+        resolve();
+      });
     }.bind(this));
   };
 
